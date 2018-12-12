@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZyC-cO-ZGp">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TimeBurner-Normal.ttf">
+            <string>TimeBurner</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Intro View Controller-->
+        <scene sceneID="NK3-9F-mr4">
+            <objects>
+                <viewController storyboardIdentifier="IntroVC" id="ZyC-cO-ZGp" customClass="IntroViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ym5-yD-ied">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1p-iz-rEH">
+                                <rect key="frame" x="15" y="30" width="290" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="KUl-Je-uNu"/>
+                                    <constraint firstAttribute="height" constant="170" id="SjE-aM-y91"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="130"/>
+                                <color key="textColor" red="0.53333333329999999" green="0.83137254900000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZo-1d-SkT">
+                                <rect key="frame" x="55.5" y="374" width="209" height="2"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="YPQ-4m-6vR"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challange yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URH-ol-Upi">
+                                <rect key="frame" x="15" y="174" width="241.5" height="16.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR load your own" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K87-BM-BBj">
+                                <rect key="frame" x="70" y="361" width="180" height="24"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="NoL-Cx-Q32"/>
+                                    <constraint firstAttribute="height" constant="24" id="gtl-xV-ndp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dcm-KN-Yr2">
+                                <rect key="frame" x="30" y="395" width="260" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gya-16-cCg" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="80"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="5Ku-GC-vP2"/>
+                                            <constraint firstAttribute="width" secondItem="gya-16-cCg" secondAttribute="height" multiplier="3:2" id="BXS-U6-5Qf"/>
+                                        </constraints>
+                                        <state key="normal" title="Camera"/>
+                                        <connections>
+                                            <action selector="cameraButtonTapped:" destination="ZyC-cO-ZGp" eventType="touchUpInside" id="Fsc-Wd-uqX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op2-DK-7Dx" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
+                                        <rect key="frame" x="140" y="0.0" width="120" height="80"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="96O-Af-J5C"/>
+                                            <constraint firstAttribute="width" secondItem="op2-DK-7Dx" secondAttribute="height" multiplier="3:2" id="yt5-YO-Qmd"/>
+                                        </constraints>
+                                        <state key="normal" title="Library"/>
+                                        <connections>
+                                            <action selector="libraryButtonTapped:" destination="ZyC-cO-ZGp" eventType="touchUpInside" id="jU9-mZ-Tyg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" spacing="260"/>
+                                <variation key="heightClass=compact-widthClass=regular" spacing="300"/>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytc-Vk-itk" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
+                                <rect key="frame" x="100" y="256" width="120" height="80"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="RRB-Zl-uwJ"/>
+                                    <constraint firstAttribute="width" secondItem="ytc-Vk-itk" secondAttribute="height" multiplier="3:2" id="rsa-Yp-ySy"/>
+                                </constraints>
+                                <state key="normal" title="Gridy Button"/>
+                                <connections>
+                                    <action selector="gridyButtonTapped:" destination="ZyC-cO-ZGp" eventType="touchUpInside" id="Kyj-Vy-ZIu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y1p-iz-rEH" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="0nn-OI-Ukj"/>
+                            <constraint firstItem="WZo-1d-SkT" firstAttribute="centerY" secondItem="K87-BM-BBj" secondAttribute="centerY" constant="2" id="4s5-f8-bPv"/>
+                            <constraint firstItem="y1p-iz-rEH" firstAttribute="leading" secondItem="gya-16-cCg" secondAttribute="leading" id="5NB-h0-qFY"/>
+                            <constraint firstItem="URH-ol-Upi" firstAttribute="leading" secondItem="y1p-iz-rEH" secondAttribute="leading" id="5k8-uh-oDK"/>
+                            <constraint firstItem="dcm-KN-Yr2" firstAttribute="top" secondItem="K87-BM-BBj" secondAttribute="bottom" constant="10" id="6AS-VF-h8N">
+                                <variation key="heightClass=compact-widthClass=compact" constant="-50"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="-80"/>
+                            </constraint>
+                            <constraint firstItem="ytc-Vk-itk" firstAttribute="top" secondItem="y1p-iz-rEH" secondAttribute="bottom" constant="56" id="Fki-9U-t38">
+                                <variation key="heightClass=compact-widthClass=regular" constant="25"/>
+                            </constraint>
+                            <constraint firstItem="WZo-1d-SkT" firstAttribute="width" secondItem="K87-BM-BBj" secondAttribute="width" multiplier="1.16" id="HCs-in-Zv0"/>
+                            <constraint firstItem="K87-BM-BBj" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="HLu-go-3eY"/>
+                            <constraint firstItem="ytc-Vk-itk" firstAttribute="centerY" secondItem="y1p-iz-rEH" secondAttribute="centerY" id="Xsb-PM-dlz"/>
+                            <constraint firstItem="WZo-1d-SkT" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="YVd-pH-E63"/>
+                            <constraint firstItem="dcm-KN-Yr2" firstAttribute="bottom" secondItem="VaP-SR-qtM" secondAttribute="bottom" constant="-30" id="b9T-I5-je8"/>
+                            <constraint firstItem="URH-ol-Upi" firstAttribute="top" secondItem="y1p-iz-rEH" secondAttribute="bottom" constant="-26" id="c8k-Ot-88y"/>
+                            <constraint firstItem="y1p-iz-rEH" firstAttribute="top" secondItem="VaP-SR-qtM" secondAttribute="top" constant="10" id="eEN-rP-hH2">
+                                <variation key="heightClass=compact-widthClass=compact" constant="10"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="15"/>
+                            </constraint>
+                            <constraint firstItem="ytc-Vk-itk" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="jKX-SE-k9p"/>
+                            <constraint firstItem="K87-BM-BBj" firstAttribute="top" secondItem="ytc-Vk-itk" secondAttribute="bottom" constant="25" id="qXd-IQ-GQd">
+                                <variation key="heightClass=compact-widthClass=regular" constant="25"/>
+                            </constraint>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dcm-KN-Yr2" secondAttribute="bottom" constant="80" id="rBx-c1-Yin"/>
+                            <constraint firstItem="dcm-KN-Yr2" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="y66-PP-wiS"/>
+                            <constraint firstItem="ytc-Vk-itk" firstAttribute="trailing" secondItem="op2-DK-7Dx" secondAttribute="trailing" id="zws-1Q-tGb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="VaP-SR-qtM"/>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="0nn-OI-Ukj"/>
+                                <exclude reference="rBx-c1-Yin"/>
+                                <exclude reference="qXd-IQ-GQd"/>
+                                <exclude reference="Fki-9U-t38"/>
+                                <exclude reference="jKX-SE-k9p"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="5NB-h0-qFY"/>
+                                <exclude reference="b9T-I5-je8"/>
+                                <exclude reference="rBx-c1-Yin"/>
+                                <exclude reference="Xsb-PM-dlz"/>
+                                <exclude reference="zws-1Q-tGb"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="5NB-h0-qFY"/>
+                                <exclude reference="b9T-I5-je8"/>
+                                <exclude reference="Xsb-PM-dlz"/>
+                                <exclude reference="zws-1Q-tGb"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="cameraButton" destination="gya-16-cCg" id="hQe-oP-REl"/>
+                        <outlet property="gridyPickButton" destination="ytc-Vk-itk" id="NIt-AX-8AO"/>
+                        <outlet property="libraryButton" destination="op2-DK-7Dx" id="FAb-hW-VH5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tqh-Cx-pU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101.25" y="110.91549295774648"/>
+        </scene>
+    </scenes>
+</document>

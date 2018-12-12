@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TimeBurner-Normal.ttf">
+            <string>TimeBurner</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
+            <connections>
+                <outlet property="customBigLabel" destination="ZwX-ei-T6c" id="wbt-8v-1MP"/>
+                <outlet property="customImageView" destination="JNi-iQ-Tlp" id="cef-LL-6Kr"/>
+                <outlet property="customTextLabel" destination="DZH-c4-HG9" id="4KM-K1-FFV"/>
+                <outlet property="customView" destination="iN0-l3-epB" id="ctd-3u-LRT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JNi-iQ-Tlp">
+                    <rect key="frame" x="164.5" y="32" width="46" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="6Mr-tE-f9f"/>
+                        <constraint firstAttribute="width" secondItem="JNi-iQ-Tlp" secondAttribute="height" multiplier="9:7" id="Sql-Bj-BuN"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZH-c4-HG9">
+                    <rect key="frame" x="5" y="73" width="365" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwX-ei-T6c">
+                    <rect key="frame" x="5" y="32" width="365" height="36"/>
+                    <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="34"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.9137254901960784" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ZwX-ei-T6c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="7Yq-SK-fkB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZwX-ei-T6c" secondAttribute="trailing" constant="5" id="9tQ-bL-97M"/>
+                <constraint firstItem="ZwX-ei-T6c" firstAttribute="height" secondItem="JNi-iQ-Tlp" secondAttribute="height" id="FE6-dq-oAJ"/>
+                <constraint firstItem="DZH-c4-HG9" firstAttribute="top" secondItem="JNi-iQ-Tlp" secondAttribute="bottom" constant="5" id="Mrh-kq-MEP"/>
+                <constraint firstItem="DZH-c4-HG9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="Qh9-pk-pzK"/>
+                <constraint firstItem="JNi-iQ-Tlp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="ctE-1f-g4V"/>
+                <constraint firstItem="ZwX-ei-T6c" firstAttribute="centerY" secondItem="JNi-iQ-Tlp" secondAttribute="centerY" id="eRj-hz-I4p"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="DZH-c4-HG9" secondAttribute="trailing" constant="5" id="fBZ-2A-WtY"/>
+                <constraint firstItem="JNi-iQ-Tlp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vQM-2a-FBh"/>
+                <constraint firstItem="DZH-c4-HG9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yf1-H0-fgo"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-107" y="-45"/>
+        </view>
+    </objects>
+</document>

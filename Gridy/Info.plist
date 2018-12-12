@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>The app needs your permission to choose photos from your media library. Do you want to play Gridy with your own photos?</string>
+	<key>NSCameraUsageDescription</key>
+	<string>By allowing the app to have access to your camera, you will be able to play Gridy with newly created photos. Do you allow it? </string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
