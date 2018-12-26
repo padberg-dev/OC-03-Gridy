@@ -29,9 +29,24 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="u4c-yc-4Eb" secondAttribute="trailing" constant="15" id="HUd-3M-t0b"/>
                             <constraint firstItem="u4c-yc-4Eb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="I5x-Au-oT8"/>
+                            <constraint firstItem="u4c-yc-4Eb" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="15" id="PHY-a3-c1C"/>
+                            <constraint firstItem="u4c-yc-4Eb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Tdi-6c-opg"/>
                             <constraint firstItem="u4c-yc-4Eb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="UAC-oj-kj7"/>
+                            <constraint firstAttribute="bottom" secondItem="u4c-yc-4Eb" secondAttribute="bottom" constant="15" id="WdJ-Sy-kQJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="HUd-3M-t0b"/>
+                                <exclude reference="UAC-oj-kj7"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="PHY-a3-c1C"/>
+                                <exclude reference="WdJ-Sy-kQJ"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>

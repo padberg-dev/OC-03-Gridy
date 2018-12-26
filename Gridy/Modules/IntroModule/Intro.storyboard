@@ -136,27 +136,27 @@
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="0nn-OI-Ukj"/>
-                                <exclude reference="rBx-c1-Yin"/>
-                                <exclude reference="qXd-IQ-GQd"/>
                                 <exclude reference="Fki-9U-t38"/>
                                 <exclude reference="jKX-SE-k9p"/>
+                                <exclude reference="qXd-IQ-GQd"/>
+                                <exclude reference="rBx-c1-Yin"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="5NB-h0-qFY"/>
-                                <exclude reference="b9T-I5-je8"/>
-                                <exclude reference="rBx-c1-Yin"/>
                                 <exclude reference="Xsb-PM-dlz"/>
                                 <exclude reference="zws-1Q-tGb"/>
+                                <exclude reference="b9T-I5-je8"/>
+                                <exclude reference="rBx-c1-Yin"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="5NB-h0-qFY"/>
-                                <exclude reference="b9T-I5-je8"/>
                                 <exclude reference="Xsb-PM-dlz"/>
                                 <exclude reference="zws-1Q-tGb"/>
+                                <exclude reference="b9T-I5-je8"/>
                             </mask>
                         </variation>
                     </view>

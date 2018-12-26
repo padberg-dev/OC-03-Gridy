@@ -14,6 +14,8 @@ class IntroFactory {
         
         let navigationController = UINavigationController()
         
+        navigationController.isNavigationBarHidden = true
+        
         let introController = UIStoryboard(name: "Intro", bundle: nil).instantiateInitialViewController() as! IntroViewController
         let introFlowController = IntroFlowController(navigator: navigationController)
         let introViewModel = IntroVM()

@@ -1,14 +1,14 @@
 //
-//  ImageEditorFlow.swift
+//  GameFlow.swift
 //  Gridy
 //
-//  Created by Rafal Padberg on 12.12.18.
+//  Created by Rafal Padberg on 20.12.18.
 //  Copyright © 2018 Rafal Padberg. All rights reserved.
 //
 
 import UIKit
 
-class ImageEditorFlowController {
+class GameFlowController {
     
     let navigator: UINavigationController
     
@@ -18,9 +18,5 @@ class ImageEditorFlowController {
     
     func goBack() {
         navigator.popViewController(animated: true)
-    }
-    
-    func showGameView(with image: UIImage) {
-        GameFactory.pushIn(navigator: navigator, with: image)
     }
 }
