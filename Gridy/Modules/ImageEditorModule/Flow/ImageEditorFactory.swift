@@ -14,8 +14,9 @@ class ImageEditorFactory {
         
         let imageEditorController = UIStoryboard(name: "ImageEditor", bundle: nil).instantiateInitialViewController() as! ImageEditorViewController
         let imageEditorFlowController = ImageEditorFlowController(navigator: navigator)
+        let viewModel = ImageEditorVM()
         
-        imageEditorController.assignDependencies(flowController: imageEditorFlowController, image: image)
+        imageEditorController.assignDependencies(flowController: imageEditorFlowController, image: image, viewModel: viewModel)
         
         navigator.pushViewController(imageEditorController, animated: true)
     }

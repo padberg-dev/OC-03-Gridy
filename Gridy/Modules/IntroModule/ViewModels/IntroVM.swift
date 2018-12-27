@@ -15,7 +15,6 @@ class IntroVM {
     ]
     
     func chooseRandomPhoto() -> String {
-        return "eiffel"
         return photosNames.randomElement()!
     }
 }

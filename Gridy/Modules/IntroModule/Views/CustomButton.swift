@@ -22,8 +22,6 @@ class CustomButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        print("KUTSA")
     }
     
     required init?(coder aDecoder: NSCoder) {
