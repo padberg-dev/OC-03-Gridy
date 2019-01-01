@@ -10,20 +10,20 @@ import UIKit
 
 class CustomGridView: UIView {
     
-    // MARK:- Parameters
+    // MARK: - Parameters
     
-    private var lineWidth: CGFloat = 1.0 { didSet { setNeedsDisplay() } }
-    private var color: UIColor = .black { didSet { setNeedsDisplay() } }
+    private var lineWidth: CGFloat = 1
+    private var lineColor: UIColor = .darkGray
     private var gridTilesPerRow: Int = 5 { didSet { setNeedsDisplay() } }
     
-    // MARK:- Initializers
+    // MARK: - Initializers
     
     override func awakeFromNib() {
         contentMode = .redraw
         layer.borderWidth = 1.0
     }
     
-    // MARK:- Public API
+    // MARK: - Public API
     
     func setNumberOf(tiles: Int) {
         gridTilesPerRow = tiles
@@ -33,30 +33,34 @@ class CustomGridView: UIView {
         return gridTilesPerRow
     }
     
-    // MARK:- Draw
+    // MARK: - Draw
     
     override func draw(_ rect: CGRect) {
-        color.setStroke()
+        lineColor.setStroke()
         
         let tileLength = bounds.width / CGFloat(gridTilesPerRow)
-        let horizontalLineSize = CGSize(width: bounds.width, height: 0.5)
+        let fullWidth = bounds.width
         
         for i in 1 ..< gridTilesPerRow {
             let origin = CGPoint(x: bounds.origin.x, y: tileLength * CGFloat(i))
+            let targetPoint = CGPoint(x: origin.x + fullWidth, y: origin.y)
             
-            var path = calculatePath(from: origin, by: horizontalLineSize)
+            var path = calculateLinePath(from: origin, to: targetPoint)
             path.stroke()
             
-            path = calculatePath(from: invert(point: origin), by: invert(size: horizontalLineSize))
+            path = calculateLinePath(from: invert(point: origin), to: invert(point: targetPoint))
             path.stroke()
         }
     }
     
-    // MARK:- Custom Methods
+    // MARK: - Custom Methods
     
-    private func calculatePath(from origin: CGPoint, by size: CGSize) -> UIBezierPath {
-        let path = UIBezierPath(rect: CGRect(origin: origin, size: size))
+    private func calculateLinePath(from origin: CGPoint, to targetPoint: CGPoint) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.move(to: origin)
+        path.addLine(to: targetPoint)
         path.lineWidth = lineWidth
+        path.setLineDash([2,2], count: 2, phase: 0)
         
         return path
     }
@@ -64,10 +68,5 @@ class CustomGridView: UIView {
     private func invert(point: CGPoint) -> CGPoint {
         let newPoint = CGPoint(x: point.y, y: point.x)
         return newPoint
-    }
-    
-    private func invert(size: CGSize) -> CGSize {
-        let newSize = CGSize(width: size.height, height: size.width)
-        return newSize
     }
 }

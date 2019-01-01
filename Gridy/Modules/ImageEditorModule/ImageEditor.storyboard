@@ -23,16 +23,16 @@
                                 <color key="backgroundColor" red="0.15905316459999999" green="0.65504045050000004" blue="0.32397437670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="ui6-oJ-53X" customClass="CustomScrollView" customModule="Gridy" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsv-yM-rf4">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gEK-Sc-wp6">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" priority="750" constant="320" id="WKO-F6-Sdo"/>
-                                                    <constraint firstAttribute="height" priority="750" constant="548" id="cR9-lL-m1D"/>
+                                                    <constraint firstAttribute="height" priority="750" constant="568" id="cR9-lL-m1D"/>
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="umi-Qs-1Bf"/>
                                             </imageView>
@@ -61,14 +61,12 @@
                                 </connections>
                             </scrollView>
                             <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="FEa-yU-EWd">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lK4-2P-SdA">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
-                                <vibrancyEffect>
-                                    <blurEffect style="light"/>
-                                </vibrancyEffect>
+                                <blurEffect style="light"/>
                             </visualEffectView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyu-qo-hSg" customClass="CustomGridView" customModule="Gridy" customModuleProvider="target">
                                 <rect key="frame" x="30" y="154" width="260" height="260"/>
@@ -99,7 +97,7 @@
                                 </constraints>
                                 <state key="normal" title="SELECT"/>
                                 <connections>
-                                    <action selector="selectImageFragment:" destination="gVS-aK-b8D" eventType="touchUpInside" id="cid-Nu-pC5"/>
+                                    <action selector="selectButtonTapped:" destination="gVS-aK-b8D" eventType="touchUpInside" id="ecX-o7-4zj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of rows and columns in a grid" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjs-MX-Xo9">
@@ -149,14 +147,14 @@
                             <constraint firstItem="Iq1-FF-bSv" firstAttribute="bottom" secondItem="FEa-yU-EWd" secondAttribute="bottom" id="hPh-io-fz1"/>
                             <constraint firstItem="Iq1-FF-bSv" firstAttribute="trailing" secondItem="Vjs-MX-Xo9" secondAttribute="trailing" constant="10" id="lHV-Uu-DHo"/>
                             <constraint firstItem="Nzi-Yc-wRO" firstAttribute="centerY" secondItem="AFY-nP-fd7" secondAttribute="centerY" id="nXv-XA-71c"/>
-                            <constraint firstItem="FEa-yU-EWd" firstAttribute="top" secondItem="Iq1-FF-bSv" secondAttribute="top" id="o6b-bm-b9m"/>
+                            <constraint firstItem="FEa-yU-EWd" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" id="o6b-bm-b9m"/>
                             <constraint firstItem="5lV-4P-bhf" firstAttribute="centerX" secondItem="AFY-nP-fd7" secondAttribute="centerX" id="ooY-7p-zkB"/>
                             <constraint firstItem="Nzi-Yc-wRO" firstAttribute="centerX" secondItem="AFY-nP-fd7" secondAttribute="centerX" id="r5r-G1-TEu"/>
-                            <constraint firstItem="ui6-oJ-53X" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" constant="20" id="scg-yW-nur"/>
+                            <constraint firstItem="ui6-oJ-53X" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" id="scg-yW-nur"/>
                             <constraint firstItem="FbF-YK-XW2" firstAttribute="leading" secondItem="5lV-4P-bhf" secondAttribute="trailing" constant="10" id="soS-Em-Bh3"/>
                             <constraint firstItem="ui6-oJ-53X" firstAttribute="leading" secondItem="AFY-nP-fd7" secondAttribute="leading" id="tNV-e3-Rdv"/>
                             <constraint firstItem="Paj-GY-bza" firstAttribute="leading" secondItem="Iq1-FF-bSv" secondAttribute="leading" constant="5" id="xFj-0y-ENy"/>
-                            <constraint firstItem="gEK-Sc-wp6" firstAttribute="height" secondItem="Iq1-FF-bSv" secondAttribute="height" placeholder="YES" id="xPg-na-SbV"/>
+                            <constraint firstItem="gEK-Sc-wp6" firstAttribute="height" secondItem="wsv-yM-rf4" secondAttribute="height" placeholder="YES" id="xPg-na-SbV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Iq1-FF-bSv"/>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -195,6 +193,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIf-gY-h0P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="119.36619718309859" y="75"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="a8G-K7-Rtm">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="h8n-fr-ZVm" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bQS-IA-LAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-780" y="75"/>
         </scene>
     </scenes>
 </document>

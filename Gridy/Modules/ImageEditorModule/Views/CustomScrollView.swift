@@ -10,7 +10,7 @@ import UIKit
 
 class CustomScrollView: UIScrollView {
     
-    // MARK:- Outlets
+    // MARK: - Outlets
     
     @IBOutlet var contentView: UIView!
     @IBOutlet var imageView: UIImageView!
@@ -18,7 +18,7 @@ class CustomScrollView: UIScrollView {
     @IBOutlet var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
     
-    // MARK:- Initializers
+    // MARK: - Initializers
     
     func initialize(with image: UIImage) {
         isScrollEnabled = true
@@ -33,7 +33,7 @@ class CustomScrollView: UIScrollView {
         imageWidthConstraint.priority = .required
     }
     
-    // MARK:- Custom Methods
+    // MARK: - Custom Methods
     
     func setContentSize() {
         if let image = imageView.image {
@@ -69,12 +69,21 @@ class CustomScrollView: UIScrollView {
     // MARK: - CustomScrollViewRotationDelegate Implementations
     // MARK: - Implementation Variables
     
+    private enum RotationPoint {
+        case imageCenter
+        case scrollViewCenter
+        case touchCenter
+    }
+    
     weak var rotationDelegate: CustomScrollViewRotationDelegate?
     
     var rotationGestureRecognizer: UIRotationGestureRecognizer?
     var rotationIsCumulative: Bool = false
+    var cumulativeRotation: CGFloat = 0
+    
     var isSnapingEnabled: Bool = false
     var snappingAngle: CGFloat = 0
+    
     var isRotationEnabled: Bool {
         set {
             if newValue {
@@ -89,9 +98,8 @@ class CustomScrollView: UIScrollView {
         }
     }
     
-    var cumulativeRotation: CGFloat = 0
     
-    // MARK:- Implementation Methods
+    // MARK: - Implementation Methods
     
     @objc private func handleRotation(rotationRecognizer: UIRotationGestureRecognizer) {
         if let rotatingView = rotationDelegate?.viewForRotation(in: self) {
@@ -116,7 +124,8 @@ class CustomScrollView: UIScrollView {
                 rotationDelegate?.scrollViewDidBeginRotation?(self, with: rotatingView, having: rotationRecognizer.rotation)
             case .changed:
                 let fullRotation = rotationRecognizer.rotation
-                let rotation = isSnapingEnabled ? round(fullRotation / snappingAngle.convertToRadiants()) : fullRotation
+                
+                let rotation = isSnapingEnabled ? (round(fullRotation / snappingAngle.convertToRadiants()) * snappingAngle.convertToRadiants()) : fullRotation
                 
                 rotationDelegate?.scrollViewIsRotating(self, view: rotatingView, by: rotation)
             case .ended:
@@ -132,7 +141,7 @@ class CustomScrollView: UIScrollView {
         }
     }
     
-    // MARK:- Custom Helper Methods
+    // MARK: - Custom Helper Methods
     
     private func reduceRadiants(_ radiants: CGFloat) -> CGFloat {
         let twoPi = 2 * CGFloat.pi

@@ -10,7 +10,7 @@ import UIKit
 
 class ImageEditorViewController: UIViewController {
     
-    // MARK:- Outlets and Attributes
+    // MARK: - Outlets and Attributes
     
     @IBOutlet var scrollView: CustomScrollView!    
     @IBOutlet var blurView: UIVisualEffectView!
@@ -26,7 +26,7 @@ class ImageEditorViewController: UIViewController {
     var photoImage: UIImage!
     var extendInsetsToGridView: Bool = false
     
-    // MARK:- View Controller Life Cycle
+    // MARK: - View Controller Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,28 +42,30 @@ class ImageEditorViewController: UIViewController {
     // FIX: Add DispatchQueue
     override func viewWillAppear(_ animated: Bool) {
         gridView.backgroundColor = .clear
+        errorView.backgroundColor = .red
         selectButton.styleSelectButton()
     }
     
-    // MARK:- Layout Change Events
+    // MARK: - Layout Change Events
     
     override func viewDidLayoutSubviews() {
         maskBlurView()
         scrollView.setContentSize()
     }
     
-    // MARK:- Custom Methods
+    // MARK: - Custom Methods
     
     private func maskBlurView() {
         let maskLayer = CAShapeLayer()
-        let topInset = UIApplication.shared.statusBarFrame.height
+        // REMOVE?
+        // let topInset = UIApplication.shared.statusBarFrame.height
         
         maskLayer.frame = view.bounds
         
         let path = UIBezierPath(rect: view.bounds)
-        let rectIncludingInsets = CGRect(origin: CGPoint(x: gridView.frame.minX, y: gridView.frame.minY - topInset), size: gridView.frame.size)
+        // let rectIncludingInsets = CGRect(origin: CGPoint(x: gridView.frame.minX, y: gridView.frame.minY - topInset), size: gridView.frame.size)
         
-        path.append(UIBezierPath(rect: rectIncludingInsets))
+        path.append(UIBezierPath(rect: gridView.frame))
         
         maskLayer.fillRule = .evenOdd
         maskLayer.path = path.cgPath
@@ -72,10 +74,13 @@ class ImageEditorViewController: UIViewController {
     }
     
     private func changeInsets(of scrollView: UIScrollView, byOriginOf view: UIView, scaledBy scale: CGFloat) {
+        let oldOffset = scrollView.contentOffset
         let newZeroPoint = view.frame.origin
         
         scrollView.contentInset = UIEdgeInsets(top: -newZeroPoint.y, left: -newZeroPoint.x, bottom: -newZeroPoint.y, right: -newZeroPoint.x)
         scrollView.contentInset.rescaleBy(scale)
+        
+        scrollView.contentOffset = oldOffset
         
         if extendInsetsToGridView {
             extendInsets(of: scrollView, to: gridView.frame)
@@ -83,12 +88,13 @@ class ImageEditorViewController: UIViewController {
     }
     
     private func extendInsets(of scrollView: UIScrollView, to frame: CGRect) {
-        let topInset = UIApplication.shared.statusBarFrame.height
-        print(topInset)
+        // FIXME: Remove? topInset not needed?
+        // let topInset = UIApplication.shared.statusBarFrame.height
+        
         let leftMargin = frame.minX
-        let topMargin = frame.minY - topInset
+        let topMargin = frame.minY
         let rightMargin = scrollView.frame.width - frame.maxX
-        let bottomMargin = scrollView.frame.height - frame.maxY + topInset
+        let bottomMargin = scrollView.frame.height - frame.maxY
         
         scrollView.contentInset.left += leftMargin
         scrollView.contentInset.top += topMargin
@@ -96,8 +102,9 @@ class ImageEditorViewController: UIViewController {
         scrollView.contentInset.bottom += bottomMargin
     }
     
-    // MARK: REMOVE?
+    
     private func getEdgePoint(from rect: CGRect) -> (CGPoint, CGPoint, CGPoint, CGPoint) {
+        // FIXME: Remove? method not needed?
         let topLeft = CGPoint(x: rect.minX, y: rect.minY)
         let topRight = CGPoint(x: rect.maxX, y: rect.minY)
         let BottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
@@ -120,14 +127,7 @@ class ImageEditorViewController: UIViewController {
         return newImage
     }
     
-    private func cropImage(_ image: UIImage, to newFrame: CGRect) -> UIImage? {
-        if let croppedImage = image.cgImage?.cropping(to: newFrame) {
-            return UIImage(cgImage: croppedImage)
-        }
-        return nil
-    }
-    
-    // MARK:- Navigation Controller Flow
+    // MARK: - Navigation Controller Flow
     
     func assignDependencies(flowController: ImageEditorFlowController, image: UIImage, viewModel: ImageEditorVM) {
         self.flow = flowController
@@ -141,8 +141,23 @@ class ImageEditorViewController: UIViewController {
     
     // MARK: - Action Methods
     
-    @IBAction func selectImageFragment(_ sender: UIButton) {
+    @IBAction func selectButtonTapped(_ sender: UIButton) {
+        print(scrollView.contentOffset)
         
+        let gridViewInImageViewBounds = view.convert(gridView.frame, to: scrollView.imageView)
+        let imageViewBounds = scrollView.imageView.bounds
+        
+        if imageViewBounds.contains(gridViewInImageViewBounds) {
+            if let snapshotImage = takeSnapshot(from: scrollView) {
+                if let croppedImage = Utilities.cropImage(snapshotImage, to: gridView.frame) {
+                    viewModel.sliceTheImage(croppedImage, into: gridView.getNumberOfTiles())
+                    
+                    
+                }
+            }
+        } else {
+            errorView.animateError()
+        }
     }
     
     @IBAction func gridSliderChanged(_ sender: UISlider) {
@@ -150,28 +165,6 @@ class ImageEditorViewController: UIViewController {
         sender.setValue(sliderValue, animated: false)
         
         self.gridView.setNumberOf(tiles: Int(sliderValue))
-    }
-    
-    
-    @IBAction func crop(_ sender: UIButton) {
-        let gridViewInImageViewBounds = view.convert(gridView.frame, to: scrollView.imageView)
-        let imageViewBounds = scrollView.imageView.bounds
-        
-        if imageViewBounds.contains(gridViewInImageViewBounds) {
-            print("YOU CAN GO")
-            goToNext()
-        } else {
-
-            UIView.animate(withDuration: 0.2, animations: {
-                self.errorView.alpha = 1.0
-            }) { [weak self] _ in
-                UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseIn, animations: {
-                    self?.errorView.alpha = 0
-                }, completion: { (hey) in
-                    
-                })
-            }
-        }
     }
     
     func goToNext() {
@@ -267,7 +260,7 @@ class ImageEditorViewController: UIViewController {
 
 extension ImageEditorViewController: UIScrollViewDelegate {
 
-    // MARK:- UIScrollViewDelegate Methods
+    // MARK: - UIScrollViewDelegate Methods
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.scrollView.contentView
@@ -280,7 +273,7 @@ extension ImageEditorViewController: UIScrollViewDelegate {
 
 extension ImageEditorViewController: CustomScrollViewRotationDelegate {
     
-    // MARK:- CustomScrollViewRotationDelegate Methods
+    // MARK: - CustomScrollViewRotationDelegate Methods
 
     func viewForRotation(in scrollView: CustomScrollView) -> UIView? {
         return scrollView.imageView
@@ -288,6 +281,7 @@ extension ImageEditorViewController: CustomScrollViewRotationDelegate {
     
     func scrollViewIsRotating(_ scrollView: CustomScrollView, view: UIView, by radiants: CGFloat) {
         let transform = CGAffineTransform(rotationAngle: radiants)
+        
         view.transform = transform
     }
     

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZyC-cO-ZGp">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_0" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,34 +20,33 @@
             <objects>
                 <viewController storyboardIdentifier="IntroVC" id="ZyC-cO-ZGp" customClass="IntroViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ym5-yD-ied">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1p-iz-rEH">
-                                <rect key="frame" x="15" y="30" width="290" height="170"/>
+                                <rect key="frame" x="34" y="10" width="290" height="169"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="KUl-Je-uNu"/>
-                                    <constraint firstAttribute="height" constant="170" id="SjE-aM-y91"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="130"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.83137254900000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZo-1d-SkT">
-                                <rect key="frame" x="55.5" y="374" width="209" height="2"/>
+                                <rect key="frame" x="179.5" y="249" width="209" height="2"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="YPQ-4m-6vR"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challange yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URH-ol-Upi">
-                                <rect key="frame" x="15" y="174" width="241.5" height="16.5"/>
+                                <rect key="frame" x="34" y="153" width="241.5" height="16.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR load your own" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K87-BM-BBj">
-                                <rect key="frame" x="70" y="361" width="180" height="24"/>
+                                <rect key="frame" x="194" y="236" width="180" height="24"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="NoL-Cx-Q32"/>
@@ -57,8 +56,8 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dcm-KN-Yr2">
-                                <rect key="frame" x="30" y="395" width="260" height="80"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="dcm-KN-Yr2">
+                                <rect key="frame" x="34" y="210" width="500" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gya-16-cCg" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="120" height="80"/>
@@ -73,10 +72,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op2-DK-7Dx" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                        <rect key="frame" x="140" y="0.0" width="120" height="80"/>
+                                        <rect key="frame" x="380" y="0.0" width="120" height="80"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="96O-Af-J5C"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="96O-Af-J5C"/>
                                             <constraint firstAttribute="width" secondItem="op2-DK-7Dx" secondAttribute="height" multiplier="3:2" id="yt5-YO-Qmd"/>
                                         </constraints>
                                         <state key="normal" title="Library"/>
@@ -89,7 +88,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" spacing="300"/>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytc-Vk-itk" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                <rect key="frame" x="100" y="256" width="120" height="80"/>
+                                <rect key="frame" x="414" y="54.5" width="120" height="80"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="RRB-Zl-uwJ"/>
@@ -111,9 +110,6 @@
                                 <variation key="heightClass=compact-widthClass=compact" constant="-50"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="-80"/>
                             </constraint>
-                            <constraint firstItem="ytc-Vk-itk" firstAttribute="top" secondItem="y1p-iz-rEH" secondAttribute="bottom" constant="56" id="Fki-9U-t38">
-                                <variation key="heightClass=compact-widthClass=regular" constant="25"/>
-                            </constraint>
                             <constraint firstItem="WZo-1d-SkT" firstAttribute="width" secondItem="K87-BM-BBj" secondAttribute="width" multiplier="1.16" id="HCs-in-Zv0"/>
                             <constraint firstItem="K87-BM-BBj" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="HLu-go-3eY"/>
                             <constraint firstItem="ytc-Vk-itk" firstAttribute="centerY" secondItem="y1p-iz-rEH" secondAttribute="centerY" id="Xsb-PM-dlz"/>
@@ -128,17 +124,24 @@
                             <constraint firstItem="K87-BM-BBj" firstAttribute="top" secondItem="ytc-Vk-itk" secondAttribute="bottom" constant="25" id="qXd-IQ-GQd">
                                 <variation key="heightClass=compact-widthClass=regular" constant="25"/>
                             </constraint>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dcm-KN-Yr2" secondAttribute="bottom" constant="80" id="rBx-c1-Yin"/>
+                            <constraint firstAttribute="bottom" secondItem="dcm-KN-Yr2" secondAttribute="bottom" constant="80" id="rBx-c1-Yin"/>
                             <constraint firstItem="dcm-KN-Yr2" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="y66-PP-wiS"/>
                             <constraint firstItem="ytc-Vk-itk" firstAttribute="trailing" secondItem="op2-DK-7Dx" secondAttribute="trailing" id="zws-1Q-tGb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VaP-SR-qtM"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5NB-h0-qFY"/>
+                                <exclude reference="b9T-I5-je8"/>
+                            </mask>
+                        </variation>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="0nn-OI-Ukj"/>
-                                <exclude reference="Fki-9U-t38"/>
+                                <include reference="5NB-h0-qFY"/>
                                 <exclude reference="jKX-SE-k9p"/>
                                 <exclude reference="qXd-IQ-GQd"/>
+                                <include reference="b9T-I5-je8"/>
                                 <exclude reference="rBx-c1-Yin"/>
                             </mask>
                         </variation>

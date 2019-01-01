@@ -6,8 +6,49 @@
 //  Copyright © 2018 Rafal Padberg. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+struct ImageTile: Equatable {
+    let image: UIImage
+    
+    let row: Int
+    let column: Int
+    
+    static func == (lhs: ImageTile, rhs: ImageTile) -> Bool {
+        return lhs.row == rhs.row && lhs.column == rhs.column
+    }
+}
 
 class ImageEditorVM {
     
+    private var fullImage: UIImage?
+    private var imageTiles: [ImageTile] = []
+    
+    // MARK:- Public API's
+    
+    func sliceTheImage(_ image: UIImage, into tilesPerRowAndColumn: Int) {
+        fullImage = image
+        
+        let step = Int(image.size.width) / tilesPerRowAndColumn
+        let size = CGSize(width: step, height: step)
+
+        for row in 0 ..< tilesPerRowAndColumn {
+            for column in 0 ..< tilesPerRowAndColumn {
+                let point = CGPoint(x: column * step, y: row * step)
+                let rect = CGRect(origin: point, size: size)
+                
+                if let newTile = Utilities.cropImage(image, to: rect) {
+                    imageTiles.append(ImageTile(image: newTile, row: row, column: column))
+                }
+            }
+        }
+    }
+    
+    func getImageArray() -> [UIImage] {
+        var imageArray: [UIImage] = []
+        
+        imageTiles.forEach { imageArray.append($0.image) }
+        
+        return imageArray
+    }
 }
