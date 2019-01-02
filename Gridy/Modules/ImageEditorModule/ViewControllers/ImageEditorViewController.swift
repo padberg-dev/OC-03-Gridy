@@ -10,12 +10,15 @@ import UIKit
 
 class ImageEditorViewController: UIViewController {
     
+    
+    
     // MARK: - Outlets and Attributes
     
     @IBOutlet var scrollView: CustomScrollView!    
     @IBOutlet var blurView: UIVisualEffectView!
     @IBOutlet var gridView: CustomGridView!
     @IBOutlet var errorView: UIView!
+    @IBOutlet var containerView: UIView!
     
     @IBOutlet var selectButton: UIButton!
     @IBOutlet var gridSlider: UISlider!
@@ -23,8 +26,25 @@ class ImageEditorViewController: UIViewController {
     private var flow: ImageEditorFlowController!
     private var viewModel: ImageEditorVM!
     
+    private var gameVC: PuzzleGameViewController!
+//
+//    lazy private var bigStackView: UIStackView = {
+//        let stackView = UIStackView(frame: gridView.frame)
+//        stackView.customizeSettings(vertical: true)
+//        return stackView
+//    }()
+    
+    private var bigStackView: UIStackView = UIStackView()
+    
     var photoImage: UIImage!
     var extendInsetsToGridView: Bool = false
+    
+    var isPortraitMode: Bool {
+        get {
+            let bounds = UIScreen.main.bounds
+            return bounds.height > bounds.width
+        }
+    }
     
     // MARK: - View Controller Life Cycle
     
@@ -37,6 +57,11 @@ class ImageEditorViewController: UIViewController {
         extendInsetsToGridView = false
         
         scrollView.initialize(with: photoImage)
+        
+        guard let firstChild = children.first as? PuzzleGameViewController else  {
+            fatalError("NO Puzzle Game View Controller??")
+        }
+        gameVC = firstChild
     }
     
     // FIX: Add DispatchQueue
@@ -142,8 +167,6 @@ class ImageEditorViewController: UIViewController {
     // MARK: - Action Methods
     
     @IBAction func selectButtonTapped(_ sender: UIButton) {
-        print(scrollView.contentOffset)
-        
         let gridViewInImageViewBounds = view.convert(gridView.frame, to: scrollView.imageView)
         let imageViewBounds = scrollView.imageView.bounds
         
@@ -152,7 +175,11 @@ class ImageEditorViewController: UIViewController {
                 if let croppedImage = Utilities.cropImage(snapshotImage, to: gridView.frame) {
                     viewModel.sliceTheImage(croppedImage, into: gridView.getNumberOfTiles())
                     
+                    hideAllUI()
+                    createStackViews(from: viewModel.getImageArray(), with: gridView.getNumberOfTiles())
+                    animateStackViews()
                     
+                    callGameContainer()
                 }
             }
         } else {
@@ -175,86 +202,136 @@ class ImageEditorViewController: UIViewController {
 //        flow.showGameView(with: imageSlices[2])
     }
     
-    func createAnimation(with imageArray: [UIImage]) {
-        let bigStackView = UIStackView(frame: gridView.frame)
-        bigStackView.axis = .vertical
-        bigStackView.spacing = 0
-        bigStackView.distribution = .fillEqually
-        bigStackView.alignment = .fill
-        
-        let step = bigStackView.frame.height / 5
-        
-        for i in 0 ..< 5 {
-            let newStackView = UIStackView(frame: CGRect(
-                x: 0,
-                y: (CGFloat(i) * step),
-                width: gridView.frame.width,
-                height: step)
-            )
-            newStackView.axis = .horizontal
-            newStackView.alignment = .fill
-            newStackView.distribution = .fillEqually
-            for j in 0 ..< 5 {
-                let image = UIImageView(image: imageArray[(i * 5) + j])
-                newStackView.addArrangedSubview(image)
+    // MARK: - Custom Animation Methods
+    
+    private func hideAllUI() {
+        UIView.animate(withDuration: 0.6) {
+            self.view.subviews.forEach { (view) in
+                view.alpha = view.isHidden ? 1 : 0
             }
-            newStackView.spacing = 0
-            bigStackView.addArrangedSubview(newStackView)
+        }
+        
+    }
+    
+    private func getRidOfHiddenUI() {
+        self.view.subviews.forEach { (view) in
+            if view.alpha == 0 {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
+    private func createStackViews(from photoSlices: [UIImage], with numberOfTilesPerRow: Int) {
+        bigStackView = UIStackView(frame: gridView.frame)
+        bigStackView.customizeSettings(vertical: true)
+        
+        let step = bigStackView.frame.height / CGFloat(numberOfTilesPerRow)
+        
+        for column in 0 ..< numberOfTilesPerRow {
+            let rowStackView = UIStackView(frame: CGRect(x: 0, y: CGFloat(column) * step, width: gridView.frame.width, height: step))
+            rowStackView.customizeSettings()
+            
+            for row in 0 ..< numberOfTilesPerRow {
+                let newImageTile = UIImageView(image: photoSlices[(column * 5) + row])
+                rowStackView.addArrangedSubview(newImageTile)
+            }
+            bigStackView.addArrangedSubview(rowStackView)
         }
         
         view.addSubview(bigStackView)
-        bigStackView.subviews.forEach { (stackView) in
-            print(stackView.frame)
-            stackView.subviews.forEach({ (image) in
-                print(image.frame)
-            })
-        }
-        errorView.isHidden = true
-        gridView.isHidden = true
+    }
+    
+    private func animateStackViews() {
+        let gridOrigin = gridView.frame.origin
+        let step = (isPortraitMode ? gridOrigin.x : gridOrigin.y) - 5
+        let number = gridView.getNumberOfTiles()
         
         UIView.animate(withDuration: 0.8, animations: {
-            self.blurView.alpha = 0
-            self.scrollView.alpha = 0
+            
         }) { [weak self] _ in
-            
-            let step = (self?.gridView.frame.origin.x)! - 5
-            
-            bigStackView.frame.size = CGSize(width: bigStackView.frame.width + 2 * step, height: bigStackView.frame.height + 2 * step)
+            self?.bigStackView.frame.size = CGSize(
+                width: (self?.bigStackView.frame.width)! + 2 * step,
+                height: (self?.bigStackView.frame.height)! + 2 * step
+            )
             
             UIView.animate(withDuration: 0.8, animations: {
                 self?.view.layoutIfNeeded()
-                bigStackView.frame.origin.x -= step
-                bigStackView.frame.origin.y -= step
-                bigStackView.spacing = (2 * step) / 8
-                bigStackView.subviews.forEach({ (innerStackView) in
-                    (innerStackView as! UIStackView).spacing = (2 * step) / 8
+                self?.bigStackView.frame.origin.x -= step
+                self?.bigStackView.frame.origin.y -= step
+                self?.bigStackView.spacing = (2 * step) / CGFloat(number - 1)
+                self?.bigStackView.subviews.forEach({ (innerStackView) in
+                    (innerStackView as! UIStackView).spacing = (2 * step) / CGFloat(number - 1)
                 })
             })
         }
-        
     }
     
-    func sliceTheImage(_ image: CGImage) -> [UIImage] {
-        var imageArray: [UIImage] = []
-        
-        let width = image.width
-        
-        let step = width / 5
-        let size = CGSize(width: step, height: step)
-        
-        for i in 0 ..< 5 {
-            for j in 0 ..< 5 {
-                let point = CGPoint(x: j * step, y: i * step)
-                let rect = CGRect(origin: point, size: size)
-                let newSlice = image.cropping(to: rect)
-                imageArray.append(UIImage(cgImage: newSlice!))
-            }
+    private func callGameContainer() {
+        if isPortraitMode {
+            containerView.frame.origin.x = 2 * view.bounds.width
+        } else {
+            containerView.frame.origin.y = -2 * view.bounds.height
         }
-        return imageArray
+        containerView.isHidden = false
+        
+        UIView.animate(withDuration: 0.8, animations: {
+            self.containerView.frame.origin.x = 0
+            self.containerView.frame.origin.y = 0
+        }) { [weak self] _ in
+            self?.moveImageTiles(into: (self?.gameVC.collectionView.frame.origin)!)
+        }
     }
     
-    @IBAction func moveBounds() {
+    private func moveImageTiles(into position: CGPoint) {
+        let numberOfTilesPerRow = gridView.getNumberOfTiles()
+        let numberOfTiles = numberOfTilesPerRow * numberOfTilesPerRow
         
+        var randomPool = Array(0 ..< numberOfTiles)
+        randomPool.shuffle()
+        
+        for i in 0 ..< numberOfTiles {
+            let number = randomPool.remove(at: 0)
+            let (row, _) = getPosition(ofTile: number, inRectangleWith: numberOfTilesPerRow)
+            
+            let rowStackView = self.bigStackView.subviews[row] as? UIStackView
+            let numberOfSubviews = rowStackView?.subviews.count
+            let tileImageView = rowStackView?.subviews[Int.random(in: 0 ..< numberOfSubviews!)]
+            
+            let oldFrame = CGRect(origin: CGPoint(x: bigStackView.frame.origin.x + tileImageView!.frame.origin.x,
+                                                  y: bigStackView.frame.origin.y + rowStackView!.frame.origin.y),
+                                  size: tileImageView!.frame.size
+            )
+            
+            rowStackView?.removeArrangedSubview(tileImageView!)
+            tileImageView?.removeFromSuperview()
+            
+            print(oldFrame)
+            
+            let newView = UIView(frame: oldFrame)
+            newView.addSubview(tileImageView!)
+            
+            tileImageView?.frame.origin = oldFrame.origin
+            
+            view.addSubview(newView)
+            
+            print(newView)
+            
+            UIView.animate(withDuration: 0.4, delay: 0.025 * Double(i), options: UIView.AnimationOptions.curveEaseInOut, animations: {
+                newView.frame.origin = position
+//                newView.alpha = 0.0
+            }, completion: { _ in
+                newView.isHidden = true
+            })
+        }
+        bigStackView.isHidden = true
+        getRidOfHiddenUI()
+    }
+    
+    private func getPosition(ofTile number: Int, inRectangleWith numberOfTilesPerRow: Int) -> (Int, Int) {
+        let row = Int(number / numberOfTilesPerRow)
+        let column = number % numberOfTilesPerRow
+        
+        return (row, column)
     }
 }
 

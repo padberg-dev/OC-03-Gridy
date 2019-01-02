@@ -32,9 +32,9 @@ class ImageEditorVM {
         let step = Int(image.size.width) / tilesPerRowAndColumn
         let size = CGSize(width: step, height: step)
 
-        for row in 0 ..< tilesPerRowAndColumn {
-            for column in 0 ..< tilesPerRowAndColumn {
-                let point = CGPoint(x: column * step, y: row * step)
+        for column in 0 ..< tilesPerRowAndColumn {
+            for row in 0 ..< tilesPerRowAndColumn {
+                let point = CGPoint(x: row * step, y: column * step)
                 let rect = CGRect(origin: point, size: size)
                 
                 if let newTile = Utilities.cropImage(image, to: rect) {

@@ -13,7 +13,7 @@
         <!--Image Editor View Controller-->
         <scene sceneID="34L-AK-Nux">
             <objects>
-                <viewController id="gVS-aK-b8D" customClass="ImageEditorViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="imageEditorVC" id="gVS-aK-b8D" customClass="ImageEditorViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AFY-nP-fd7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,19 +75,6 @@
                                     <constraint firstAttribute="width" secondItem="oyu-qo-hSg" secondAttribute="height" id="eG4-nP-crA"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Paj-GY-bza">
-                                <rect key="frame" x="5" y="25" width="50" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="A4a-o1-HM8"/>
-                                    <constraint firstAttribute="width" constant="50" id="VyG-jM-Mph"/>
-                                </constraints>
-                                <state key="normal" title="Back">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="goBack:" destination="gVS-aK-b8D" eventType="touchUpInside" id="YHY-XM-oPs"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nzi-Yc-wRO">
                                 <rect key="frame" x="120" y="489" width="80" height="34"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
@@ -112,18 +99,41 @@
                                     <action selector="gridSliderChanged:" destination="gVS-aK-b8D" eventType="valueChanged" id="osD-9Z-gSJ"/>
                                 </connections>
                             </slider>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6AT-s9-h0O">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <connections>
+                                    <segue destination="2j7-PO-zrh" kind="embed" id="ha7-vD-3ak"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Paj-GY-bza">
+                                <rect key="frame" x="5" y="25" width="50" height="30"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.91372549020000005" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="A4a-o1-HM8"/>
+                                    <constraint firstAttribute="width" constant="50" id="VyG-jM-Mph"/>
+                                </constraints>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="goBack:" destination="gVS-aK-b8D" eventType="touchUpInside" id="YHY-XM-oPs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5lV-4P-bhf" firstAttribute="width" secondItem="AFY-nP-fd7" secondAttribute="width" multiplier="0.5" id="0Vd-z7-ZAS"/>
                             <constraint firstItem="ui6-oJ-53X" firstAttribute="bottom" secondItem="AFY-nP-fd7" secondAttribute="bottom" id="158-0Z-4gE"/>
                             <constraint firstAttribute="bottom" secondItem="oyu-qo-hSg" secondAttribute="bottom" constant="30" id="5v6-NZ-9xe"/>
+                            <constraint firstItem="6AT-s9-h0O" firstAttribute="leading" secondItem="Iq1-FF-bSv" secondAttribute="leading" id="6gr-xp-x1c"/>
                             <constraint firstItem="Iq1-FF-bSv" firstAttribute="trailing" secondItem="oyu-qo-hSg" secondAttribute="trailing" constant="30" id="8UZ-ER-YAM"/>
                             <constraint firstItem="oyu-qo-hSg" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" constant="30" id="EKD-Eo-mwk"/>
+                            <constraint firstItem="6AT-s9-h0O" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" id="EKr-3A-FwO"/>
                             <constraint firstItem="gEK-Sc-wp6" firstAttribute="width" secondItem="Iq1-FF-bSv" secondAttribute="width" placeholder="YES" id="FaD-uV-h3G"/>
                             <constraint firstItem="5lV-4P-bhf" firstAttribute="leading" secondItem="Iq1-FF-bSv" secondAttribute="leading" constant="10" id="Fyf-BH-7mN"/>
                             <constraint firstItem="Vjs-MX-Xo9" firstAttribute="leading" secondItem="Iq1-FF-bSv" secondAttribute="leading" constant="10" id="LKB-VW-mRM"/>
                             <constraint firstItem="Paj-GY-bza" firstAttribute="top" secondItem="Iq1-FF-bSv" secondAttribute="top" constant="5" id="M1E-M3-gog"/>
+                            <constraint firstItem="6AT-s9-h0O" firstAttribute="bottom" secondItem="Iq1-FF-bSv" secondAttribute="bottom" id="P55-Oy-RhK"/>
                             <constraint firstItem="FbF-YK-XW2" firstAttribute="height" secondItem="oyu-qo-hSg" secondAttribute="height" id="PLT-Uk-yEG"/>
                             <constraint firstItem="FbF-YK-XW2" firstAttribute="centerY" secondItem="oyu-qo-hSg" secondAttribute="centerY" id="QBh-TZ-BVB"/>
                             <constraint firstItem="5lV-4P-bhf" firstAttribute="top" secondItem="Vjs-MX-Xo9" secondAttribute="bottom" constant="10" id="QkE-Mh-Uy5">
@@ -153,6 +163,7 @@
                             <constraint firstItem="ui6-oJ-53X" firstAttribute="top" secondItem="AFY-nP-fd7" secondAttribute="top" id="scg-yW-nur"/>
                             <constraint firstItem="FbF-YK-XW2" firstAttribute="leading" secondItem="5lV-4P-bhf" secondAttribute="trailing" constant="10" id="soS-Em-Bh3"/>
                             <constraint firstItem="ui6-oJ-53X" firstAttribute="leading" secondItem="AFY-nP-fd7" secondAttribute="leading" id="tNV-e3-Rdv"/>
+                            <constraint firstItem="6AT-s9-h0O" firstAttribute="trailing" secondItem="Iq1-FF-bSv" secondAttribute="trailing" id="vTc-bH-0pb"/>
                             <constraint firstItem="Paj-GY-bza" firstAttribute="leading" secondItem="Iq1-FF-bSv" secondAttribute="leading" constant="5" id="xFj-0y-ENy"/>
                             <constraint firstItem="gEK-Sc-wp6" firstAttribute="height" secondItem="wsv-yM-rf4" secondAttribute="height" placeholder="YES" id="xPg-na-SbV"/>
                         </constraints>
@@ -183,6 +194,7 @@
                     </view>
                     <connections>
                         <outlet property="blurView" destination="FEa-yU-EWd" id="cZa-BG-vAb"/>
+                        <outlet property="containerView" destination="6AT-s9-h0O" id="zx7-aX-MDN"/>
                         <outlet property="errorView" destination="FbF-YK-XW2" id="1qN-F7-aWJ"/>
                         <outlet property="gridSlider" destination="5lV-4P-bhf" id="D4k-07-wR9"/>
                         <outlet property="gridView" destination="oyu-qo-hSg" id="NYE-Th-Nud"/>
@@ -192,15 +204,91 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIf-gY-h0P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119.36619718309859" y="75"/>
+            <point key="canvasLocation" x="-86.25" y="75"/>
         </scene>
-        <!--Page View Controller-->
-        <scene sceneID="a8G-K7-Rtm">
+        <!--Puzzle Game View Controller-->
+        <scene sceneID="ebd-zA-QtI">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="h8n-fr-ZVm" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bQS-IA-LAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="puzzleGameVC" id="2j7-PO-zrh" customClass="PuzzleGameViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qYA-AU-jvX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="157-Lr-B7i">
+                                <rect key="frame" x="15" y="30" width="290" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="9Cl-Tm-qA4"/>
+                                    <constraint firstAttribute="height" constant="80" id="soU-72-hbX"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sM2-eu-WF2">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Zba-dj-xdf">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="soU-72-hbX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="soU-72-hbX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="9Cl-Tm-qA4"/>
+                                        <include reference="soU-72-hbX"/>
+                                    </mask>
+                                </variation>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.53333333329999999" green="0.83137254900000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Cyl-1O-K6n" firstAttribute="bottom" secondItem="157-Lr-B7i" secondAttribute="bottom" constant="15" id="35s-ri-hWU"/>
+                            <constraint firstItem="157-Lr-B7i" firstAttribute="top" secondItem="qYA-AU-jvX" secondAttribute="top" constant="30" id="GQw-1b-zgT">
+                                <variation key="heightClass=compact-widthClass=compact" constant="15"/>
+                            </constraint>
+                            <constraint firstItem="157-Lr-B7i" firstAttribute="leading" secondItem="Cyl-1O-K6n" secondAttribute="leading" constant="15" id="VZh-Vl-mPe"/>
+                            <constraint firstItem="Cyl-1O-K6n" firstAttribute="trailing" secondItem="157-Lr-B7i" secondAttribute="trailing" constant="15" id="tfe-K8-13m"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cyl-1O-K6n"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="tfe-K8-13m"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="tfe-K8-13m"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="35s-ri-hWU"/>
+                                <include reference="tfe-K8-13m"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="157-Lr-B7i" id="CEP-Wi-Wtu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F6g-JR-VU1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-780" y="75"/>
+            <point key="canvasLocation" x="1158.75" y="75"/>
         </scene>
     </scenes>
 </document>
