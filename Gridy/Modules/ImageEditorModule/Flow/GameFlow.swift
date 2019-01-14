@@ -1,8 +1,8 @@
 //
-//  GameFlow.swift
+//  ImageEditorFlow.swift
 //  Gridy
 //
-//  Created by Rafal Padberg on 20.12.18.
+//  Created by Rafal Padberg on 12.12.18.
 //  Copyright © 2018 Rafal Padberg. All rights reserved.
 //
 

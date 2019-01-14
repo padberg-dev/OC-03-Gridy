@@ -8,11 +8,13 @@
 
 import Foundation
 
-class IntroVM {
+class IntroViewModel {
     
     private let photosNames = [
         "office", "puppy", "lion", "eiffel", "pizza"
     ]
+    
+    // MARK: - Publuc API
     
     func chooseRandomPhoto() -> String {
         return photosNames.randomElement()!

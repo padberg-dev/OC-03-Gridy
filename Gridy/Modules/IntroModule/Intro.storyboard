@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZyC-cO-ZGp">
-    <device id="retina4_0" orientation="landscape">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,11 +20,11 @@
             <objects>
                 <viewController storyboardIdentifier="IntroVC" id="ZyC-cO-ZGp" customClass="IntroViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ym5-yD-ied">
-                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1p-iz-rEH">
-                                <rect key="frame" x="34" y="10" width="290" height="169"/>
+                                <rect key="frame" x="15" y="30" width="290" height="169"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="KUl-Je-uNu"/>
                                 </constraints>
@@ -33,20 +33,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZo-1d-SkT">
-                                <rect key="frame" x="179.5" y="249" width="209" height="2"/>
+                                <rect key="frame" x="55.5" y="387" width="209" height="2"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="YPQ-4m-6vR"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challange yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URH-ol-Upi">
-                                <rect key="frame" x="34" y="153" width="241.5" height="16.5"/>
+                                <rect key="frame" x="15" y="173" width="241.5" height="16.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR load your own" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K87-BM-BBj">
-                                <rect key="frame" x="194" y="236" width="180" height="24"/>
+                                <rect key="frame" x="70" y="374" width="180" height="24"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="NoL-Cx-Q32"/>
@@ -57,7 +57,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="dcm-KN-Yr2">
-                                <rect key="frame" x="34" y="210" width="500" height="80"/>
+                                <rect key="frame" x="25" y="408" width="270" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gya-16-cCg" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="120" height="80"/>
@@ -72,7 +72,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op2-DK-7Dx" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                        <rect key="frame" x="380" y="0.0" width="120" height="80"/>
+                                        <rect key="frame" x="150" y="0.0" width="120" height="80"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="96O-Af-J5C"/>
@@ -88,7 +88,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" spacing="300"/>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytc-Vk-itk" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                <rect key="frame" x="414" y="54.5" width="120" height="80"/>
+                                <rect key="frame" x="100" y="269" width="120" height="80"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="RRB-Zl-uwJ"/>
@@ -131,15 +131,23 @@
                         <viewLayoutGuide key="safeArea" id="VaP-SR-qtM"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0nn-OI-Ukj"/>
                                 <exclude reference="5NB-h0-qFY"/>
+                                <exclude reference="Xsb-PM-dlz"/>
+                                <exclude reference="jKX-SE-k9p"/>
+                                <exclude reference="zws-1Q-tGb"/>
+                                <exclude reference="qXd-IQ-GQd"/>
                                 <exclude reference="b9T-I5-je8"/>
+                                <exclude reference="rBx-c1-Yin"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="0nn-OI-Ukj"/>
                                 <include reference="5NB-h0-qFY"/>
+                                <include reference="Xsb-PM-dlz"/>
                                 <exclude reference="jKX-SE-k9p"/>
+                                <include reference="zws-1Q-tGb"/>
                                 <exclude reference="qXd-IQ-GQd"/>
                                 <include reference="b9T-I5-je8"/>
                                 <exclude reference="rBx-c1-Yin"/>
@@ -156,16 +164,21 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
+                                <include reference="0nn-OI-Ukj"/>
                                 <exclude reference="5NB-h0-qFY"/>
                                 <exclude reference="Xsb-PM-dlz"/>
+                                <include reference="jKX-SE-k9p"/>
                                 <exclude reference="zws-1Q-tGb"/>
+                                <include reference="qXd-IQ-GQd"/>
                                 <exclude reference="b9T-I5-je8"/>
+                                <include reference="rBx-c1-Yin"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="cameraButton" destination="gya-16-cCg" id="hQe-oP-REl"/>
                         <outlet property="gridyPickButton" destination="ytc-Vk-itk" id="NIt-AX-8AO"/>
+                        <outlet property="haha" destination="WZo-1d-SkT" id="wIx-JR-Ini"/>
                         <outlet property="libraryButton" destination="op2-DK-7Dx" id="FAb-hW-VH5"/>
                     </connections>
                 </viewController>

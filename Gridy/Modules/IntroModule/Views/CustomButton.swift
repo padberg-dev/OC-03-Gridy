@@ -16,7 +16,7 @@ class CustomButton: UIButton {
     @IBOutlet var customTextLabel: UILabel!
     
     override func awakeFromNib() {
-        self.backgroundColor = nil
+        self.backgroundColor = .clear
         self.titleLabel?.text = " "
     }
     
@@ -28,10 +28,10 @@ class CustomButton: UIButton {
         super.init(coder: aDecoder)
     }
 
+    // If asssets does not contain an image with 'imageName' then use it as a label and hide ImageView
     func setUpButton(withText text: String, andImageName imageName: String) {
         Bundle.main.loadNibNamed("CustomButton", owner: self, options: nil)
         customView.frame = self.bounds
-
         customView.layer.cornerRadius = 14.0
 
         customTextLabel.text = text
@@ -43,7 +43,6 @@ class CustomButton: UIButton {
             customBigLabel.isHidden = false
             customBigLabel.text = imageName
         }
-        
         customView.isUserInteractionEnabled = false
         addSubview(customView)
     }

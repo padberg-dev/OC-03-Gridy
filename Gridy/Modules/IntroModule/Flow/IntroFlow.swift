@@ -17,6 +17,6 @@ class IntroFlowController {
     }
     
     func showImageEditor(with image: UIImage) {
-        ImageEditorFactory.pushIn(navigator: navigator, with: image)
+        GameFactory.pushIn(navigator: navigator, with: image)
     }
 }

@@ -25,24 +25,24 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JNi-iQ-Tlp">
-                    <rect key="frame" x="164.5" y="32" width="46" height="36"/>
+                    <rect key="frame" x="52" y="12" width="46" height="36"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="6Mr-tE-f9f"/>
                         <constraint firstAttribute="width" secondItem="JNi-iQ-Tlp" secondAttribute="height" multiplier="9:7" id="Sql-Bj-BuN"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZH-c4-HG9">
-                    <rect key="frame" x="5" y="73" width="365" height="20.5"/>
+                    <rect key="frame" x="5" y="53" width="140" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwX-ei-T6c">
-                    <rect key="frame" x="5" y="32" width="365" height="36"/>
+                    <rect key="frame" x="5" y="12" width="140" height="36"/>
                     <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="34"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -61,6 +61,7 @@
                 <constraint firstItem="JNi-iQ-Tlp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vQM-2a-FBh"/>
                 <constraint firstItem="DZH-c4-HG9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yf1-H0-fgo"/>
             </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="-107" y="-45"/>
         </view>

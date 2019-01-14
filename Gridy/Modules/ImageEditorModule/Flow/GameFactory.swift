@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ImageEditorFactory {
+class GameFactory {
     
     static func pushIn(navigator: UINavigationController, with image: UIImage) {
         
-        let imageEditorController = UIStoryboard(name: "ImageEditor", bundle: nil).instantiateInitialViewController() as! ImageEditorViewController
-        let imageEditorFlowController = ImageEditorFlowController(navigator: navigator)
+        let imageEditorController = UIStoryboard(name: "Game", bundle: nil).instantiateInitialViewController() as! ImageEditorViewController
+        let gameFlowController = GameFlowController(navigator: navigator)
         let viewModel = ImageEditorVM()
         
-        imageEditorController.assignDependencies(flowController: imageEditorFlowController, image: image, viewModel: viewModel)
+        imageEditorController.assignDependencies(flowController: gameFlowController, image: image, viewModel: viewModel)
         
         navigator.pushViewController(imageEditorController, animated: true)
     }

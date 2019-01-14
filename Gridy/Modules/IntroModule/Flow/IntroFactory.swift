@@ -13,16 +13,14 @@ class IntroFactory {
     static func showIn(window: UIWindow) {
         
         let navigationController = UINavigationController()
-        
         navigationController.isNavigationBarHidden = true
         
-        let introController = UIStoryboard(name: "Intro", bundle: nil).instantiateInitialViewController() as! IntroViewController
+        let introViewController = UIStoryboard(name: "Intro", bundle: nil).instantiateInitialViewController() as! IntroViewController
         let introFlowController = IntroFlowController(navigator: navigationController)
-        let introViewModel = IntroVM()
+        let introViewModel = IntroViewModel()
         
-        introController.assignDependencies(flowController: introFlowController, viewModel: introViewModel)
-        
-        navigationController.setViewControllers([introController], animated: false)
+        introViewController.assignDependencies(flowController: introFlowController, viewModel: introViewModel)
+        navigationController.setViewControllers([introViewController], animated: false)
         
         window.rootViewController = navigationController
     }

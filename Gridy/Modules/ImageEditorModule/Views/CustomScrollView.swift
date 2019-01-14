@@ -12,11 +12,11 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Outlets
     
-    @IBOutlet var contentView: UIView!
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet var imageWidthConstraint: NSLayoutConstraint!
-    @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Initializers
     
@@ -35,14 +35,19 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Custom Methods
     
-    func setContentSize() {
+    func setContentSize(toFitInGrid size: CGSize? = nil) {
         if let image = imageView.image {
             let newSize = calculateMinSizeToFit(basedOn: (image.size))
             
             imageWidthConstraint.constant = newSize.width
             imageHeightConstraint.constant = newSize.height
-            
             self.contentSize = newSize
+            
+            if let gridSize = size {
+                let scaleX = round(gridSize.width / newSize.width * 10) / 10
+                let scaleY = round(gridSize.height / newSize.height * 10) / 10
+                minimumZoomScale = max(scaleX, scaleY)
+            }
         }
     }
     
@@ -68,12 +73,6 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - CustomScrollViewRotationDelegate Implementations
     // MARK: - Implementation Variables
-    
-    private enum RotationPoint {
-        case imageCenter
-        case scrollViewCenter
-        case touchCenter
-    }
     
     weak var rotationDelegate: CustomScrollViewRotationDelegate?
     

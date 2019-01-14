@@ -10,48 +10,59 @@ import UIKit
 
 class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    // MARK: - Outlets and Attributes
+    
     @IBOutlet var gridyPickButton: CustomButton!
     @IBOutlet var libraryButton: CustomButton!
     @IBOutlet var cameraButton: CustomButton!
     
+    @IBOutlet var haha: UIView!
+    
     private var flow: IntroFlowController!
-    private var viewModel: IntroVM!
+    private var viewModel: IntroViewModel!
+    
+    // MARK: - View Controller Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Intro View"
         setUpButtons()
     }
     
-    func setUpButtons() {
+    // MARK: - Custom Methods
+    
+    private func setUpButtons() {
         gridyPickButton.setUpButton(withText: "Pick", andImageName: "Gridy")
         libraryButton.setUpButton(withText: "Photo Library", andImageName: "library")
         cameraButton.setUpButton(withText: "Camera", andImageName: "camera")
     }
     
-    func assignDependencies(flowController: IntroFlowController, viewModel: IntroVM) {
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            moveToImageEditorVC(with: selectedImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Navigation Controller Flow
+    
+    func assignDependencies(flowController: IntroFlowController, viewModel: IntroViewModel) {
         self.flow = flowController
         self.viewModel = viewModel
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            moveToNextVC(with: selectedImage)
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func moveToNextVC(with image: UIImage) {
+    private func moveToImageEditorVC(with image: UIImage) {
         flow.showImageEditor(with: image)
     }
+    
+    // MARK: - Action Methods
     
     @IBAction func gridyButtonTapped(_ sender: CustomButton) {
         let imageName = viewModel.chooseRandomPhoto()
         if let image = UIImage(named: imageName) {
-            moveToNextVC(with: image)
+            moveToImageEditorVC(with: image)
         }
     }
     
