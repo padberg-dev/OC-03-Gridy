@@ -17,4 +17,13 @@ extension CGRect {
         newRect.size.height = self.size.height - 1
         return newRect
     }
+    
+    func extendAllSidesBy(_ points: CGFloat) -> CGRect {
+        var newRect = self
+        newRect.size.width = self.width + 2 * points
+        newRect.size.height = self.height + 2 * points
+        newRect.origin.x = self.origin.x - points
+        newRect.origin.y = self.origin.y - points
+        return newRect
+    }
 }

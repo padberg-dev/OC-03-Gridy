@@ -111,7 +111,7 @@ class ImageEditorViewController: UIViewController {
     }
     
     @IBAction func goBack(_ sender: UIButton) {
-        flow.goBack()
+        flow.newGame()
     }
     
     // MARK: - Action Methods

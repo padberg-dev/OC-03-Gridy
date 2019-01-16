@@ -259,10 +259,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yss-Zd-mle">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yss-Zd-mle">
                                 <rect key="frame" x="0.0" y="110" width="320" height="458"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Be-L0-O3C" customClass="PlayfieldCollectionView" customModule="Gridy" customModuleProvider="target">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Be-L0-O3C" customClass="PlayfieldCollectionView" customModule="Gridy" customModuleProvider="target">
                                         <rect key="frame" x="30" y="99" width="260" height="260"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -299,21 +299,81 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJx-Ut-svI" customClass="CustomGridView" customModule="Gridy" customModuleProvider="target">
+                                    <view userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJx-Ut-svI" customClass="CustomGridView" customModule="Gridy" customModuleProvider="target">
                                         <rect key="frame" x="30" y="99" width="260" height="260"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHm-Gy-Z6A">
+                                        <rect key="frame" x="240" y="373" width="65" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="65" id="P1n-8J-sen"/>
+                                        </constraints>
+                                        <state key="normal" title="Preview">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="previewButtonTapped:" destination="2j7-PO-zrh" eventType="touchUpInside" id="vwi-0N-5DT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Omx-3j-9CV">
+                                        <rect key="frame" x="175" y="373" width="45" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="boi-5O-hTa"/>
+                                        </constraints>
+                                        <state key="normal" title="Help">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="helpButtonTapped:" destination="2j7-PO-zrh" eventType="touchUpInside" id="FRV-qF-uji"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enW-cv-Rk0">
+                                        <rect key="frame" x="15" y="408" width="90" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="odc-rD-gUH"/>
+                                            <constraint firstAttribute="width" constant="90" id="uVz-8Y-fjJ"/>
+                                        </constraints>
+                                        <state key="normal" title="New Game">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="newGameButtonTapped:" destination="2j7-PO-zrh" eventType="touchUpInside" id="iM4-9u-yGT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pi0-6H-qIU">
+                                        <rect key="frame" x="245" y="408" width="60" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="z1A-le-Ijd"/>
+                                        </constraints>
+                                        <state key="normal" title="Check">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="checkPuzzleButtonTapped:" destination="2j7-PO-zrh" eventType="touchUpInside" id="tVL-Jo-xOT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="enW-cv-Rk0" secondAttribute="bottom" constant="20" id="09y-uV-yWk"/>
+                                    <constraint firstItem="yHm-Gy-Z6A" firstAttribute="leading" secondItem="Omx-3j-9CV" secondAttribute="trailing" constant="20" id="1jZ-PK-lcT"/>
+                                    <constraint firstAttribute="trailing" secondItem="pi0-6H-qIU" secondAttribute="trailing" constant="15" id="D5f-YG-Aot"/>
                                     <constraint firstItem="wJx-Ut-svI" firstAttribute="height" secondItem="6Be-L0-O3C" secondAttribute="height" id="E1X-qA-3mp"/>
+                                    <constraint firstItem="yHm-Gy-Z6A" firstAttribute="top" secondItem="Omx-3j-9CV" secondAttribute="bottom" constant="5" id="ELW-O2-5Pe"/>
+                                    <constraint firstItem="enW-cv-Rk0" firstAttribute="leading" secondItem="yss-Zd-mle" secondAttribute="leading" constant="15" id="Fc0-Zr-vaT"/>
+                                    <constraint firstItem="pi0-6H-qIU" firstAttribute="top" secondItem="yHm-Gy-Z6A" secondAttribute="bottom" constant="5" id="GFb-nZ-V6i"/>
                                     <constraint firstAttribute="trailing" secondItem="6Be-L0-O3C" secondAttribute="trailing" constant="30" id="Hyu-4R-Mth"/>
+                                    <constraint firstAttribute="trailing" secondItem="Omx-3j-9CV" secondAttribute="trailing" constant="15" id="IrC-9g-bdX"/>
                                     <constraint firstItem="6Be-L0-O3C" firstAttribute="centerX" secondItem="yss-Zd-mle" secondAttribute="centerX" id="KA8-Mf-5w0"/>
                                     <constraint firstItem="wJx-Ut-svI" firstAttribute="centerY" secondItem="yss-Zd-mle" secondAttribute="centerY" id="Ka3-E1-emU"/>
                                     <constraint firstItem="wJx-Ut-svI" firstAttribute="centerX" secondItem="yss-Zd-mle" secondAttribute="centerX" id="LSA-Sj-AeR"/>
+                                    <constraint firstItem="enW-cv-Rk0" firstAttribute="leading" secondItem="yss-Zd-mle" secondAttribute="leading" constant="10" id="Q1p-hl-LNp"/>
                                     <constraint firstItem="wJx-Ut-svI" firstAttribute="width" secondItem="6Be-L0-O3C" secondAttribute="width" id="QeH-6m-qet"/>
+                                    <constraint firstItem="Omx-3j-9CV" firstAttribute="centerY" secondItem="yHm-Gy-Z6A" secondAttribute="centerY" id="Yhq-iJ-1jb"/>
                                     <constraint firstAttribute="bottom" secondItem="6Be-L0-O3C" secondAttribute="bottom" constant="30" id="aJ9-v7-trw"/>
+                                    <constraint firstAttribute="trailing" secondItem="yHm-Gy-Z6A" secondAttribute="trailing" constant="15" id="hbR-hs-Qqq"/>
                                     <constraint firstItem="6Be-L0-O3C" firstAttribute="centerY" secondItem="yss-Zd-mle" secondAttribute="centerY" id="lev-Tt-LBH"/>
+                                    <constraint firstAttribute="bottom" secondItem="pi0-6H-qIU" secondAttribute="bottom" constant="20" id="n31-za-QG0"/>
                                     <constraint firstItem="6Be-L0-O3C" firstAttribute="top" secondItem="yss-Zd-mle" secondAttribute="top" constant="30" id="pit-1h-NO8"/>
                                     <constraint firstItem="6Be-L0-O3C" firstAttribute="leading" secondItem="yss-Zd-mle" secondAttribute="leading" constant="30" id="u08-0e-33E"/>
                                 </constraints>
@@ -323,6 +383,12 @@
                                         <exclude reference="aJ9-v7-trw"/>
                                         <exclude reference="pit-1h-NO8"/>
                                         <exclude reference="u08-0e-33E"/>
+                                        <exclude reference="Fc0-Zr-vaT"/>
+                                        <exclude reference="Q1p-hl-LNp"/>
+                                        <exclude reference="IrC-9g-bdX"/>
+                                        <exclude reference="Yhq-iJ-1jb"/>
+                                        <exclude reference="1jZ-PK-lcT"/>
+                                        <exclude reference="ELW-O2-5Pe"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
@@ -331,6 +397,12 @@
                                         <include reference="aJ9-v7-trw"/>
                                         <include reference="pit-1h-NO8"/>
                                         <exclude reference="u08-0e-33E"/>
+                                        <exclude reference="Fc0-Zr-vaT"/>
+                                        <include reference="Q1p-hl-LNp"/>
+                                        <include reference="IrC-9g-bdX"/>
+                                        <exclude reference="Yhq-iJ-1jb"/>
+                                        <exclude reference="1jZ-PK-lcT"/>
+                                        <include reference="ELW-O2-5Pe"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -339,6 +411,12 @@
                                         <exclude reference="aJ9-v7-trw"/>
                                         <exclude reference="pit-1h-NO8"/>
                                         <include reference="u08-0e-33E"/>
+                                        <include reference="Fc0-Zr-vaT"/>
+                                        <exclude reference="Q1p-hl-LNp"/>
+                                        <exclude reference="IrC-9g-bdX"/>
+                                        <include reference="Yhq-iJ-1jb"/>
+                                        <include reference="1jZ-PK-lcT"/>
+                                        <exclude reference="ELW-O2-5Pe"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -396,28 +474,6 @@
                                     </mask>
                                 </variation>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enW-cv-Rk0">
-                                <rect key="frame" x="20" y="518" width="50" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="odc-rD-gUH"/>
-                                    <constraint firstAttribute="width" constant="50" id="qBf-Mx-MgW"/>
-                                </constraints>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="backButtonTapped:" destination="2j7-PO-zrh" eventType="touchUpInside" id="l1h-xK-54D"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pi0-6H-qIU">
-                                <rect key="frame" x="256" y="518" width="44" height="30"/>
-                                <state key="normal" title="Check">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="checkPuzzle:" destination="2j7-PO-zrh" eventType="touchUpInside" id="nBO-0M-sQj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.53333333329999999" green="0.83137254900000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -425,15 +481,11 @@
                             <constraint firstItem="157-Lr-B7i" firstAttribute="top" secondItem="qYA-AU-jvX" secondAttribute="top" constant="30" id="GQw-1b-zgT">
                                 <variation key="heightClass=compact-widthClass=compact" constant="15"/>
                             </constraint>
-                            <constraint firstItem="Cyl-1O-K6n" firstAttribute="bottom" secondItem="enW-cv-Rk0" secondAttribute="bottom" constant="20" id="RIv-BQ-xQc"/>
                             <constraint firstItem="157-Lr-B7i" firstAttribute="leading" secondItem="Cyl-1O-K6n" secondAttribute="leading" constant="15" id="VZh-Vl-mPe"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="leading" secondItem="Cyl-1O-K6n" secondAttribute="leading" id="ZvH-1K-MCr"/>
-                            <constraint firstItem="enW-cv-Rk0" firstAttribute="leading" secondItem="Cyl-1O-K6n" secondAttribute="leading" constant="20" id="aDB-Ut-Fqq"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="leading" secondItem="157-Lr-B7i" secondAttribute="trailing" id="gE4-IR-nbg"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="bottom" secondItem="Cyl-1O-K6n" secondAttribute="bottom" id="h8b-u3-Wz1"/>
-                            <constraint firstItem="Cyl-1O-K6n" firstAttribute="bottom" secondItem="pi0-6H-qIU" secondAttribute="bottom" constant="20" id="jdm-5Q-O28"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="trailing" secondItem="Cyl-1O-K6n" secondAttribute="trailing" id="lVU-Ko-eFs"/>
-                            <constraint firstItem="Cyl-1O-K6n" firstAttribute="trailing" secondItem="pi0-6H-qIU" secondAttribute="trailing" constant="20" id="n9i-hc-pjS"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="top" secondItem="Cyl-1O-K6n" secondAttribute="top" id="nGD-HD-HNq"/>
                             <constraint firstItem="yss-Zd-mle" firstAttribute="top" secondItem="157-Lr-B7i" secondAttribute="bottom" id="nVi-90-mUK"/>
                             <constraint firstItem="Cyl-1O-K6n" firstAttribute="trailing" secondItem="157-Lr-B7i" secondAttribute="trailing" constant="15" id="tfe-K8-13m"/>
@@ -469,11 +521,16 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="checkPuzzleButton" destination="pi0-6H-qIU" id="oL8-J1-lld"/>
                         <outlet property="collectionView" destination="157-Lr-B7i" id="CEP-Wi-Wtu"/>
                         <outlet property="collectionViewHeightConstraint" destination="soU-72-hbX" id="LKd-dZ-xYW"/>
                         <outlet property="collectionViewWidthConstraint" destination="9Cl-Tm-qA4" id="vcW-px-Pnm"/>
+                        <outlet property="containerView" destination="yss-Zd-mle" id="flB-su-Roz"/>
+                        <outlet property="helpButton" destination="Omx-3j-9CV" id="Vd3-0H-Iod"/>
+                        <outlet property="newGameButton" destination="enW-cv-Rk0" id="TKI-hP-Y2m"/>
                         <outlet property="playfieldCollectionView" destination="6Be-L0-O3C" id="52y-XO-cHr"/>
                         <outlet property="playfieldGridView" destination="wJx-Ut-svI" id="2bh-ge-sCr"/>
+                        <outlet property="previewButton" destination="yHm-Gy-Z6A" id="dsd-sU-tSg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6g-JR-VU1" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -41,10 +41,8 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            print("GO")
             moveToImageEditorVC(with: selectedImage)
         }
-        print("DISMISS")
         dismiss(animated: true, completion: nil)
     }
     
@@ -88,8 +86,6 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
             imagePicker.delegate = self
             
             self.present(imagePicker, animated: true, completion: nil)
-        } else {
-            print("DENIED")
         }
     }
 }

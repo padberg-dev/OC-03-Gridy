@@ -22,6 +22,10 @@ extension UIView {
         }
     }
     
+    func roundEdges(by points: CGFloat) {
+        self.layer.cornerRadius = points
+    }
+    
     func animateAlpha(toValue: CGFloat = 1) {
         UIView.animate(withDuration: 0.4) {
             self.alpha = toValue
@@ -80,10 +84,8 @@ extension UIView {
     }
     
     func createArrow(view: inout ArrowView?, from startingPoint: CGPoint) {
-        if view == nil {
-            view = ArrowView(frame: CGRect(origin: startingPoint, size: .zero))
-            self.addSubview(view!)
-        }
+        view = ArrowView(frame: CGRect(origin: startingPoint, size: .zero))
+        self.addSubview(view!)
     }
     
     func moveImages(from startCollectionView: UICollectionView, with startIndex: Int, to endCollectionView: UICollectionView, with endIndex: Int) {

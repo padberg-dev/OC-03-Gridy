@@ -17,6 +17,12 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var playfieldCollectionView: PlayfieldCollectionView!
     @IBOutlet weak var playfieldGridView: CustomGridView!
+    @IBOutlet weak var containerView: UIView!
+    
+    @IBOutlet weak var newGameButton: UIButton!
+    @IBOutlet weak var helpButton: UIButton!
+    @IBOutlet weak var previewButton: UIButton!
+    @IBOutlet weak var checkPuzzleButton: UIButton!
     
     // MARK: - Attributes
     
@@ -28,22 +34,9 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     var imageTiles: [UIImageView] = []
     var collectionViewLayout: UICollectionViewFlowLayout!
     
-//    var startingPoint: CGPoint = .zero
-//    var showView: ArrowView?
-    var movingImageIndex: IndexPath?
-//    var lastItemIndex: IndexPath?
-//
-//    var panGesture: UIPanGestureRecognizer! {
-//        didSet {
-//            self.view.addGestureRecognizer(panGesture)
-//        }
-//    }
-    
-    // ------------
-    
     var panGesture: UIPanGestureRecognizer! {
         didSet {
-            self.view.addGestureRecognizer(panGesture)
+            self.collectionView.addGestureRecognizer(panGesture)
         }
     }
     var startingPoint: CGPoint = .zero
@@ -54,186 +47,9 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     var gridIndexOld: Int?
+    var allowDraging: Bool = false
     
     var showView: ArrowView?
-    
-        private func killArrowView() {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.showView?.alpha = 0
-            }) { [weak self] _ in
-                self?.showView?.removeFromSuperview()
-                self?.showView = nil
-            }
-        }
-    // ------
-    
-    @objc func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
-        switch panRecognizer.state {
-        case .began:
-            break
-        case .cancelled:
-            break
-        case .changed:
-            let movePoint = panRecognizer.location(in: view)
-            showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: movePoint)
-            
-            if gridIndexOld != nil { playfieldCollectionView.cellFromItem(gridIndexOld!)?.clearHighlight() }
-            
-            if let index = playfieldCollectionView.getGridItem(of: movePoint) {
-                playfieldCollectionView.cellFromItem(index)?.highlight()
-                gridIndexOld = index
-            } else {
-                gridIndexOld = nil
-            }
-        case .ended:
-            killArrowView()
-            
-            if gridIndexOld != nil {
-                playfieldCollectionView.cellFromItem(gridIndexOld!)?.clearHighlight()
-                print("MOVE")
-                view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
-            }
-        case .failed:
-            print("FAILED")
-        case . possible:
-            print("POSIBLE")
-        }
-    }
-    
-    // MARK: - Gesture Recognizer
-    /*
-    @objc func handlePan(byReactingTo gestureRecognizer: UIPanGestureRecognizer) {
-        if allowDraging || isDraging {
-            switch gestureRecognizer.state {
-            case .began:
-                print("BEGAN")
-                allowDraging = false
-                isDraging = true
-                
-                startingPoint = gestureRecognizer.location(in: view)
-                print(startingPoint)
-                
-                if showView == nil {
-                    showView = ArrowView(frame: CGRect(origin: startingPoint, size: .zero))
-                    showView?.contentMode = .redraw
-                    showView?.backgroundColor = .clear
-                    view.addSubview(showView!)
-                }
-                collectionView.isScrollEnabled = false
-            case .cancelled:
-                print("CANCELLED")
-            case .changed:
-                let movePoint = gestureRecognizer.location(in: view)
-                let differencePoint = CGPoint(x: movePoint.x - startingPoint.x, y: movePoint.y - startingPoint.y)
-                
-                showView?.frame.size = CGSize(width: abs(differencePoint.x), height: abs(differencePoint.y))
-                let negX = differencePoint.x < 0
-                let negY = differencePoint.y < 0
-                
-                showView?.negativeX = negX
-                showView?.negativeY = negY
-                if negX { showView?.frame.origin.x = movePoint.x }
-                if negY { showView?.frame.origin.y = movePoint.y }
-                
-                
-                let point = gestureRecognizer.location(in: playfieldCollectionView)
-                let index = playfieldCollectionView.indexPathForItem(at: point)
-                if index?.item != nil {
-                    
-                    if lastItemIndex != index && lastItemIndex != nil {
-                        print("YES")
-                        let cell = playfieldCollectionView.cellForItem(at: lastItemIndex!)
-                        cell!.alpha = 1
-                    }
-                    
-                    let cell = playfieldCollectionView.cellForItem(at: index!)
-                    cell?.alpha = 0.5
-                    lastItemIndex = index
-                }
-            case .ended:
-                print("ENDED")
-                allowDraging = false
-                isDraging = false
-                
-                let point = gestureRecognizer.location(in: playfieldCollectionView)
-                print(point)
-                
-                let index = playfieldCollectionView.indexPathForItem(at: point)
-                
-                (view.subviews.last)?.removeFromSuperview()
-                showView = nil
-                
-                if index != nil && movingImageIndex != nil {
-//                    movePicture(with: index!, and: movingImageIndex!)
-                    view.moveImages(from: collectionView, with: (index?.item)!, to: playfieldCollectionView, with: (movingImageIndex?.item)!)
-                }
-                collectionView.isScrollEnabled = true
-                
-                movingImageIndex = nil
-            case .failed:
-                print("FAILED")
-            case . possible:
-                print("POSIBLE")
-            }
-        }
-    }
-    **/
-    
-    @objc func handlePlayfieldPan(byReactingTo gestureRecognizer: UIPanGestureRecognizer) {
-        
-    }
-    /*
-    private func movePicture(with indexPath: IndexPath, and oldIndex: IndexPath) {
-        let oldCell = collectionView.cellForItem(at: oldIndex) as? CustomCollectionViewCell
-        let newCell = playfieldCollectionView.cellForItem(at: indexPath) as? CustomCollectionViewCell
-        newCell?.alpha = 1
-        
-        let hasImage = newCell?.hasImage
-        
-        print(hasImage)
-        
-        let startPoint = collectionView.convert(oldCell!.frame.origin, to: view)
-        let endPoint = playfieldCollectionView.convert(newCell!.frame.origin, to: view)
-        
-        let newImage = imageTiles.remove(at: movingImageIndex!.item)
-        collectionView.deleteItems(at: [movingImageIndex!])
-        collectionView.reloadData()
-        
-        let oldImage = hasImage! ? UIImageView(image: newCell?.imageView.image!) : nil
-        
-        let newImageView = UIView(frame: CGRect(origin: startPoint, size: oldCell!.frame.size))
-        newImageView.addSubview(newImage)
-        view.addSubview(newImageView)
-        
-        let oldImageView = UIView(frame: CGRect(origin: endPoint, size: newCell!.frame.size))
-        
-        if hasImage! {
-            oldImageView.addSubview(oldImage!)
-            view.addSubview(oldImageView)
-        }
-        
-        UIView.animate(withDuration: 0.6, animations: {
-            newImageView.frame.origin = endPoint
-
-            if hasImage! {
-                oldImageView.frame.origin = startPoint
-            }
-        }) { [weak self] _ in
-            newCell?.imageView.image = newImage.image
-            newCell?.hasImage = true
-
-            if hasImage! {
-                self?.imageTiles.insert(oldImage!, at: oldIndex.item)
-                self?.collectionView.insertItems(at: [oldIndex])
-
-                oldImageView.removeFromSuperview()
-            }
-            newImageView.removeFromSuperview()
-        }
-    }
-    */
-    var allowDraging: Bool = false
-    var isDraging: Bool = false
     
     // MARK: - View Controller Life Cycle
     
@@ -243,6 +59,53 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         view.backgroundColor = StyleGuide.greenLight
         setUpCollectionViews()
         setUpGestureRecognizers()
+        styleButtons()
+    }
+    
+    // MARK: - Gesture Recognizer
+    
+    @objc private func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
+        if !allowDraging { return }
+        
+        switch panRecognizer.state {
+        case .began:
+            break
+        case .cancelled:
+            break
+        case .changed:
+            let movePoint = panRecognizer.location(in: view)
+            let movePointConverted = view.convert(movePoint, to: playfieldCollectionView)
+            
+            showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: movePoint)
+            
+            if gridIndexOld != nil { playfieldCollectionView.cellFromItem(gridIndexOld!)?.clearHighlight() }
+            
+            if let index = playfieldCollectionView.getGridItem(of: movePointConverted) {
+                playfieldCollectionView.cellFromItem(index)?.highlight()
+                gridIndexOld = index
+            } else {
+                gridIndexOld = nil
+            }
+        case .ended:
+            showView?.kill()
+            allowDraging = false
+            
+            if gridIndexOld != nil {
+                let cell = (playfieldCollectionView.cellFromItem(gridIndexOld!) as? CustomCollectionViewCell)!
+                cell.clearHighlight()
+                
+                view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
+                
+                if !cell.hasImage {
+                    imageTiles.remove(at: startingGridIndex!)
+                    collectionView.deleteItems(at: [IndexPath(item: startingGridIndex!, section: 0)])
+                }
+            }
+        case .failed:
+            print("FAILED")
+        case . possible:
+            print("POSIBLE")
+        }
     }
     
     // MARK: - Custom Methods
@@ -267,6 +130,35 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(byReactingTo:)))
         
         playfieldCollectionView.panGesture = UIPanGestureRecognizer(target: playfieldCollectionView, action: #selector(handlePan(byReactingTo:)))
+    }
+    
+    private func styleButtons() {
+        newGameButton.styleSelectButton()
+        previewButton.styleSelectButton()
+        checkPuzzleButton.styleSelectButton()
+        helpButton.styleSelectButton()
+    }
+    
+    private func getCellsWithImages() -> [CustomCollectionViewCell] {
+        let allCells = playfieldCollectionView.visibleCells.filter { (cell) -> Bool in
+            if let image = ((cell as? CustomCollectionViewCell)?.imageView.image) as? GridImage {
+                if image.row != nil {
+                    return true
+                }
+            }
+            return false
+        }
+        return (allCells as? [CustomCollectionViewCell]) ?? []
+    }
+    
+    private func checkIfPuzzleSolved() -> Bool {
+        let allCells = getCellsWithImages()
+        let count = viewModel.getNumberOfTiles()
+        
+        if allCells.count == count {
+            return viewModel.checkIfPuzzleSolved(cells: allCells)
+        }
+        return false
     }
     
     // MARK: - Layout Change Events
@@ -303,13 +195,10 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.highlight()
         
-        collectionView.isUserInteractionEnabled = false
         allowDraging = true
-        
-//        ??
         startingGridIndex = indexPath.item
         
-        movingImageIndex = indexPath
+        collectionView.isUserInteractionEnabled = false
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
@@ -317,7 +206,6 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         cell?.layer.borderWidth = 0
         
         collectionView.isUserInteractionEnabled = true
-        allowDraging = false
     }
     
     // MARK: - Custom Public Mehtods
@@ -342,30 +230,73 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     func preparePlayfield() {
         playfieldCollectionView.prepareGridFor(tilesPerRow: CGFloat(viewModel.getNumberOfRows()))
         playfieldGridView.setNumberOf(tiles: viewModel.getNumberOfRows())
-        playfieldGridView.animateAlpha(toValue: 0.4)
+        containerView.animateAlpha(toValue: 1)
     }
     
     // MARK: - Action Methods
     
-    @IBAction func backButtonTapped(_ sender: UIButton) {
-        flow.goBack()
+    @IBAction func newGameButtonTapped(_ sender: UIButton) {
+        flow.newGame()
     }
     
-    @IBAction func checkPuzzle(_ sender: UIButton) {
-        let allCells = playfieldCollectionView.visibleCells.filter { (cell) -> Bool in
-            if let image = ((cell as? CustomCollectionViewCell)?.imageView.image) as? GridImage {
-                if image.row != nil {
-                    return true
-                }
+    // TUTAJ JESZCZE NIE SKOŃCZONE
+    @IBAction func helpButtonTapped(_ sender: UIButton) {
+        let cells = getCellsWithImages()
+        if cells.count > 1 {
+            if viewModel.checkIfPuzzleSolved(cells: cells) {
+                
             }
-            return false
+        } else {
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
+            let cell = collectionView.cellFromItem(0) as? CustomCollectionViewCell
+            if let image = cell?.imageView.image as? GridImage {
+                
+                let endCellIndex = viewModel.convertToIntFrom(row: image.row!, column: image.column!)
+                startingGridIndex = 0
+                let endPoint = playfieldCollectionView.getMiddlePointOf(cell: endCellIndex)
+                let convertedPoint = playfieldCollectionView.convert(endPoint!, to: view)
+                showView?.alpha = 0
+                showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: convertedPoint)
+                showView?.animateAlpha()
+            }
         }
-        let count = viewModel.getNumberOfTiles()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.showView?.kill()
+        }
+    }
+    
+    // TUTAJ JESZCZE NIE SKOŃCZONE
+    @IBAction func previewButtonTapped(_ sender: UIButton) {
+        let newView = UIView(frame: playfieldGridView.frame.extendAllSidesBy(25))
+        newView.backgroundColor = StyleGuide.yellowLight
+        newView.roundEdges(by: 15)
         
-        if allCells.count == count {
-            if let cells = allCells as? [CustomCollectionViewCell] {
-                print(viewModel.checkIfPuzzleSolved(cells: cells))
-            }
+        containerView.addSubview(newView)
+        
+        let stackView = viewModel.createImageStackView(ofSize: CGRect(origin: CGPoint(x: 25, y: 25), size: playfieldGridView.frame.size))
+        newView.addSubview(stackView)
+        
+        let progressBar = UIProgressView(frame: CGRect(origin: CGPoint(x: 25, y: 20), size: CGSize(width: stackView.frame.width, height: 2)))
+        progressBar.trackTintColor = .clear
+        progressBar.tintColor = StyleGuide.navy
+        newView.addSubview(progressBar)
+        
+        UIView.animate(withDuration: 2.0) {
+            progressBar.setProgress(1, animated: true)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            newView.removeFromSuperview()
+        }
+    }
+    
+    @IBAction func checkPuzzleButtonTapped(_ sender: UIButton) {
+        let color: UIColor = checkIfPuzzleSolved() ? UIColor.green : UIColor.red
+        
+        view.backgroundColor = color
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.view.backgroundColor = StyleGuide.greenLight
         }
     }
 }

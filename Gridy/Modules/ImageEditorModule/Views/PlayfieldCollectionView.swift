@@ -30,7 +30,7 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     // MARK: - Gesture Recognizer Methods
     
-    @objc func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
+    @objc private func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
         switch panRecognizer.state {
         case .began:
             break
@@ -49,35 +49,16 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
                 gridIndexOld = nil
             }
         case .ended:
-            killArrowView()
+            showView?.kill()
             
             if gridIndexOld != nil {
                 cellFromItem(gridIndexOld!)?.clearHighlight()
-                print("MOVE")
                 moveImages(from: self, with: startingGridIndex, to: self, with: gridIndexOld!)
             }
         case .failed:
             print("FAILED")
         case . possible:
             print("POSIBLE")
-        }
-    }
-    
-    // MARK: Custom Methods
-    
-//    private func createArrowView() {
-//        if showView == nil {
-//            showView = ArrowView(frame: CGRect(origin: startingPoint, size: .zero))
-//            self.addSubview(showView!)
-//        }
-//    }
-    
-    private func killArrowView() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.showView?.alpha = 0
-        }) { [weak self] _ in
-            self?.showView?.removeFromSuperview()
-            self?.showView = nil
         }
     }
     

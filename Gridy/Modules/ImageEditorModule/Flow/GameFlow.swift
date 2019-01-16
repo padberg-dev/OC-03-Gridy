@@ -16,7 +16,7 @@ class GameFlowController {
         self.navigator = navigator
     }
     
-    func goBack() {
+    func newGame() {
         navigator.popViewController(animated: true)
     }
 }

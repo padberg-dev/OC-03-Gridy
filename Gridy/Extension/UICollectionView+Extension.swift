@@ -9,9 +9,6 @@
 import UIKit
 
 extension UICollectionView {
-    func roundEdges(by points: CGFloat) {
-        self.layer.cornerRadius = points
-    }
     
     func getGridItem(of point: CGPoint) -> Int? {
         let index = self.indexPathForItem(at: point)

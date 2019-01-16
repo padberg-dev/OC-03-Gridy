@@ -74,10 +74,6 @@ class ImageEditorVM {
         return (row, column)
     }
     
-    func convertToIntFrom(row: Int, column: Int) -> Int {
-        return tilesPerRow * row + column
-    }
-    
     func getTileSize() -> CGSize {
         if imageTiles.count > 0 {
             return imageTiles[0].size
@@ -96,13 +92,21 @@ class ImageEditorVM {
     func checkIfPuzzleSolved(cells array: [CustomCollectionViewCell]) -> Bool {
         var error = false
         for cell in array {
-            if let image = cell.imageView.image as? GridImage {
-                if cell.index != convertToIntFrom(row: image.row, column: image.column) {
-                    error = true
-                }
-            }
+            error = !checkIfCellIsInRightPlace(cell)
         }
         return !error
     }
     
+    func checkIfCellIsInRightPlace(_ cell: CustomCollectionViewCell) -> Bool {
+        if let image = cell.imageView.image as? GridImage {
+            if cell.index == convertToIntFrom(row: image.row, column: image.column) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func convertToIntFrom(row: Int, column: Int) -> Int {
+        return tilesPerRow * row + column
+    }
 }
