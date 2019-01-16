@@ -239,28 +239,27 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         flow.newGame()
     }
     
-    // TUTAJ JESZCZE NIE SKOŃCZONE
     @IBAction func helpButtonTapped(_ sender: UIButton) {
         let cells = getCellsWithImages()
         if cells.count > 1 {
             if viewModel.checkIfPuzzleSolved(cells: cells) {
                 
             }
-        } else {
-            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
-            let cell = collectionView.cellFromItem(0) as? CustomCollectionViewCell
-            if let image = cell?.imageView.image as? GridImage {
-                
-                let endCellIndex = viewModel.convertToIntFrom(row: image.row!, column: image.column!)
-                startingGridIndex = 0
-                let endPoint = playfieldCollectionView.getMiddlePointOf(cell: endCellIndex)
-                let convertedPoint = playfieldCollectionView.convert(endPoint!, to: view)
-                showView?.alpha = 0
-                showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: convertedPoint)
-                showView?.animateAlpha()
-            }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
+        let cell = collectionView.cellFromItem(0) as? CustomCollectionViewCell
+        if let image = cell?.imageView.image as? GridImage {
+            
+            let endCellIndex = viewModel.convertToIntFrom(row: image.row!, column: image.column!)
+            startingGridIndex = 0
+            let endPoint = playfieldCollectionView.getMiddlePointOf(cell: endCellIndex)
+            let convertedPoint = playfieldCollectionView.convert(endPoint!, to: view)
+            showView?.alpha = 0
+            showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: convertedPoint)
+            showView?.animateAlpha()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showView?.kill()
         }
     }
