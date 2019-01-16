@@ -10,7 +10,7 @@ import UIKit
 
 class ImageEditorViewController: UIViewController {
     
-    // MARK: - Outlets and Attributes
+    // MARK: - Outlets
     
     @IBOutlet weak var scrollView: CustomScrollView!
     @IBOutlet weak var blurView: UIVisualEffectView!
@@ -18,18 +18,16 @@ class ImageEditorViewController: UIViewController {
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
-    
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var gridSlider: UISlider!
     
+    // MARK: - Attributes
+    
     private var flow: GameFlowController!
     private var viewModel: ImageEditorVM!
-    
     private var gameVC: PuzzleGameViewController!
-    
     private var bigStackView: UIStackView = UIStackView()
     private var blockAutoration: Bool = false
-    
     private var photoImage: UIImage!
     
     // MARK: - View Controller Life Cycle
@@ -124,15 +122,12 @@ class ImageEditorViewController: UIViewController {
                 if let croppedImage = Utilities.cropImage(snapshotImage, to: gridView.frame) {
                     
                     viewModel.sliceTheImage(croppedImage, into: gridView.getNumberOfTiles())
-                    
                     gameVC.changeCellSize(to: viewModel.getTileSize())
-                    view.hideAllUI()
                     
+                    view.hideAllUI()
                     bigStackView = viewModel.createImageStackView(ofSize: gridView.frame)
                     view.addSubview(bigStackView)
-                    
                     animateStackViews()
-                    
                     moveContainerViewIntoScreen()
                     blockAutoration = true
                 }
@@ -183,7 +178,7 @@ class ImageEditorViewController: UIViewController {
                 newView.frame.origin = position
             }, completion: { [weak self] _ in
                 newView.isHidden = true
-                self?.gameVC.insert((newView.subviews[0] as? UIImageView)!)
+                self?.gameVC.insertIntoCollectionView((newView.subviews[0] as? UIImageView)!)
                 
                 if i == numberOfTiles - 1 {
                     self?.cleanUIAfterAnimation()
@@ -193,7 +188,7 @@ class ImageEditorViewController: UIViewController {
     }
     
     private func cleanUIAfterAnimation() {
-        gameVC.prepareGrid()
+        gameVC.preparePlayfield()
         blockAutoration = false
         bigStackView.isHidden = true
         

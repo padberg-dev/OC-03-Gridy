@@ -93,7 +93,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="3" maxValue="9" translatesAutoresizingMaskIntoConstraints="NO" id="5lV-4P-bhf">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="3" maxValue="9" translatesAutoresizingMaskIntoConstraints="NO" id="5lV-4P-bhf">
                                 <rect key="frame" x="78" y="94.5" width="164" height="31"/>
                                 <connections>
                                     <action selector="gridSliderChanged:" destination="gVS-aK-b8D" eventType="valueChanged" id="osD-9Z-gSJ"/>

@@ -11,13 +11,10 @@ import UIKit
 extension UIScrollView {
     
     func changeInsets(with zeroPoint: CGPoint) {
-        let oldOffset = contentOffset
         let scale = zoomScale
     
         contentInset = UIEdgeInsets(top: -zeroPoint.y, left: -zeroPoint.x, bottom: -zeroPoint.y, right: -zeroPoint.x)
         contentInset.rescaleBy(scale)
-    
-//        contentOffset = oldOffset
     }
     
     func extendInsets(to frame: CGRect) {

@@ -14,7 +14,6 @@ class CustomScrollView: UIScrollView {
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
@@ -86,7 +85,7 @@ class CustomScrollView: UIScrollView {
     var isRotationEnabled: Bool {
         set {
             if newValue {
-                rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(rotationRecognizer:)))
+                rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(byReactingTo:)))
                 self.addGestureRecognizer(rotationGestureRecognizer!)
             } else {
                 self.gestureRecognizers?.removeAll()
@@ -100,7 +99,7 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Implementation Methods
     
-    @objc private func handleRotation(rotationRecognizer: UIRotationGestureRecognizer) {
+    @objc private func handleRotation(byReactingTo rotationRecognizer: UIRotationGestureRecognizer) {
         if let rotatingView = rotationDelegate?.viewForRotation(in: self) {
             
             if isZooming { return }

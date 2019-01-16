@@ -22,6 +22,12 @@ extension UIView {
         }
     }
     
+    func animateAlpha(toValue: CGFloat = 1) {
+        UIView.animate(withDuration: 0.4) {
+            self.alpha = toValue
+        }
+    }
+    
     func maskView(withHole frame: CGRect) {
         let maskLayer = CAShapeLayer()
         maskLayer.frame = self.bounds
@@ -71,5 +77,65 @@ extension UIView {
         newView.addSubview(imageView)
         
         return newView
+    }
+    
+    func createArrow(view: inout ArrowView?, from startingPoint: CGPoint) {
+        if view == nil {
+            view = ArrowView(frame: CGRect(origin: startingPoint, size: .zero))
+            self.addSubview(view!)
+        }
+    }
+    
+    func moveImages(from startCollectionView: UICollectionView, with startIndex: Int, to endCollectionView: UICollectionView, with endIndex: Int) {
+        guard let startCell = startCollectionView.cellFromItem(startIndex) as? CustomCollectionViewCell else { fatalError("!!!") }
+        guard let endCell = endCollectionView.cellFromItem(endIndex) as? CustomCollectionViewCell else { fatalError("!!!") }
+        
+        let imageSize = startCell.frame.size
+        
+        let startHasImage = startCell.hasImage
+        let endHasImage = endCell.hasImage
+        
+        let startPoint = startCollectionView.convert(startCell.frame.origin, to: self)
+        let endPoint = endCollectionView.convert(endCell.frame.origin, to: self)
+        
+        let startImage = startCell.hasImage ? UIImageView(image: startCell.imageView.image!) : nil
+        let endImage = endCell.hasImage ? UIImageView(image: endCell.imageView.image!) : nil
+        
+        let startImageView = UIView(frame: CGRect(origin: startPoint, size: imageSize))
+        let endImageView = UIView(frame: CGRect(origin: endPoint, size: imageSize))
+        
+        if startHasImage {
+            startImageView.addSubview(startImage!)
+            addSubview(startImageView)
+            startCell.imageView.image = nil
+        }
+        
+        if endHasImage {
+            endImageView.addSubview(endImage!)
+            addSubview(endImageView)
+            endCell.imageView.image = nil
+        }
+        
+        UIView.animate(withDuration: 0.6, animations: {
+            if endHasImage {
+                endImageView.frame.origin = startPoint
+            } else {
+                
+            }
+            if startHasImage {
+                startImageView.frame.origin = endPoint
+            }
+        }) { _ in
+            if endHasImage {
+                startCell.imageView.image = endImage?.image
+                endImageView.removeFromSuperview()
+            }
+            if startHasImage {
+                endCell.imageView.image = startImage?.image
+                startImageView.removeFromSuperview()
+            }
+            startCell.hasImage = endHasImage
+            endCell.hasImage = startHasImage
+        }
     }
 }

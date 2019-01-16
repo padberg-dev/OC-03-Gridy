@@ -43,6 +43,8 @@
 		013A515A21EBEF3200CE6ED2 /* CGRect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013A515921EBEF3200CE6ED2 /* CGRect+Extension.swift */; };
 		01995BB321C1B6ED00A4275D /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01995BB221C1B6ED00A4275D /* IntroViewModel.swift */; };
 		01B0033D21E24777002ED09C /* PlayfieldCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */; };
+		01D1F12121ECF91600B5908A /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */; };
+		01D1F12321ED238600B5908A /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,8 @@
 		013A515921EBEF3200CE6ED2 /* CGRect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extension.swift"; sourceTree = "<group>"; };
 		01995BB221C1B6ED00A4275D /* IntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
 		01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayfieldCollectionView.swift; sourceTree = "<group>"; };
+		01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 				01225A7221DE455D00608CDA /* UINavigationController+Extension.swift */,
 				013A515721EB7D4200CE6ED2 /* UIScrollView+Extension.swift */,
 				013A515921EBEF3200CE6ED2 /* CGRect+Extension.swift */,
+				01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */,
+				01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -359,6 +365,8 @@
 				0123DF7D21D42EC50003935B /* UIEdgeInset+Extension.swift in Sources */,
 				012E0D5D21E4E16900A95A8E /* GridImage.swift in Sources */,
 				012966B521D50CC000D0549C /* Utilities.swift in Sources */,
+				01D1F12121ECF91600B5908A /* UICollectionView+Extension.swift in Sources */,
+				01D1F12321ED238600B5908A /* UICollectionViewCell+Extension.swift in Sources */,
 				0123DF7A21D3FFE40003935B /* CustomScrollViewRotationDelegate.swift in Sources */,
 				013A515821EB7D4200CE6ED2 /* UIScrollView+Extension.swift in Sources */,
 				01225A7321DE455D00608CDA /* UINavigationController+Extension.swift in Sources */,
