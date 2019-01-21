@@ -26,6 +26,16 @@ class CustomGridView: UIView {
     
     // MARK: - Public API
     
+    func colorBorder(with color: UIColor) {
+        layer.borderColor = color.cgColor
+        layer.borderWidth = 4.0
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.layer.borderWidth = 1.0
+            self.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    
     func setNumberOf(tiles: Int) {
         if gridTilesPerRow != tiles {
             gridTilesPerRow = tiles

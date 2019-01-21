@@ -8,11 +8,24 @@
 
 import UIKit
 
-class ImageEditorVM {
+class GameVM {
     
-    private var fullImage: UIImage?
+    private(set) var fullImage: UIImage?
     private var imageTiles: [GridImage] = []
     private var tilesPerRow: Int = 0
+    
+    // MARK: - Scoring Variables
+    
+    let timePenalty = 10.0
+    
+    private var moves = 0
+    private(set) var penalties = 0
+    
+    private let pointsPerMove = 1
+    private let pointsPerPenalty = 100
+    
+    private var firstMoveTime: Date?
+    private var finishMoveTime: Date?
     
     // MARK: - Public Settings
     
@@ -61,15 +74,16 @@ class ImageEditorVM {
         return mainStackView
     }
     
-    func getRandomPoolOfTilesNumbers() -> [Int] {
+    // Returns a shuffled array containing numbers from 0 to numberOfTiles
+    func getShuffledNumberArray() -> [Int] {
         var randomPool = Array(0 ..< getNumberOfTiles())
         randomPool.shuffle()
         return randomPool
     }
     
-    func convertIntToRowAndColumn(_ number: Int) -> (Int, Int) {
-        let row = Int(number / tilesPerRow)
-        let column = number % tilesPerRow
+    func getRowAndColumn(from index: Int) -> (Int, Int) {
+        let row = Int(index / tilesPerRow)
+        let column = index % tilesPerRow
         
         return (row, column)
     }
@@ -92,12 +106,12 @@ class ImageEditorVM {
     func checkIfPuzzleSolved(cells array: [CustomCollectionViewCell]) -> Bool {
         var error = false
         for cell in array {
-            error = !checkIfCellIsInRightPlace(cell)
+            error = !isCellInCorrectPlace(cell)
         }
         return !error
     }
     
-    func checkIfCellIsInRightPlace(_ cell: CustomCollectionViewCell) -> Bool {
+    func isCellInCorrectPlace(_ cell: CustomCollectionViewCell) -> Bool {
         if let image = cell.imageView.image as? GridImage {
             if cell.index == convertToIntFrom(row: image.row, column: image.column) {
                 return true
@@ -108,5 +122,19 @@ class ImageEditorVM {
     
     func convertToIntFrom(row: Int, column: Int) -> Int {
         return tilesPerRow * row + column
+    }
+    
+    // MARK: - Scoring Public Methods
+    
+    func moveMade(_ withImage: Bool) {
+        if withImage { moves += 1 }
+    }
+    
+    func hintUsed() {
+        penalties += 1
+    }
+    
+    func getScore() -> Int {
+        return (moves - getNumberOfTiles()) * pointsPerMove + penalties * pointsPerPenalty
     }
 }

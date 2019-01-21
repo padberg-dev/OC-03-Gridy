@@ -14,7 +14,7 @@ class GameFactory {
         
         let imageEditorController = UIStoryboard(name: "Game", bundle: nil).instantiateInitialViewController() as! ImageEditorViewController
         let gameFlowController = GameFlowController(navigator: navigator)
-        let viewModel = ImageEditorVM()
+        let viewModel = GameVM()
         
         imageEditorController.assignDependencies(flowController: gameFlowController, image: image, viewModel: viewModel)
         

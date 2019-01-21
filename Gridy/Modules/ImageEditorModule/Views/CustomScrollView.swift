@@ -17,6 +17,31 @@ class CustomScrollView: UIScrollView {
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
+    // MARK: - Delegate-Implementation Variables
+    
+    weak var rotationDelegate: CustomScrollViewRotationDelegate?
+    
+    var rotationGestureRecognizer: UIRotationGestureRecognizer?
+    var rotationIsCumulative: Bool = false
+    var cumulativeRotation: CGFloat = 0
+    
+    var isSnapingEnabled: Bool = false
+    var snappingAngle: CGFloat = 0
+    
+    var isRotationEnabled: Bool {
+        set {
+            if newValue {
+                rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(byReactingTo:)))
+                self.addGestureRecognizer(rotationGestureRecognizer!)
+            } else {
+                self.gestureRecognizers?.removeAll()
+            }
+        }
+        get {
+            return (rotationGestureRecognizer != nil) ? true : false
+        }
+    }
+    
     // MARK: - Initializers
     
     func initialize(with image: UIImage) {
@@ -70,34 +95,7 @@ class CustomScrollView: UIScrollView {
         return newSize
     }
     
-    // MARK: - CustomScrollViewRotationDelegate Implementations
-    // MARK: - Implementation Variables
-    
-    weak var rotationDelegate: CustomScrollViewRotationDelegate?
-    
-    var rotationGestureRecognizer: UIRotationGestureRecognizer?
-    var rotationIsCumulative: Bool = false
-    var cumulativeRotation: CGFloat = 0
-    
-    var isSnapingEnabled: Bool = false
-    var snappingAngle: CGFloat = 0
-    
-    var isRotationEnabled: Bool {
-        set {
-            if newValue {
-                rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(byReactingTo:)))
-                self.addGestureRecognizer(rotationGestureRecognizer!)
-            } else {
-                self.gestureRecognizers?.removeAll()
-            }
-        }
-        get {
-            return (rotationGestureRecognizer != nil) ? true : false
-        }
-    }
-    
-    
-    // MARK: - Implementation Methods
+    // MARK: - Delegate-Implementation Methods
     
     @objc private func handleRotation(byReactingTo rotationRecognizer: UIRotationGestureRecognizer) {
         if let rotatingView = rotationDelegate?.viewForRotation(in: self) {
@@ -141,6 +139,7 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Custom Helper Methods
     
+    // ??? pi * k * pi :pikachu
     private func reduceRadiants(_ radiants: CGFloat) -> CGFloat {
         let twoPi = 2 * CGFloat.pi
         

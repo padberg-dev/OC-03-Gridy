@@ -17,19 +17,24 @@ extension UIStackView {
         self.alignment = .fill
     }
     
-    func animateSlicing(in view: UIView, to point: CGPoint, extendBy pixelsStep: CGFloat) {
+    func animateSlicing(in view: UIView, to point: CGPoint, extendBy pointsDistance: CGFloat) {
         let numOfStacks = numberOfStackViewsInside
         
-        UIView.animate(withDuration: 0.8, animations: {}) { _ in
-            self.frame.size = CGSize(width: self.frame.width + 2 * pixelsStep, height: self.frame.height + 2 * pixelsStep)
+        UIView.animate(withDuration: 0.8, animations: {}) { [weak self] _ in
+            
+            self?.frame.size.width += 2 * pointsDistance
+            self?.frame.size.height += 2 * pointsDistance
             
             UIView.animate(withDuration: 0.8, animations: {
+                // view.layoutIfNeeded() makes calculation for frame changes and it has to be fired after those changes
                 view.layoutIfNeeded()
-                self.frame.origin.x -= pixelsStep
-                self.frame.origin.y -= pixelsStep
-                self.spacing = (2 * pixelsStep) / CGFloat(numOfStacks - 1)
-                self.subviews.forEach({ (innerStackView) in
-                    (innerStackView as! UIStackView).spacing = (2 * pixelsStep) / CGFloat(numOfStacks - 1)
+                
+                // Because everything else has no autoLayoutConstraits those animations below are not affected by view.layoutIfNeeded()
+                self?.frame.origin.x -= pointsDistance
+                self?.frame.origin.y -= pointsDistance
+                self?.spacing = (2 * pointsDistance) / CGFloat(numOfStacks - 1)
+                self?.subviews.forEach({ (innerStackView) in
+                    (innerStackView as! UIStackView).spacing = (2 * pointsDistance) / CGFloat(numOfStacks - 1)
                 })
             })
         }

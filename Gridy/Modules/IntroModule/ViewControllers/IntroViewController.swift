@@ -16,10 +16,15 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet var libraryButton: CustomButton!
     @IBOutlet var cameraButton: CustomButton!
     
-    @IBOutlet var haha: UIView!
-    
     private var flow: IntroFlowController!
     private var viewModel: IntroViewModel!
+    
+    // MARK: - Dependency Injection
+    
+    func assignDependencies(flowController: IntroFlowController, viewModel: IntroViewModel) {
+        self.flow = flowController
+        self.viewModel = viewModel
+    }
     
     // MARK: - View Controller Life Cycle
     
@@ -47,11 +52,6 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     // MARK: - Navigation Controller Flow
-    
-    func assignDependencies(flowController: IntroFlowController, viewModel: IntroViewModel) {
-        self.flow = flowController
-        self.viewModel = viewModel
-    }
     
     private func moveToImageEditorVC(with image: UIImage) {
         flow.showImageEditor(with: image)

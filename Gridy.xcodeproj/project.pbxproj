@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0120093921F5E42100BC7AF5 /* UIProgressView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0120093821F5E42100BC7AF5 /* UIProgressView+Extension.swift */; };
+		0120093B21F5F4AD00BC7AF5 /* ParentConnectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0120093A21F5F4AD00BC7AF5 /* ParentConnectionDelegate.swift */; };
 		01225A7121DE3E2B00608CDA /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01225A7021DE3E2B00608CDA /* CustomCollectionViewCell.swift */; };
 		01225A7321DE455D00608CDA /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01225A7221DE455D00608CDA /* UINavigationController+Extension.swift */; };
 		0123DF7521D3B2830003935B /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123DF7421D3B2830003935B /* CustomScrollView.swift */; };
 		0123DF7721D3BE950003935B /* CustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123DF7621D3BE950003935B /* CustomGridView.swift */; };
 		0123DF7A21D3FFE40003935B /* CustomScrollViewRotationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123DF7921D3FFE40003935B /* CustomScrollViewRotationDelegate.swift */; };
 		0123DF7D21D42EC50003935B /* UIEdgeInset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123DF7C21D42EC50003935B /* UIEdgeInset+Extension.swift */; };
-		012966A921D4D42600D0549C /* ImageEditorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012966A821D4D42600D0549C /* ImageEditorVM.swift */; };
+		012966A921D4D42600D0549C /* GameVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012966A821D4D42600D0549C /* GameVM.swift */; };
 		012966AF21D4E09A00D0549C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012966AE21D4E09A00D0549C /* UIButton+Extension.swift */; };
 		012966B121D4E7D700D0549C /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012966B021D4E7D700D0549C /* CGFloat+Extension.swift */; };
 		012966B321D5086700D0549C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012966B221D5086700D0549C /* UIView+Extension.swift */; };
@@ -45,16 +47,19 @@
 		01B0033D21E24777002ED09C /* PlayfieldCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */; };
 		01D1F12121ECF91600B5908A /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */; };
 		01D1F12321ED238600B5908A /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */; };
+		01F1444C21F54164008C9888 /* ImageEditorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F1444B21F54164008C9888 /* ImageEditorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0120093821F5E42100BC7AF5 /* UIProgressView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Extension.swift"; sourceTree = "<group>"; };
+		0120093A21F5F4AD00BC7AF5 /* ParentConnectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentConnectionDelegate.swift; sourceTree = "<group>"; };
 		01225A7021DE3E2B00608CDA /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		01225A7221DE455D00608CDA /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		0123DF7421D3B2830003935B /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		0123DF7621D3BE950003935B /* CustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGridView.swift; sourceTree = "<group>"; };
 		0123DF7921D3FFE40003935B /* CustomScrollViewRotationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollViewRotationDelegate.swift; sourceTree = "<group>"; };
 		0123DF7C21D42EC50003935B /* UIEdgeInset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInset+Extension.swift"; sourceTree = "<group>"; };
-		012966A821D4D42600D0549C /* ImageEditorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorVM.swift; sourceTree = "<group>"; };
+		012966A821D4D42600D0549C /* GameVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVM.swift; sourceTree = "<group>"; };
 		012966AE21D4E09A00D0549C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		012966B021D4E7D700D0549C /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		012966B221D5086700D0549C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -88,6 +93,7 @@
 		01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayfieldCollectionView.swift; sourceTree = "<group>"; };
 		01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
+		01F1444B21F54164008C9888 /* ImageEditorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				0123DF7921D3FFE40003935B /* CustomScrollViewRotationDelegate.swift */,
+				0120093A21F5F4AD00BC7AF5 /* ParentConnectionDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -136,6 +143,7 @@
 				013A515921EBEF3200CE6ED2 /* CGRect+Extension.swift */,
 				01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */,
 				01D1F12221ED238600B5908A /* UICollectionViewCell+Extension.swift */,
+				0120093821F5E42100BC7AF5 /* UIProgressView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -222,7 +230,7 @@
 		012BCE4821C188DE00082332 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				012966A821D4D42600D0549C /* ImageEditorVM.swift */,
+				012966A821D4D42600D0549C /* GameVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -230,7 +238,7 @@
 		012BCE4921C188EA00082332 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				012BCE5621C18C5300082332 /* ImageEditorViewController.swift */,
+				01F1444A21F5414C008C9888 /* ImageEditor */,
 				012D03EC21DCC15600663152 /* PuzzleGameViewController.swift */,
 			);
 			path = ViewControllers;
@@ -282,6 +290,15 @@
 				012BCE5A21C1901700082332 /* Modules */,
 			);
 			path = Gridy;
+			sourceTree = "<group>";
+		};
+		01F1444A21F5414C008C9888 /* ImageEditor */ = {
+			isa = PBXGroup;
+			children = (
+				012BCE5621C18C5300082332 /* ImageEditorViewController.swift */,
+				01F1444B21F54164008C9888 /* ImageEditorExtensions.swift */,
+			);
+			path = ImageEditor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,14 +384,17 @@
 				012966B521D50CC000D0549C /* Utilities.swift in Sources */,
 				01D1F12121ECF91600B5908A /* UICollectionView+Extension.swift in Sources */,
 				01D1F12321ED238600B5908A /* UICollectionViewCell+Extension.swift in Sources */,
+				0120093B21F5F4AD00BC7AF5 /* ParentConnectionDelegate.swift in Sources */,
 				0123DF7A21D3FFE40003935B /* CustomScrollViewRotationDelegate.swift in Sources */,
 				013A515821EB7D4200CE6ED2 /* UIScrollView+Extension.swift in Sources */,
 				01225A7321DE455D00608CDA /* UINavigationController+Extension.swift in Sources */,
 				012D03ED21DCC15600663152 /* PuzzleGameViewController.swift in Sources */,
-				012966A921D4D42600D0549C /* ImageEditorVM.swift in Sources */,
+				0120093921F5E42100BC7AF5 /* UIProgressView+Extension.swift in Sources */,
+				012966A921D4D42600D0549C /* GameVM.swift in Sources */,
 				012BCE6521C1A26E00082332 /* CustomButton.swift in Sources */,
 				0123DF7521D3B2830003935B /* CustomScrollView.swift in Sources */,
 				012BCE5321C18B3600082332 /* GameFactory.swift in Sources */,
+				01F1444C21F54164008C9888 /* ImageEditorExtensions.swift in Sources */,
 				01B0033D21E24777002ED09C /* PlayfieldCollectionView.swift in Sources */,
 				0135DC4421E28E2F007CD5C2 /* ArrowView.swift in Sources */,
 				013A515A21EBEF3200CE6ED2 /* CGRect+Extension.swift in Sources */,

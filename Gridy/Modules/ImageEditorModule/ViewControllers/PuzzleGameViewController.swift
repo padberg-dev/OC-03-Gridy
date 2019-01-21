@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ParentConnectionDelegate {
     
     // MARK: - Outlets
     
@@ -18,6 +18,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var playfieldCollectionView: PlayfieldCollectionView!
     @IBOutlet weak var playfieldGridView: CustomGridView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var helpButton: UIButton!
@@ -26,7 +27,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Attributes
     
-    var viewModel: ImageEditorVM!
+    var gameViewModel: GameVM!
     var flow: GameFlowController!
     
     let topBottomInset: CGFloat = 10
@@ -34,7 +35,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     var imageTiles: [UIImageView] = []
     var collectionViewLayout: UICollectionViewFlowLayout!
     
-    var panGesture: UIPanGestureRecognizer! {
+    var panGesture: UILongPressGestureRecognizer! {
         didSet {
             self.collectionView.addGestureRecognizer(panGesture)
         }
@@ -42,7 +43,11 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     var startingPoint: CGPoint = .zero
     var startingGridIndex: Int! {
         didSet {
-            startingPoint = collectionView.convert(collectionView.getMiddlePointOf(cell: startingGridIndex)!, to: view)
+            if imageTiles.count > 0 {
+                startingPoint = collectionView.convert(collectionView.getCenterPointOf(cell: startingGridIndex)!, to: view)
+            } else {
+                startingPoint = playfieldCollectionView.convert(playfieldCollectionView.getCenterPointOf(cell: startingGridIndex)!, to: view)
+            }
             view.createArrow(view: &showView, from: startingPoint)
         }
     }
@@ -57,19 +62,21 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLoad()
         
         view.backgroundColor = StyleGuide.greenLight
+        containerView.alpha = 0
         setUpCollectionViews()
         setUpGestureRecognizers()
         styleButtons()
+        progressView.style()
     }
     
     // MARK: - Gesture Recognizer
     
-    @objc private func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
+    @objc private func handlePan(byReactingTo panRecognizer: UILongPressGestureRecognizer) {
         if !allowDraging { return }
         
         switch panRecognizer.state {
         case .began:
-            break
+            collectionView.cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.highlight()
         case .cancelled:
             break
         case .changed:
@@ -78,23 +85,27 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
             
             showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: movePoint)
             
-            if gridIndexOld != nil { playfieldCollectionView.cellFromItem(gridIndexOld!)?.clearHighlight() }
+            if gridIndexOld != nil { playfieldCollectionView.cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight() }
             
             if let index = playfieldCollectionView.getGridItem(of: movePointConverted) {
-                playfieldCollectionView.cellFromItem(index)?.highlight()
+                playfieldCollectionView.cellForItem(at: IndexPath(item: index, section: 0))?.highlight()
                 gridIndexOld = index
             } else {
                 gridIndexOld = nil
             }
         case .ended:
-            showView?.kill()
+            showView?.animatedRemoval()
             allowDraging = false
             
+            collectionView.cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.clearHighlight()
+            
             if gridIndexOld != nil {
-                let cell = (playfieldCollectionView.cellFromItem(gridIndexOld!) as? CustomCollectionViewCell)!
+                let cell = (playfieldCollectionView.cellForItem(at: IndexPath(item: gridIndexOld!, section: 0)) as? CustomCollectionViewCell)!
                 cell.clearHighlight()
                 
-                view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
+                let wasImageMoved = view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
+                gameViewModel.moveMade(wasImageMoved)
+                checkIfAllTilesOnGrid()
                 
                 if !cell.hasImage {
                     imageTiles.remove(at: startingGridIndex!)
@@ -117,8 +128,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        collectionView.allowsSelection = true
-        collectionView.roundEdges(by: topBottomInset)
+        collectionView.roundCorners(by: topBottomInset)
         
         collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         playfieldCollectionView.layout = playfieldCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
@@ -127,7 +137,8 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     private func setUpGestureRecognizers() {
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(byReactingTo:)))
+        panGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePan(byReactingTo:)))
+        panGesture.minimumPressDuration = 0.3
         
         playfieldCollectionView.panGesture = UIPanGestureRecognizer(target: playfieldCollectionView, action: #selector(handlePan(byReactingTo:)))
     }
@@ -151,14 +162,56 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         return (allCells as? [CustomCollectionViewCell]) ?? []
     }
     
+    private func checkIfAllTilesOnGrid() {
+        if imageTiles.count == 1 {
+            checkPuzzleButton.isHidden = false
+            checkPuzzleButton.makeEnabled(true)
+            puzzleCheck()
+        }
+    }
+    
+    private func puzzleCheck() {
+        let check = checkIfPuzzleSolved()
+        let color: UIColor = check ? UIColor.green : UIColor.red
+        playfieldGridView.colorBorder(with: color)
+        playfieldCollectionView.animateAlpha(to: 0.85, andBackTo: 1)
+        
+        if check {
+            animateFinish()
+        }
+    }
+    
     private func checkIfPuzzleSolved() -> Bool {
         let allCells = getCellsWithImages()
-        let count = viewModel.getNumberOfTiles()
+        let count = gameViewModel.getNumberOfTiles()
         
         if allCells.count == count {
-            return viewModel.checkIfPuzzleSolved(cells: allCells)
+            return gameViewModel.checkIfPuzzleSolved(cells: allCells)
         }
         return false
+    }
+    
+    private func enableHintsButtons() {
+        previewButton.makeEnabled(true)
+        helpButton.makeEnabled(true)
+        progressView.progress = 0
+        progressView.alpha = 0
+    }
+    
+    private func blockHintsButtons() {
+        gameViewModel.hintUsed()
+        previewButton.makeEnabled(false)
+        helpButton.makeEnabled(false)
+        progressView.alpha = 1
+        
+        let duration = gameViewModel.timePenalty
+        UIView.animate(withDuration: duration) {
+            self.progressView.setProgress(1, animated: true)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration * 0.9) {
+            self.enableHintsButtons()
+        }
     }
     
     // MARK: - Layout Change Events
@@ -187,25 +240,17 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - UICollectionViewDelegate Methods
     
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.highlight()
-        
         allowDraging = true
         startingGridIndex = indexPath.item
-        
-        collectionView.isUserInteractionEnabled = false
     }
     
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 0
-        
-        collectionView.isUserInteractionEnabled = true
+    // MARK: - ConnectionDelegate
+    
+    func didMoveAnImageOnTheGrid(withImage: Bool) {
+        if withImage, imageTiles.count == 0 {
+            puzzleCheck()
+        }
     }
     
     // MARK: - Custom Public Mehtods
@@ -228,9 +273,50 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func preparePlayfield() {
-        playfieldCollectionView.prepareGridFor(tilesPerRow: CGFloat(viewModel.getNumberOfRows()))
-        playfieldGridView.setNumberOf(tiles: viewModel.getNumberOfRows())
-        containerView.animateAlpha(toValue: 1)
+        playfieldCollectionView.prepareGridFor(tilesPerRow: CGFloat(gameViewModel.getNumberOfRows()))
+        playfieldGridView.setNumberOf(tiles: gameViewModel.getNumberOfRows())
+        containerView.animateAlpha(to: 1)
+    }
+    
+    // MARK: - Success Animations
+    
+    private func animateFinish() {
+        let newView = UIView(frame: view.bounds)
+        newView.alpha = 0
+        
+        let blurView = UIVisualEffectView(frame: view.bounds)
+        blurView.effect = UIBlurEffect(style: .light)
+        
+        newView.addSubview(blurView)
+        
+        let stack = UIStackView(frame: playfieldGridView.frame)
+        stack.alignment = .center
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alpha = 0
+        
+        newView.addSubview(stack)
+        view.addSubview(newView)
+        
+        newView.animateAlpha(to: 1)
+        
+        let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        label.text = "YOU SOLVED THE PUZZLE"
+        
+        stack.addArrangedSubview(label)
+        
+        let label2 = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        label2.text = "With a score of \(gameViewModel.getScore())"
+        
+        stack.addArrangedSubview(label2)
+        
+        let label3 = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        label3.text = "You used hints \(gameViewModel.penalties) times"
+        
+        stack.addArrangedSubview(label3)
+        
+        stack.animateAlpha()
+        stack.addArrangedSubview(newGameButton)
     }
     
     // MARK: - Action Methods
@@ -240,62 +326,47 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func helpButtonTapped(_ sender: UIButton) {
-        let cells = getCellsWithImages()
-        if cells.count > 1 {
-            if viewModel.checkIfPuzzleSolved(cells: cells) {
-                
+        var cell: CustomCollectionViewCell!
+        let imagesStillInCollectionView = imageTiles.count > 0
+        
+        if imagesStillInCollectionView {
+            // Hint from collectionView to playfield
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
+            cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CustomCollectionViewCell
+        } else {
+            // No more images in collectionView -> hint in Playfield
+            let cellsOutOfPlace = (playfieldCollectionView.visibleCells as? [CustomCollectionViewCell])?.filter { (cell) -> Bool in
+                return !gameViewModel.isCellInCorrectPlace(cell)
             }
+            cell = cellsOutOfPlace?.first
         }
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
-        let cell = collectionView.cellFromItem(0) as? CustomCollectionViewCell
+        
         if let image = cell?.imageView.image as? GridImage {
-            
-            let endCellIndex = viewModel.convertToIntFrom(row: image.row!, column: image.column!)
-            startingGridIndex = 0
-            let endPoint = playfieldCollectionView.getMiddlePointOf(cell: endCellIndex)
+            startingGridIndex = imagesStillInCollectionView ? 0 : playfieldCollectionView.indexPath(for: cell)?.item
+            let endCellIndex = gameViewModel.convertToIntFrom(row: image.row!, column: image.column!)
+            let endPoint = playfieldCollectionView.getCenterPointOf(cell: endCellIndex)
             let convertedPoint = playfieldCollectionView.convert(endPoint!, to: view)
             showView?.alpha = 0
             showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: convertedPoint)
             showView?.animateAlpha()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.showView?.kill()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            self.showView?.animatedRemoval()
         }
+        
+        blockHintsButtons()
     }
     
-    // TUTAJ JESZCZE NIE SKOŃCZONE
     @IBAction func previewButtonTapped(_ sender: UIButton) {
-        let newView = UIView(frame: playfieldGridView.frame.extendAllSidesBy(25))
-        newView.backgroundColor = StyleGuide.yellowLight
-        newView.roundEdges(by: 15)
+        let newOrigin = containerView.convert(playfieldGridView.frame.origin, to: view)
+        let gridFrame = CGRect(origin: newOrigin, size: playfieldGridView.frame.size)
         
-        containerView.addSubview(newView)
-        
-        let stackView = viewModel.createImageStackView(ofSize: CGRect(origin: CGPoint(x: 25, y: 25), size: playfieldGridView.frame.size))
-        newView.addSubview(stackView)
-        
-        let progressBar = UIProgressView(frame: CGRect(origin: CGPoint(x: 25, y: 20), size: CGSize(width: stackView.frame.width, height: 2)))
-        progressBar.trackTintColor = .clear
-        progressBar.tintColor = StyleGuide.navy
-        newView.addSubview(progressBar)
-        
-        UIView.animate(withDuration: 2.0) {
-            progressBar.setProgress(1, animated: true)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            newView.removeFromSuperview()
-        }
+        view.createPreview(of: gameViewModel.fullImage!, withGridFrame: gridFrame, isPortraitMode: isPortraitMode)
+        blockHintsButtons()
     }
     
     @IBAction func checkPuzzleButtonTapped(_ sender: UIButton) {
-        let color: UIColor = checkIfPuzzleSolved() ? UIColor.green : UIColor.red
-        
-        view.backgroundColor = color
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.view.backgroundColor = StyleGuide.greenLight
-        }
+        puzzleCheck()
     }
 }

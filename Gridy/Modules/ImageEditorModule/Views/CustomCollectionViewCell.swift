@@ -12,6 +12,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    // To make checks wheter the UIImageView contains an image have less code
     var hasImage: Bool = false
     var index: Int?
 }

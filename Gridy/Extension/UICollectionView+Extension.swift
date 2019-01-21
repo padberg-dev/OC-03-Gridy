@@ -18,17 +18,10 @@ extension UICollectionView {
         return nil
     }
     
-    func getMiddlePointOf(cell index: Int) -> CGPoint? {
+    func getCenterPointOf(cell index: Int) -> CGPoint? {
         if let cell = cellForItem(at: IndexPath(item: index, section: 0)) {
             let point = CGPoint(x: cell.frame.origin.x + cell.bounds.midX, y: cell.frame.origin.y + cell.bounds.midY)
             return point
-        }
-        return nil
-    }
-    
-    func cellFromItem(_ item: Int) -> UICollectionViewCell? {
-        if let cell = cellForItem(at: IndexPath(item: item, section: 0)) {
-            return cell
         }
         return nil
     }

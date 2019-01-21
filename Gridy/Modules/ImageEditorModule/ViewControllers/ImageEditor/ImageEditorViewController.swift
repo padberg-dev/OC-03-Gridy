@@ -21,14 +21,37 @@ class ImageEditorViewController: UIViewController {
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var gridSlider: UISlider!
     
-    // MARK: - Attributes
+    // MARK: - Dependencies
     
     private var flow: GameFlowController!
-    private var viewModel: ImageEditorVM!
+    private var viewModel: GameVM!
+    private var photoImage: UIImage!
     private var gameVC: PuzzleGameViewController!
+    
+    // MARK: - Attributes
+    
     private var bigStackView: UIStackView = UIStackView()
     private var blockAutoration: Bool = false
-    private var photoImage: UIImage!
+    
+    // MARK: - Dependency Injection
+    
+    func assignDependencies(flowController: GameFlowController, image: UIImage, viewModel: GameVM) {
+        self.photoImage = image
+        self.flow = flowController
+        self.viewModel = viewModel
+    }
+    
+    // ??? W factory nie było jeszcze children
+    func initializeGameVC() {
+        guard let firstChild = children.first as? PuzzleGameViewController else  {
+            fatalError("NO Puzzle Game View Controller??")
+        }
+        gameVC = firstChild
+        self.gameVC.flow = flow
+        self.gameVC.gameViewModel = viewModel
+        self.gameVC.playfieldCollectionView.gameViewModel = viewModel
+        self.gameVC.playfieldCollectionView.parentConnectionDelegate = gameVC
+    }
     
     // MARK: - View Controller Life Cycle
     
@@ -64,17 +87,7 @@ class ImageEditorViewController: UIViewController {
     
     // MARK: - Custom Methods
     
-    private func initializeGameVC() {
-        guard let firstChild = children.first as? PuzzleGameViewController else  {
-            fatalError("NO Puzzle Game View Controller??")
-        }
-        gameVC = firstChild
-        
-        self.gameVC.viewModel = self.viewModel
-        self.gameVC.flow = self.flow
-    }
-    
-    private func resetUI() {
+    func resetUI() {
         scrollView.changeInsets(with: scrollView.imageView.frame.origin)
         
         if viewModel.extendInsetsToGridView {
@@ -82,33 +95,28 @@ class ImageEditorViewController: UIViewController {
         }
     }
     
+    /// ??? ViewModel ?
     private func checkIfImageOutOfGrid() -> Bool {
-        // ScaleDownByHalfPixel because of rounding Problems (minimumScale is a fraction, thus view.contains will miss calculate by X < 0.5 pixels)
-        let gridViewInImageViewBounds = view.convert(gridView.frame.scaleDownByHalfPixel(), to: scrollView.imageView)
+        // ScaleDownByHalfPoint because of rounding Problems (minimumScale is a fraction, thus view.contains will miss calculate by X < 0.5 pixels)
+        let gridViewInImageViewBounds = view.convert(gridView.frame.scaleDownByHalfPoint(), to: scrollView.imageView)
         let imageViewBounds = scrollView.imageView.bounds
         
         return imageViewBounds.contains(gridViewInImageViewBounds)
     }
     
-    private func checkIfCanContinue() {
+    func checkIfCanContinue() {
         if checkIfImageOutOfGrid() {
             selectButton.isEnabled = true
             selectButton.alpha = 1
         } else {
             selectButton.isEnabled = false
             selectButton.alpha = 0.2
-            errorView.animateError()
-            errorLabel.animateError()
+            errorView.animateAlpha(andBackTo: 0)
+            errorLabel.animateAlpha(andBackTo: 0)
         }
     }
     
     // MARK: - Navigation Controller Flow
-    
-    func assignDependencies(flowController: GameFlowController, image: UIImage, viewModel: ImageEditorVM) {
-        self.flow = flowController
-        self.photoImage = image
-        self.viewModel = viewModel
-    }
     
     @IBAction func goBack(_ sender: UIButton) {
         flow.newGame()
@@ -124,7 +132,7 @@ class ImageEditorViewController: UIViewController {
                     viewModel.sliceTheImage(croppedImage, into: gridView.getNumberOfTiles())
                     gameVC.changeCellSize(to: viewModel.getTileSize())
                     
-                    view.hideAllUI()
+                    view.hideNotNeededUI()
                     bigStackView = viewModel.createImageStackView(ofSize: gridView.frame)
                     view.addSubview(bigStackView)
                     animateStackViews()
@@ -135,6 +143,7 @@ class ImageEditorViewController: UIViewController {
         }
     }
     
+    // ??? Stepper
     @IBAction func gridSliderChanged(_ sender: UISlider) {
         let sliderValue = round(sender.value)
         sender.setValue(sliderValue, animated: false)
@@ -146,9 +155,9 @@ class ImageEditorViewController: UIViewController {
     
     private func animateStackViews() {
         let gridOrigin = gridView.frame.origin
-        let step = (isPortraitMode ? gridOrigin.x : gridOrigin.y) - 5
+        let spaceToExtend = (isPortraitMode ? gridOrigin.x : gridOrigin.y) - 5
         
-        bigStackView.animateSlicing(in: view, to: gridOrigin, extendBy: step)
+        bigStackView.animateSlicing(in: view, to: gridOrigin, extendBy: spaceToExtend)
     }
     
     private func moveContainerViewIntoScreen() {
@@ -162,12 +171,12 @@ class ImageEditorViewController: UIViewController {
     }
     
     private func moveImageTiles(into position: CGPoint) {
-        var randomPool = viewModel.getRandomPoolOfTilesNumbers()
+        var randomPool = viewModel.getShuffledNumberArray()
         let numberOfTiles = randomPool.count
         
         for i in 0 ..< numberOfTiles {
             let number = randomPool.remove(at: 0)
-            let (row, _) = viewModel.convertIntToRowAndColumn(number)
+            let (row, _) = viewModel.getRowAndColumn(from: number)
             
             let tileImageView = bigStackView.getRandomImageViewFromInsideStackView(row)
             let newView = view.createNewView(from: tileImageView!)
@@ -192,58 +201,6 @@ class ImageEditorViewController: UIViewController {
         blockAutoration = false
         bigStackView.isHidden = true
         
-        view.getRidOfHiddenUI()
-    }
-}
-
-extension ImageEditorViewController: UIScrollViewDelegate {
-
-    // MARK: - UIScrollViewDelegate Methods
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.scrollView.contentView
-    }
-
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        resetUI()
-        checkIfCanContinue()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            checkIfCanContinue()
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        checkIfCanContinue()
-    }
-}
-
-extension ImageEditorViewController: CustomScrollViewRotationDelegate {
-    
-    // MARK: - CustomScrollViewRotationDelegate Methods
-
-    func viewForRotation(in scrollView: CustomScrollView) -> UIView? {
-        return scrollView.imageView
-    }
-    
-    func scrollViewIsRotating(_ scrollView: CustomScrollView, view: UIView, by radiants: CGFloat) {
-        let transform = CGAffineTransform(rotationAngle: radiants)
-        
-        view.transform = transform
-    }
-    
-    func scrollViewDidEndRotation(_ scrollView: CustomScrollView, with view: UIView, rotatedBy radiants: CGFloat) {
-        resetUI()
-        checkIfCanContinue()
-    }
-    
-    func scrollView(_ scrollView: CustomScrollView, rotationSnapsToAngle inAngularDegrees: CGFloat) -> CGFloat {
-        return 0
-    }
-    
-    func scrollView(_ scrollVIew: CustomScrollView, cummulativeRotation isSet: Bool) -> Bool {
-        return true
+        view.removeTransparentViews()
     }
 }

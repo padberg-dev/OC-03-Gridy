@@ -10,6 +10,8 @@ import UIKit
 
 class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    weak var parentConnectionDelegate: ParentConnectionDelegate?
+    
     var layout: UICollectionViewFlowLayout!
     var numberOfTiles: Int = 0
     var panGesture: UIPanGestureRecognizer! {
@@ -20,12 +22,12 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     var startingPoint: CGPoint = .zero
     var startingGridIndex: Int! {
         didSet {
-            startingPoint = getMiddlePointOf(cell: startingGridIndex)!
+            startingPoint = getCenterPointOf(cell: startingGridIndex)!
             createArrow(view: &showView, from: startingPoint)
         }
     }
     var gridIndexOld: Int?
-    
+    var gameViewModel: GameVM!
     var showView: ArrowView?
     
     // MARK: - Gesture Recognizer Methods
@@ -40,20 +42,22 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
             let movePoint = panRecognizer.location(in: self)
             showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: movePoint)
             
-            if gridIndexOld != nil { cellFromItem(gridIndexOld!)?.clearHighlight() }
+            if gridIndexOld != nil { cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight() }
             
             if let index = self.getGridItem(of: movePoint) {
-                cellFromItem(index)?.highlight()
+                cellForItem(at: IndexPath(item: index, section: 0))?.highlight()
                 gridIndexOld = index
             } else {
                 gridIndexOld = nil
             }
         case .ended:
-            showView?.kill()
+            showView?.animatedRemoval()
             
             if gridIndexOld != nil {
-                cellFromItem(gridIndexOld!)?.clearHighlight()
-                moveImages(from: self, with: startingGridIndex, to: self, with: gridIndexOld!)
+                cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight()
+                let wasImageMoved = moveImages(from: self, with: startingGridIndex, to: self, with: gridIndexOld!)
+                gameViewModel.moveMade(wasImageMoved)
+                parentConnectionDelegate?.didMoveAnImageOnTheGrid(withImage: wasImageMoved)
             }
         case .failed:
             print("FAILED")

@@ -9,7 +9,7 @@
 import UIKit
 
 extension CGRect {
-    func scaleDownByHalfPixel() -> CGRect {
+    func scaleDownByHalfPoint() -> CGRect {
         var newRect = CGRect()
         newRect.origin.x = self.origin.x + 0.5
         newRect.origin.y = self.origin.y + 0.5

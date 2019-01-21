@@ -17,6 +17,6 @@ class GameFlowController {
     }
     
     func newGame() {
-        navigator.popViewController(animated: true)
+        navigator.popToRootViewController(animated: true)
     }
 }

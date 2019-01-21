@@ -14,7 +14,7 @@ class IntroViewModel {
         "office", "puppy", "lion", "eiffel", "pizza"
     ]
     
-    // MARK: - Publuc API
+    // MARK: - Public API
     
     func chooseRandomPhoto() -> String {
         return photosNames.randomElement()!
