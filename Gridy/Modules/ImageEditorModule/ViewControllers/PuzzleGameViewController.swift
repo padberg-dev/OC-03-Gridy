@@ -389,7 +389,5 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBAction func checkPuzzleButtonTapped(_ sender: UIButton) {
         puzzleCheck(immediately: true)
-        
-        animateFinish()
     }
 }
