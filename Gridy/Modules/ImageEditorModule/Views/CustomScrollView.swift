@@ -86,9 +86,13 @@ class CustomScrollView: UIScrollView {
         }) { [weak self] (_) in
             UIView.animate(withDuration: 0.3, animations: {
                 self?.setZoomScale((self?.zoomScale)!, animated: true)
+            }, completion: { (_) in
+                self?.delegate?.scrollViewDidEndDecelerating!(self!)
             })
         }
     }
+    
+    // MARK: - Custom Private Methods
     
     private func calculateMinSizeToFit(basedOn imageSize: CGSize) -> CGSize {
         let screenSize = UIScreen.main.bounds

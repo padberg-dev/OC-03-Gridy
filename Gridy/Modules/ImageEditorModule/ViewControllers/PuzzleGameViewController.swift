@@ -190,7 +190,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
             let check = self.checkIfPuzzleSolved()
             let color: UIColor = check ? UIColor.green : UIColor.red
             
-            self.playfieldGridView.colorBorder(with: color.withAlphaComponent(0.6))
+            self.playfieldGridView.colorBorder(with: color.withAlphaComponent(0.3))
             
             if check {
                 self.animateFinish()
