@@ -12,4 +12,13 @@ extension CGFloat {
     func convertToRadiants() -> CGFloat {
         return self / 180 * CGFloat.pi
     }
+    
+    func convertFromRadiants() -> CGFloat {
+        return self * 180 / CGFloat.pi
+    }
+    
+    func getRoundedString() -> String {
+        let num = (self * 100).rounded() / 100
+        return "\(num)°"
+    }
 }

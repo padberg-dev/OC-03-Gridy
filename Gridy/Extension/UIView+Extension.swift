@@ -123,7 +123,7 @@ extension UIView {
             endCell.imageView.image = nil
         }
         
-        UIView.animate(withDuration: 0.6, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             if endHasImage {
                 endImageView.frame.origin = startPoint
             } else {
@@ -147,7 +147,7 @@ extension UIView {
         return startHasImage || endHasImage
     }
     
-    func createPreview(of image: UIImage, withGridFrame gridFrame: CGRect, isPortraitMode: Bool) {
+    func createPreview(of image: UIImage, withGridFrame gridFrame: CGRect, isPortraitMode: Bool, above: UIView) {
         let extendBy: CGFloat = 25.0
         
         let previewView = UIView(frame: self.bounds)
@@ -181,8 +181,8 @@ extension UIView {
         previewView.addSubview(newView)
         
         UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
-            newView.frame.origin.x = gridFrame.origin.x - extendBy
-            newView.frame.origin.y = gridFrame.origin.y
+            newView.frame.origin.x = gridFrame.origin.x - (isPortraitMode ? extendBy : 0)
+            newView.frame.origin.y = gridFrame.origin.y - (isPortraitMode ? 0 : extendBy)
         }, completion: nil)
         
         self.addSubview(previewView)

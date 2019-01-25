@@ -17,7 +17,7 @@ extension UIScrollView {
         contentInset.rescaleBy(scale)
     }
     
-    func extendInsets(to frame: CGRect) {
+    func extendInsets(to frame: CGRect, toOffset point: CGPoint) {
         let leftMargin = frame.minX
         let topMargin = frame.minY
         let rightMargin = self.frame.width - frame.maxX
@@ -27,5 +27,7 @@ extension UIScrollView {
         contentInset.top += topMargin
         contentInset.right += rightMargin
         contentInset.bottom += bottomMargin
+        
+        setContentOffset(point, animated: false)
     }
 }

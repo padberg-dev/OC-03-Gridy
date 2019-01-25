@@ -15,6 +15,8 @@ class ArrowView: UIView {
     
     let lineWidth: CGFloat = 4
     let extendSizeBy: CGFloat = 16
+    
+    var isAnimating: Bool = false
 
     override func draw(_ rect: CGRect) {
         UIColor.black.set()
@@ -38,17 +40,22 @@ class ArrowView: UIView {
     // MARK: - Public Methods
     
     func resizeFrameFrom(startPoint: CGPoint, toPoint: CGPoint) {
-        let differencePoint = CGPoint(x: toPoint.x - startPoint.x, y: toPoint.y - startPoint.y)
-        self.frame.size = CGSize(width: abs(differencePoint.x) + 2 * extendSizeBy,
-                                 height: abs(differencePoint.y) + 2 * extendSizeBy)
-        negativeX = differencePoint.x < 0
-        negativeY = differencePoint.y < 0
-        self.frame.origin.x = (negativeX ? toPoint.x : startPoint.x) - extendSizeBy
-        self.frame.origin.y = (negativeY ? toPoint.y : startPoint.y) - extendSizeBy
+        if !isAnimating {
+            let differencePoint = CGPoint(x: toPoint.x - startPoint.x, y: toPoint.y - startPoint.y)
+            self.frame.size = CGSize(width: abs(differencePoint.x) + 2 * extendSizeBy,
+                                     height: abs(differencePoint.y) + 2 * extendSizeBy)
+            negativeX = differencePoint.x < 0
+            negativeY = differencePoint.y < 0
+            self.frame.origin.x = (negativeX ? toPoint.x : startPoint.x) - extendSizeBy
+            self.frame.origin.y = (negativeY ? toPoint.y : startPoint.y) - extendSizeBy
+        }
     }
     
-    func animatedRemoval() {
-        UIView.animate(withDuration: 0.3, animations: {
+    func animatedRemoval(extendedDuration: Bool = false) {
+        isAnimating = true
+        let duration = extendedDuration ? 0.7 : 0.3
+        
+        UIView.animate(withDuration: duration, animations: {
             self.alpha = 0
         }) { [weak self] _ in
             self?.removeFromSuperview()

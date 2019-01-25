@@ -15,7 +15,7 @@ class CustomGridView: UIView {
     private var lineWidth: CGFloat = 1
     private var firstLineColor: UIColor = StyleGuide.navy
     private var secondLineColor: UIColor = StyleGuide.yellowLight
-    private var gridTilesPerRow: Int = 5 { didSet { setNeedsDisplay() } }
+    private var gridTilesPerRow: Int = 3 { didSet { setNeedsDisplay() } }
     
     // MARK: - Initializers
     
@@ -28,9 +28,9 @@ class CustomGridView: UIView {
     
     func colorBorder(with color: UIColor) {
         layer.borderColor = color.cgColor
-        layer.borderWidth = 4.0
+        layer.borderWidth = frame.size.width / 2
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.layer.borderWidth = 1.0
             self.layer.borderColor = UIColor.black.cgColor
         }

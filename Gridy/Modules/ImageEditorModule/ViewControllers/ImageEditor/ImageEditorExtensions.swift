@@ -8,7 +8,6 @@
 
 import UIKit
 
-// ??? private to public / resetUI i checkIfCanContinnue
 extension ImageEditorViewController: UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate Methods
@@ -17,7 +16,7 @@ extension ImageEditorViewController: UIScrollViewDelegate {
         return self.scrollView.contentView
     }
     
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {        
         resetUI()
         checkIfCanContinue()
     }
@@ -43,17 +42,19 @@ extension ImageEditorViewController: CustomScrollViewRotationDelegate {
     
     func scrollViewIsRotating(_ scrollView: CustomScrollView, view: UIView, by radiants: CGFloat) {
         let transform = CGAffineTransform(rotationAngle: radiants)
-        
         view.transform = transform
+        angleLabel.text = radiants.convertFromRadiants().getRoundedString()
     }
     
     func scrollViewDidEndRotation(_ scrollView: CustomScrollView, with view: UIView, rotatedBy radiants: CGFloat) {
+        print("END ROTATION")
         resetUI()
         checkIfCanContinue()
     }
     
     func scrollView(_ scrollView: CustomScrollView, rotationSnapsToAngle inAngularDegrees: CGFloat) -> CGFloat {
-        return 0
+        print("SNAPPING")
+        return isSnapingAllowed ? CGFloat(snappingDegree) : 0
     }
     
     func scrollView(_ scrollVIew: CustomScrollView, cummulativeRotation isSet: Bool) -> Bool {

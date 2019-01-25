@@ -10,10 +10,10 @@ import UIKit
 
 class CustomButton: UIButton {
     
-    @IBOutlet var customBigLabel: UILabel!
-    @IBOutlet var customView: UIView!
-    @IBOutlet var customImageView: UIImageView!
-    @IBOutlet var customTextLabel: UILabel!
+    @IBOutlet weak var customBigLabel: UILabel!
+    @IBOutlet weak var customView: UIView!
+    @IBOutlet weak var customImageView: UIImageView!
+    @IBOutlet weak var customTextLabel: UILabel!
     
     override func awakeFromNib() {
         self.backgroundColor = .clear

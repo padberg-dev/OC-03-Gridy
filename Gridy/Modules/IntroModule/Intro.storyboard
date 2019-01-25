@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZyC-cO-ZGp">
-    <device id="ipad9_7" orientation="portrait">
+    <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,50 +20,69 @@
             <objects>
                 <viewController storyboardIdentifier="IntroVC" id="ZyC-cO-ZGp" customClass="IntroViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ym5-yD-ied">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1p-iz-rEH">
-                                <rect key="frame" x="239" y="120" width="290" height="169"/>
+                                <rect key="frame" x="222" y="50" width="580" height="338"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="290" id="KUl-Je-uNu"/>
+                                    <constraint firstAttribute="width" constant="290" id="KUl-Je-uNu">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="580"/>
+                                    </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="130"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.83137254900000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="260"/>
+                                </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZo-1d-SkT">
-                                <rect key="frame" x="279.5" y="590" width="209" height="2"/>
+                                <rect key="frame" x="303" y="513" width="418" height="4"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="YPQ-4m-6vR"/>
+                                    <constraint firstAttribute="height" constant="2" id="YPQ-4m-6vR">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="4"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challange yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URH-ol-Upi">
-                                <rect key="frame" x="239" y="263" width="241.5" height="16.5"/>
+                                <rect key="frame" x="222" y="336" width="483" height="33"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="28"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR load your own" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K87-BM-BBj">
-                                <rect key="frame" x="294" y="577" width="180" height="24"/>
+                                <rect key="frame" x="332" y="489" width="360" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="NoL-Cx-Q32"/>
-                                    <constraint firstAttribute="height" constant="24" id="gtl-xV-ndp"/>
+                                    <constraint firstAttribute="width" constant="180" id="NoL-Cx-Q32">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="360"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="24" id="gtl-xV-ndp">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="48"/>
+                                    </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="dcm-KN-Yr2">
-                                <rect key="frame" x="249" y="611" width="270" height="80"/>
+                                <rect key="frame" x="257" y="547" width="510" height="160"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gya-16-cCg" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="160"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="5Ku-GC-vP2"/>
+                                            <constraint firstAttribute="width" constant="120" id="5Ku-GC-vP2">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="240"/>
+                                            </constraint>
                                             <constraint firstAttribute="width" secondItem="gya-16-cCg" secondAttribute="height" multiplier="3:2" id="BXS-U6-5Qf"/>
                                         </constraints>
                                         <state key="normal" title="Camera"/>
@@ -72,7 +91,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op2-DK-7Dx" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                        <rect key="frame" x="150" y="0.0" width="120" height="80"/>
+                                        <rect key="frame" x="270" y="0.0" width="240" height="160"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="96O-Af-J5C"/>
@@ -88,10 +107,12 @@
                                 <variation key="heightClass=compact-widthClass=regular" spacing="300"/>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytc-Vk-itk" customClass="CustomButton" customModule="Gridy" customModuleProvider="target">
-                                <rect key="frame" x="324" y="472" width="120" height="80"/>
+                                <rect key="frame" x="392" y="304" width="240" height="160"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="RRB-Zl-uwJ"/>
+                                    <constraint firstAttribute="width" constant="120" id="RRB-Zl-uwJ">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="240"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" secondItem="ytc-Vk-itk" secondAttribute="height" multiplier="3:2" id="rsa-Yp-ySy"/>
                                 </constraints>
                                 <state key="normal" title="Gridy Button"/>
@@ -116,11 +137,13 @@
                             <constraint firstItem="WZo-1d-SkT" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="YVd-pH-E63"/>
                             <constraint firstItem="dcm-KN-Yr2" firstAttribute="bottom" secondItem="VaP-SR-qtM" secondAttribute="bottom" constant="-30" id="b9T-I5-je8"/>
                             <constraint firstItem="K87-BM-BBj" firstAttribute="top" secondItem="ytc-Vk-itk" secondAttribute="bottom" constant="25" id="bLb-8d-25R"/>
-                            <constraint firstItem="URH-ol-Upi" firstAttribute="top" secondItem="y1p-iz-rEH" secondAttribute="bottom" constant="-26" id="c8k-Ot-88y"/>
+                            <constraint firstItem="URH-ol-Upi" firstAttribute="top" secondItem="y1p-iz-rEH" secondAttribute="bottom" constant="-26" id="c8k-Ot-88y">
+                                <variation key="heightClass=regular-widthClass=regular" constant="-52"/>
+                            </constraint>
                             <constraint firstItem="y1p-iz-rEH" firstAttribute="top" secondItem="VaP-SR-qtM" secondAttribute="top" constant="10" id="eEN-rP-hH2">
                                 <variation key="heightClass=compact-widthClass=compact" constant="10"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="15"/>
-                                <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="30"/>
                             </constraint>
                             <constraint firstItem="ytc-Vk-itk" firstAttribute="centerY" secondItem="ym5-yD-ied" secondAttribute="centerY" id="ift-Jv-9hW"/>
                             <constraint firstItem="ytc-Vk-itk" firstAttribute="centerX" secondItem="ym5-yD-ied" secondAttribute="centerX" id="jKX-SE-k9p"/>
@@ -186,8 +209,11 @@
                     </view>
                     <connections>
                         <outlet property="cameraButton" destination="gya-16-cCg" id="hQe-oP-REl"/>
+                        <outlet property="gridyButtonCenterYConstraint" destination="ift-Jv-9hW" id="z7Q-eR-cUC"/>
                         <outlet property="gridyPickButton" destination="ytc-Vk-itk" id="NIt-AX-8AO"/>
                         <outlet property="libraryButton" destination="op2-DK-7Dx" id="FAb-hW-VH5"/>
+                        <outlet property="orLoadTextYTOStackVIewConstraint" destination="6AS-VF-h8N" id="pUj-LO-M8C"/>
+                        <outlet property="stackView" destination="dcm-KN-Yr2" id="3Sn-3K-aVT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tqh-Cx-pU0" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -8,24 +8,45 @@
 
 import UIKit
 
+struct ScoreData {
+    let points: Int
+    let movesMade: Int
+    let hintsUsed: Int
+    let tiles: Int
+}
+
+struct PointsData {
+    let pointsPerMove: Int
+    let pointsPerPenalty: Int
+    let pointsPerTile: Int
+}
+
 class GameVM {
     
     private(set) var fullImage: UIImage?
     private var imageTiles: [GridImage] = []
     private var tilesPerRow: Int = 0
     
+    var soundIsOn = true
+    
     // MARK: - Scoring Variables
     
     let timePenalty = 10.0
     
-    private var moves = 0
+    private let pointsPerMove = -3
+    private let pointsPerPenalty = -100
+    private let pointsPerTile = 200
+    
+    private(set) var points = 0 {
+        didSet {
+            scoreLabel.text = String(points)
+        }
+    }
+    private(set) var moves = 0
     private(set) var penalties = 0
     
-    private let pointsPerMove = 1
-    private let pointsPerPenalty = 100
-    
-    private var firstMoveTime: Date?
-    private var finishMoveTime: Date?
+    var scoreLabel: UILabel!
+    var scoreDifference: UILabel!
     
     // MARK: - Public Settings
     
@@ -53,6 +74,7 @@ class GameVM {
                 }
             }
         }
+        setInitialPoints()
     }
     
     func createImageStackView(ofSize size: CGRect) -> UIStackView {
@@ -104,11 +126,12 @@ class GameVM {
     }
     
     func checkIfPuzzleSolved(cells array: [CustomCollectionViewCell]) -> Bool {
-        var error = false
         for cell in array {
-            error = !isCellInCorrectPlace(cell)
+            if !isCellInCorrectPlace(cell) {
+                return false
+            }
         }
-        return !error
+        return true
     }
     
     func isCellInCorrectPlace(_ cell: CustomCollectionViewCell) -> Bool {
@@ -127,14 +150,39 @@ class GameVM {
     // MARK: - Scoring Public Methods
     
     func moveMade(_ withImage: Bool) {
-        if withImage { moves += 1 }
+        if withImage {
+            moves += 1
+            subtractPoints(pointsPerMove)
+        }
     }
     
     func hintUsed() {
         penalties += 1
+        subtractPoints(pointsPerPenalty)
     }
     
     func getScore() -> Int {
         return (moves - getNumberOfTiles()) * pointsPerMove + penalties * pointsPerPenalty
+    }
+    
+    func getInjectionData() -> (ScoreData, PointsData) {
+        let scoreData = ScoreData(points: points, movesMade: moves, hintsUsed: penalties, tiles: getNumberOfTiles())
+        let pointsData = PointsData(pointsPerMove: pointsPerMove, pointsPerPenalty: pointsPerPenalty, pointsPerTile: pointsPerTile)
+        return (scoreData, pointsData)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func setInitialPoints() {
+        points = getNumberOfTiles() * (pointsPerTile - pointsPerMove)
+    }
+    
+    private func updateScore() {
+        points = (pointsPerTile * getNumberOfTiles()) + (moves * pointsPerMove) + (penalties * pointsPerPenalty)
+    }
+    
+    private func subtractPoints(_ byNumber: Int) {
+        scoreDifference.animateSubtraction(with: byNumber)
+        updateScore()
     }
 }

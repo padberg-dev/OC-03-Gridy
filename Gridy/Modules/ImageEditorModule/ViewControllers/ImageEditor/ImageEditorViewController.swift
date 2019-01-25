@@ -21,6 +21,12 @@ class ImageEditorViewController: UIViewController {
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var gridSlider: UISlider!
     
+    @IBOutlet weak var angleLabel: UILabel!
+    @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var snappingButton: UIButton!
+    @IBOutlet weak var snapDegreeButton: UIButton!
+    @IBOutlet weak var snapDegreeView: UIView!
+    
     // MARK: - Dependencies
     
     private var flow: GameFlowController!
@@ -33,6 +39,11 @@ class ImageEditorViewController: UIViewController {
     private var bigStackView: UIStackView = UIStackView()
     private var blockAutoration: Bool = false
     
+    var isSnapingAllowed = false
+    var snappingDegree = 15
+    
+    var blockIPadLayout: Bool = false
+    
     // MARK: - Dependency Injection
     
     func assignDependencies(flowController: GameFlowController, image: UIImage, viewModel: GameVM) {
@@ -41,7 +52,6 @@ class ImageEditorViewController: UIViewController {
         self.viewModel = viewModel
     }
     
-    // ??? W factory nie było jeszcze children
     func initializeGameVC() {
         guard let firstChild = children.first as? PuzzleGameViewController else  {
             fatalError("NO Puzzle Game View Controller??")
@@ -51,6 +61,9 @@ class ImageEditorViewController: UIViewController {
         self.gameVC.gameViewModel = viewModel
         self.gameVC.playfieldCollectionView.gameViewModel = viewModel
         self.gameVC.playfieldCollectionView.parentConnectionDelegate = gameVC
+        
+        viewModel.scoreLabel = gameVC.scoreLabel
+        viewModel.scoreDifference = gameVC.scoreChangeLabel
     }
     
     // MARK: - View Controller Life Cycle
@@ -83,19 +96,23 @@ class ImageEditorViewController: UIViewController {
         scrollView.setContentSize(toFitInGrid: gridSize)
         
         resetUI()
+        
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad, !blockIPadLayout {
+            (view as? ImageEditorView)?.setConstraints(isPortraitMode: isPortraitMode)
+        }
     }
     
     // MARK: - Custom Methods
     
     func resetUI() {
+        let offsetPoint = scrollView.contentOffset
         scrollView.changeInsets(with: scrollView.imageView.frame.origin)
         
         if viewModel.extendInsetsToGridView {
-            scrollView.extendInsets(to: gridView.frame)
+            scrollView.extendInsets(to: gridView.frame, toOffset: offsetPoint)
         }
     }
     
-    /// ??? ViewModel ?
     private func checkIfImageOutOfGrid() -> Bool {
         // ScaleDownByHalfPoint because of rounding Problems (minimumScale is a fraction, thus view.contains will miss calculate by X < 0.5 pixels)
         let gridViewInImageViewBounds = view.convert(gridView.frame.scaleDownByHalfPoint(), to: scrollView.imageView)
@@ -143,7 +160,54 @@ class ImageEditorViewController: UIViewController {
         }
     }
     
-    // ??? Stepper
+    @IBAction func soundButtonTapped(_ sender: UIButton) {
+        let isOn = viewModel.soundIsOn
+        viewModel.soundIsOn = !isOn
+
+        soundButton.setBackgroundImage(UIImage(named: !isOn ? "audio-on" : "audio-off"), for: .normal)
+    }
+    
+    @IBAction func snappingButtonTapped(_ sender: UIButton) {
+        let tag = sender.tag
+        snappingButton.setBackgroundImage(UIImage(named: tag == 1 ? "snapping" : "snapping-filled"), for: .normal)
+        isSnapingAllowed = tag == 1 ? false : true
+        
+        if tag == 0 {
+            snapDegreeView.animateAlpha()
+            snapDegreeButton.animateAlpha()
+            sender.tag = 1
+        } else {
+            snapDegreeView.animateAlpha(to: 0)
+            snapDegreeButton.animateAlpha(to: 0)
+            sender.tag = 0
+        }
+    }
+    
+    @IBAction func snapDegreeButtonTapped(_ sender: UIButton) {
+        var tag = sender.tag + 1
+        var degree = 0
+        
+        switch tag {
+        case 1:
+            degree = 30
+        case 2:
+            degree = 45
+        case 3:
+            degree = 90
+        default:
+            tag = 0
+            degree = 15
+        }
+        snapDegreeButton.setBackgroundImage(UIImage(named: String(degree)), for: .normal)
+        snappingDegree = degree
+        sender.tag = tag
+    }
+    
+    @IBAction func resetRotationButtonTapped(_ sender: UIButton) {
+        scrollView.setRotationToZero()
+        angleLabel.text = "0°"
+    }
+    
     @IBAction func gridSliderChanged(_ sender: UISlider) {
         let sliderValue = round(sender.value)
         sender.setValue(sliderValue, animated: false)
@@ -202,5 +266,6 @@ class ImageEditorViewController: UIViewController {
         bigStackView.isHidden = true
         
         view.removeTransparentViews()
+        blockIPadLayout = true
     }
 }

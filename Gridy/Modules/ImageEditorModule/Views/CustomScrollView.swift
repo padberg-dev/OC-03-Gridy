@@ -24,6 +24,7 @@ class CustomScrollView: UIScrollView {
     var rotationGestureRecognizer: UIRotationGestureRecognizer?
     var rotationIsCumulative: Bool = false
     var cumulativeRotation: CGFloat = 0
+    var tempRotation: CGFloat = 0
     
     var isSnapingEnabled: Bool = false
     var snappingAngle: CGFloat = 0
@@ -61,17 +62,32 @@ class CustomScrollView: UIScrollView {
     
     func setContentSize(toFitInGrid size: CGSize? = nil) {
         if let image = imageView.image {
-            let newSize = calculateMinSizeToFit(basedOn: (image.size))
+            var newSize = calculateMinSizeToFit(basedOn: (image.size))
             
             imageWidthConstraint.constant = newSize.width
             imageHeightConstraint.constant = newSize.height
-            self.contentSize = newSize
             
             if let gridSize = size {
                 let scaleX = round(gridSize.width / newSize.width * 10) / 10
                 let scaleY = round(gridSize.height / newSize.height * 10) / 10
                 minimumZoomScale = max(scaleX, scaleY)
+                print(minimumZoomScale)
             }
+            
+            newSize.width *= zoomScale
+            newSize.height *= zoomScale
+            
+            self.contentSize = newSize
+        }
+    }
+    
+    func setRotationToZero() {
+        UIView.animate(withDuration: 0.6, animations: {
+            self.rotationDelegate?.viewForRotation(in: self)?.transform = .identity
+        }) { [weak self] (_) in
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.setZoomScale((self?.zoomScale)!, animated: true)
+            })
         }
     }
     
@@ -113,7 +129,7 @@ class CustomScrollView: UIScrollView {
                     }
                 }
                 
-                if rotationDelegate?.scrollView?(self, cummulativeRotation: (rotationIsCumulative)) != nil {
+                if rotationDelegate?.scrollView?(self, cummulativeRotation: (rotationIsCumulative)) != nil, !isSnapingEnabled {
                     rotationRecognizer.rotation = cumulativeRotation
                 }
                 
@@ -121,11 +137,22 @@ class CustomScrollView: UIScrollView {
             case .changed:
                 let fullRotation = rotationRecognizer.rotation
                 
-                let rotation = isSnapingEnabled ? (round(fullRotation / snappingAngle.convertToRadiants()) * snappingAngle.convertToRadiants()) : fullRotation
+                var rotation: CGFloat = 0
+                if isSnapingEnabled {
+                    rotation = (round(fullRotation / snappingAngle.convertToRadiants()) * snappingAngle.convertToRadiants())
+                    rotation += cumulativeRotation
+                    tempRotation = rotation
+                } else {
+                    rotation = fullRotation
+                }
                 
                 rotationDelegate?.scrollViewIsRotating(self, view: rotatingView, by: rotation)
             case .ended:
-                cumulativeRotation = reduceRadiants(rotationRecognizer.rotation)
+                if !isSnapingEnabled {
+                    cumulativeRotation = reduceRadiants(rotationRecognizer.rotation)
+                } else {
+                    cumulativeRotation = reduceRadiants(tempRotation)
+                }
                 rotationDelegate?.scrollViewDidEndRotation?(self, with: rotatingView, rotatedBy: rotationRecognizer.rotation)
             case .cancelled:
                 break
@@ -139,7 +166,6 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Custom Helper Methods
     
-    // ??? pi * k * pi :pikachu
     private func reduceRadiants(_ radiants: CGFloat) -> CGFloat {
         let twoPi = 2 * CGFloat.pi
         

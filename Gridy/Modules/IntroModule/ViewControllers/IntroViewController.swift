@@ -12,9 +12,13 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
     // MARK: - Outlets and Attributes
     
-    @IBOutlet var gridyPickButton: CustomButton!
-    @IBOutlet var libraryButton: CustomButton!
-    @IBOutlet var cameraButton: CustomButton!
+    @IBOutlet weak var orLoadTextYTOStackVIewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var gridyButtonCenterYConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var gridyPickButton: CustomButton!
+    @IBOutlet weak var libraryButton: CustomButton!
+    @IBOutlet weak var cameraButton: CustomButton!
+    @IBOutlet weak var stackView: UIStackView!
     
     private var flow: IntroFlowController!
     private var viewModel: IntroViewModel!
@@ -34,12 +38,26 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
         setUpButtons()
     }
     
+    // MARK: - Layout Change Events
+    
+    override func viewDidLayoutSubviews() {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
+            self.setConstraints(isPortraitMode: isPortraitMode)
+        }
+    }
+    
     // MARK: - Custom Methods
     
     private func setUpButtons() {
         gridyPickButton.setUpButton(withText: "Pick", andImageName: "Gridy")
         libraryButton.setUpButton(withText: "Photo Library", andImageName: "library")
         cameraButton.setUpButton(withText: "Camera", andImageName: "camera")
+    }
+    
+    private func setConstraints(isPortraitMode: Bool) {
+        gridyButtonCenterYConstraint.constant = isPortraitMode ? 0 : 100
+        orLoadTextYTOStackVIewConstraint.constant = isPortraitMode ? 10 : -100
+        stackView.spacing = isPortraitMode ? 30 : 480
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods

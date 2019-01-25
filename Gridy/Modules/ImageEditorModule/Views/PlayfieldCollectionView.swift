@@ -19,16 +19,9 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
             self.addGestureRecognizer(panGesture)
         }
     }
-    var startingPoint: CGPoint = .zero
-    var startingGridIndex: Int! {
-        didSet {
-            startingPoint = getCenterPointOf(cell: startingGridIndex)!
-            createArrow(view: &showView, from: startingPoint)
-        }
-    }
+    var startingGridIndex: Int!
     var gridIndexOld: Int?
     var gameViewModel: GameVM!
-    var showView: ArrowView?
     
     // MARK: - Gesture Recognizer Methods
     
@@ -40,18 +33,22 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
             break
         case .changed:
             let movePoint = panRecognizer.location(in: self)
-            showView?.resizeFrameFrom(startPoint: startingPoint, toPoint: movePoint)
+            parentConnectionDelegate?.shouldResizeArrowFrame(to: movePoint)
             
-            if gridIndexOld != nil { cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight() }
-            
+            if gridIndexOld != nil {
+                cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight()
+            }
             if let index = self.getGridItem(of: movePoint) {
                 cellForItem(at: IndexPath(item: index, section: 0))?.highlight()
                 gridIndexOld = index
             } else {
+                if gridIndexOld != nil {
+                    parentConnectionDelegate?.didEndArrowAnimation(extended: true)
+                }
                 gridIndexOld = nil
             }
         case .ended:
-            showView?.animatedRemoval()
+            parentConnectionDelegate?.didEndArrowAnimation(extended: false)
             
             if gridIndexOld != nil {
                 cellForItem(at: IndexPath(item: gridIndexOld!, section: 0))?.clearHighlight()
@@ -73,6 +70,7 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         cell?.highlight()
         
         startingGridIndex = indexPath.item
+        parentConnectionDelegate?.didStartArrowAnimation(with: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
