@@ -71,7 +71,6 @@ class CustomScrollView: UIScrollView {
                 let scaleX = round(gridSize.width / newSize.width * 10) / 10
                 let scaleY = round(gridSize.height / newSize.height * 10) / 10
                 minimumZoomScale = max(scaleX, scaleY)
-                print(minimumZoomScale)
             }
             
             newSize.width *= zoomScale

@@ -25,10 +25,12 @@ extension ImageEditorViewController: UIScrollViewDelegate {
         if !decelerate {
             checkIfCanContinue()
         }
+        viewModel.playSound(for: .imageMove)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         checkIfCanContinue()
+        viewModel.playSound(for: .imageMove)
     }
 }
 
@@ -47,13 +49,11 @@ extension ImageEditorViewController: CustomScrollViewRotationDelegate {
     }
     
     func scrollViewDidEndRotation(_ scrollView: CustomScrollView, with view: UIView, rotatedBy radiants: CGFloat) {
-        print("END ROTATION")
         resetUI()
         checkIfCanContinue()
     }
     
     func scrollView(_ scrollView: CustomScrollView, rotationSnapsToAngle inAngularDegrees: CGFloat) -> CGFloat {
-        print("SNAPPING")
         return isSnapingAllowed ? CGFloat(snappingDegree) : 0
     }
     

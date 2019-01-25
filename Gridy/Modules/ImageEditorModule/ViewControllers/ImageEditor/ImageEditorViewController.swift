@@ -29,8 +29,8 @@ class ImageEditorViewController: UIViewController {
     
     // MARK: - Dependencies
     
+    var viewModel: GameVM!
     private var flow: GameFlowController!
-    private var viewModel: GameVM!
     private var photoImage: UIImage!
     private var gameVC: PuzzleGameViewController!
     
@@ -165,6 +165,7 @@ class ImageEditorViewController: UIViewController {
         viewModel.soundIsOn = !isOn
 
         soundButton.setBackgroundImage(UIImage(named: !isOn ? "audio-on" : "audio-off"), for: .normal)
+        gameVC.soundButton.setBackgroundImage(UIImage(named: !isOn ? "audio-on" : "audio-off"), for: .normal)
     }
     
     @IBAction func snappingButtonTapped(_ sender: UIButton) {

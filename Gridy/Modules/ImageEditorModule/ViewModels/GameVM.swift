@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 struct ScoreData {
     let points: Int
@@ -21,12 +22,21 @@ struct PointsData {
     let pointsPerTile: Int
 }
 
+enum SoundTypes {
+    case imageMove
+    case puzzleStart
+    case imageSwap
+    case hint
+    case finish
+}
+
 class GameVM {
     
     private(set) var fullImage: UIImage?
     private var imageTiles: [GridImage] = []
     private var tilesPerRow: Int = 0
     
+    var audioPlayer: AVAudioPlayer?
     var soundIsOn = true
     
     // MARK: - Scoring Variables
@@ -75,6 +85,27 @@ class GameVM {
             }
         }
         setInitialPoints()
+        playSound(for: .puzzleStart)
+    }
+    
+    func playSound(for type: SoundTypes) {
+        if !soundIsOn { return }
+        
+        var soundName = ""
+        switch type {
+        case .imageMove:
+            soundName = "glitch"
+        case .puzzleStart:
+            soundName = "paper"
+        case .imageSwap:
+            let random = Int.random(in: 0 ... 5)
+            soundName = "swish\(random)"
+        case .hint:
+            soundName = "shotgun"
+        case .finish:
+            soundName = "anteUp"
+        }
+        play(sound: soundName)
     }
     
     func createImageStackView(ofSize size: CGRect) -> UIStackView {
@@ -153,12 +184,14 @@ class GameVM {
         if withImage {
             moves += 1
             subtractPoints(pointsPerMove)
+            playSound(for: .imageSwap)
         }
     }
     
     func hintUsed() {
         penalties += 1
         subtractPoints(pointsPerPenalty)
+        playSound(for: .hint)
     }
     
     func getScore() -> Int {
@@ -184,5 +217,16 @@ class GameVM {
     private func subtractPoints(_ byNumber: Int) {
         scoreDifference.animateSubtraction(with: byNumber)
         updateScore()
+    }
+    
+    private func play(sound name: String) {
+        let path = Bundle.main.path(forResource: name, ofType : "mp3")!
+        let url = URL(fileURLWithPath : path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

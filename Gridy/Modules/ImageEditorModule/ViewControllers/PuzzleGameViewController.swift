@@ -329,6 +329,8 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         view.addSubview(successView!)
         
         successView?.animateSuccess()
+        
+        gameViewModel.playSound(for: .finish)
     }
     
     // MARK: - Action Methods
