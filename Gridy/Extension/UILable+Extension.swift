@@ -9,6 +9,8 @@
 import UIKit
 
 extension UILabel {
+    // Creates an animation for changing a text
+    // It makes it bigger when increasing alpha and then smaller again with decreasing alpha
     func animateSubtraction(with number: Int) {
         self.text = String(number)
         

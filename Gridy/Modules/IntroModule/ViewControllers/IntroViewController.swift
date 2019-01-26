@@ -9,7 +9,7 @@
 import UIKit
 
 class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     // MARK: - Outlets and Attributes
     
     @IBOutlet weak var orLoadTextYTOStackVIewConstraint: NSLayoutConstraint!
@@ -54,6 +54,7 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
         cameraButton.setUpButton(withText: "Camera", andImageName: "camera")
     }
     
+    // Changes some UIConstraints for iPad in landscapeMode
     private func setConstraints(isPortraitMode: Bool) {
         gridyButtonCenterYConstraint.constant = isPortraitMode ? 0 : 100
         orLoadTextYTOStackVIewConstraint.constant = isPortraitMode ? 10 : -100
@@ -62,6 +63,7 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
+    // Camera and library output
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             moveToImageEditorVC(with: selectedImage)
@@ -77,13 +79,13 @@ class IntroViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // MARK: - Action Methods
     
+    // A random Image will be chosen
     @IBAction func gridyButtonTapped(_ sender: CustomButton) {
         let imageName = viewModel.chooseRandomPhoto()
         if let image = UIImage(named: imageName) {
             moveToImageEditorVC(with: image)
         }
     }
-    
     
     @IBAction func cameraButtonTapped(_ sender: CustomButton) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {

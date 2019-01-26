@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIEdgeInsets {
+    // Rescales itself by a given scale
     mutating func rescaleBy(_ scale: CGFloat) {
         self.top *= scale
         self.right *= scale

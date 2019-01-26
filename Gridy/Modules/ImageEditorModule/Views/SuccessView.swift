@@ -11,7 +11,7 @@ import UIKit
 class SuccessView: UIView {
     
     var flow: GameFlowController!
-
+    
     // MARK: - Outlets
     
     @IBOutlet weak var customView: UIView!
@@ -47,6 +47,7 @@ class SuccessView: UIView {
         self.flow = flow
     }
     
+    // Populates all labels with data
     func injectData(score: ScoreData, points: PointsData) {
         scoreBigLabel.text = String(score.points)
         scoreSmallLabel.text = String(score.points)
@@ -71,6 +72,8 @@ class SuccessView: UIView {
         calculations?[3].text = "\(points.pointsPerPenalty * score.hintsUsed)"
     }
     
+    // 3 consecutive animations happening each after another to create a good looking effect
+    // Changes alpha back to 1 and transform-attribute back to .identity
     func animateSuccess() {
         UIView.animate(withDuration: 0.4, animations: {
             self.customView.alpha = 1
@@ -113,6 +116,8 @@ class SuccessView: UIView {
     
     // MARK: - Private Methods
     
+    // Animated StackViews will have their transform attributes changed.
+    // When animating all of this transform attributes will be set back to normal/.identity
     private func prepareForAnimation() {
         customView.alpha = 0
         
@@ -133,7 +138,6 @@ class SuccessView: UIView {
                 subview.transform = scaleUpTransform
             }
         }
-        
         scoreSmallLabel.alpha = 0
         scoreSmallLabel.transform = moveRightTransform
         

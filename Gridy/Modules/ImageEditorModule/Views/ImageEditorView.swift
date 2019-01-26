@@ -9,7 +9,9 @@
 import UIKit
 
 class ImageEditorView: UIView {
-
+    
+    // A lot of contraints that will be changed depending on landscape or portrait mode on iPad
+    // Because iPad doesn't have different autoLayout classes for portrait and landscape it has to be done programatically
     @IBOutlet weak var gridViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var gridViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var gridViewCenterYConstraint: NSLayoutConstraint!
@@ -52,22 +54,24 @@ class ImageEditorView: UIView {
     @IBOutlet weak var errorLabelBottomTOSelectButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var errorLabelBottomConstraint: NSLayoutConstraint!
     
+    // Every constraint will be either activated or disabled depending on device orientation
+    // Some of the contraint will differ in value
     func setConstraints(isPortraitMode: Bool) {
         gridViewLeadingConstraint.isActive = isPortraitMode
         gridViewCenterYConstraint.isActive = isPortraitMode
         gridViewTopConstraint.isActive = !isPortraitMode
         gridViewBottomConstraint.isActive = !isPortraitMode
-
+        
         numberOfRowsTextTOBackYConstraint.isActive = isPortraitMode
         numberOfRowsTextTopConstraint.isActive = !isPortraitMode
-
+        
         gridSliderTOnumberOfRowsYConstraint.constant = isPortraitMode ? 20 : 5
-
+        
         angleLabelTopConstraint.isActive = isPortraitMode
         angleLabelLeadingConstraint.isActive = !isPortraitMode
         angleLabelCenterXConstraint.isActive = isPortraitMode
         angleLabelCenterYConstraint.isActive = !isPortraitMode
-
+        
         soundButtonTrailingTOGridViewConstraint.isActive = !isPortraitMode
         soundButtonCenterYTOResetButtonConstraint.isActive = isPortraitMode
         soundButtonCenterXTOResetButtonConstraint.isActive = !isPortraitMode
@@ -75,9 +79,9 @@ class ImageEditorView: UIView {
         soundButtonTopConsraint.isActive = isPortraitMode
         soundButtonBottomTOGridViewConstraint.isActive = !isPortraitMode
         soundButtonLeadingTOGridViewConstraint.isActive = isPortraitMode
-
+        
         resetButtonCenterXTOGridViewConstraint.isActive = isPortraitMode
-
+        
         snappingButtonTopTOGridView.isActive = isPortraitMode
         snappingButtonTrailingTOGridViewConstraint.isActive = isPortraitMode
         snappingButtonCenterYTOsnapDegreeButtonConstraint.isActive = isPortraitMode
@@ -86,17 +90,15 @@ class ImageEditorView: UIView {
         snappingButtonTopTOsnapDegreeButtonConstraint.isActive = !isPortraitMode
         snappingButtonLeadingTOGridView.isActive = !isPortraitMode
         snappingButtonBottomTOGridView.isActive = !isPortraitMode
-
+        
         selectButtonCenterXConstraint.isActive = isPortraitMode
         selectButtonBottomConstraint.isActive = isPortraitMode
         selectButtonCenterYConstraint.isActive = !isPortraitMode
         selectButtonLeadingConstraint.isActive = !isPortraitMode
-
+        
         errorLabelBottomConstraint.isActive = !isPortraitMode
         errorLabelBottomTOSelectButtonConstraint.isActive = isPortraitMode
         
         self.layoutIfNeeded()
     }
-    
-    
 }

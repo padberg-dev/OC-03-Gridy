@@ -14,7 +14,9 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionViewWidthConstraint: NSLayoutConstraint!
+    // Collection View with all images
     @IBOutlet weak var collectionView: UICollectionView!
+    // Collection View with a grid
     @IBOutlet weak var playfieldCollectionView: PlayfieldCollectionView!
     @IBOutlet weak var playfieldGridView: CustomGridView!
     @IBOutlet weak var containerView: UIView!
@@ -31,11 +33,13 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Attributes
     
+    // A view with detailed score after completing puzzle
     var successView: SuccessView?
     
     var gameViewModel: GameVM!
     var flow: GameFlowController!
     
+    // Insets for collectionView
     let topBottomInset: CGFloat = 10
     
     var imageTiles: [UIImageView] = []
@@ -46,25 +50,26 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
             self.collectionView.addGestureRecognizer(panGesture)
         }
     }
+    // Starting point for the arrow
     var startingPoint: CGPoint = .zero
+    // Index of collectionView cell
+    // After it gets passed by a gesture recognizer or helpBUttonTapped(_:) the centerPoint of the chosen cell will be assigned to startingPoint
     var startingGridIndex: Int! {
         didSet {
-            if imageTiles.count > 0 {
-                startingPoint = collectionView.convert(collectionView.getCenterPointOf(cell: startingGridIndex)!, to: view)
-            } else {
-                startingPoint = playfieldCollectionView.convert(playfieldCollectionView.getCenterPointOf(cell: startingGridIndex)!, to: view)
-            }
+            startingPoint = collectionView.convert(collectionView.getCenterPointOf(cell: startingGridIndex)!, to: view)
             view.createArrow(view: &showView, from: startingPoint)
         }
     }
+    // Index of playfieldCollectionView cell. Rest same as above
     var startingGridIndexPlayfield: Int! {
         didSet {
             startingPoint = playfieldCollectionView.convert(playfieldCollectionView.getCenterPointOf(cell: startingGridIndexPlayfield)!, to: view)
             view.createArrow(view: &showView, from: startingPoint)
         }
     }
+    // Index of the cell over which the arrow is dragging
+    // If let go it becomes the endCell for image swap
     var gridIndexOld: Int?
-    var allowDraging: Bool = false
     
     var showView: ArrowView?
     
@@ -75,6 +80,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         
         view.backgroundColor = StyleGuide.greenLight
         containerView.alpha = 0
+        
         setUpCollectionViews()
         setUpGestureRecognizers()
         styleButtons()
@@ -84,14 +90,15 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     // MARK: - Gesture Recognizer
     
     @objc private func handlePan(byReactingTo panRecognizer: UILongPressGestureRecognizer) {
-        if !allowDraging { return }
-        
         switch panRecognizer.state {
         case .began:
             collectionView.cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.highlight()
         case .cancelled:
             break
         case .changed:
+            // Converts location of pan to playfieldCollectionView
+            // Resize Arrow
+            // Clear highlight on old cell and highligh new cell if convertedLocation over a playfield cell
             let movePoint = panRecognizer.location(in: view)
             let movePointConverted = view.convert(movePoint, to: playfieldCollectionView)
             
@@ -106,8 +113,11 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
                 gridIndexOld = nil
             }
         case .ended:
+            // Make arrow disappear and clear highlights
+            // If pan ended over playfieldCollectionView move images
+            // Remove chosen image from imageTiles and from collectionView
+            // Then check if all tiles are on playfield grid
             showView?.animatedRemoval()
-            allowDraging = false
             
             collectionView.cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.clearHighlight()
             
@@ -118,11 +128,9 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
                 let wasImageMoved = view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
                 gameViewModel.moveMade(wasImageMoved)
                 
-                if !cell.hasImage {
-                    imageTiles.remove(at: startingGridIndex!)
-                    collectionView.deleteItems(at: [IndexPath(item: startingGridIndex!, section: 0)])
-                    checkIfAllTilesOnGrid()
-                }
+                imageTiles.remove(at: startingGridIndex!)
+                collectionView.deleteItems(at: [IndexPath(item: startingGridIndex!, section: 0)])
+                checkIfAllTilesOnGrid()
             }
         case .failed:
             print("FAILED")
@@ -133,6 +141,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Custom Methods
     
+    // Set delegates, round corners, set up layout insets
     private func setUpCollectionViews() {
         playfieldCollectionView.delegate = playfieldCollectionView
         playfieldCollectionView.dataSource = playfieldCollectionView
@@ -148,6 +157,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
+    // Assign gesture recognizer to variables
     private func setUpGestureRecognizers() {
         panGesture = UILongPressGestureRecognizer(target: self, action: #selector(handlePan(byReactingTo:)))
         panGesture.minimumPressDuration = 0.3
@@ -162,6 +172,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         helpButton.styleSelectButton()
     }
     
+    // Returns an array of all cells from playfieldCollectionView that have an image
     private func getCellsWithImages() -> [CustomCollectionViewCell] {
         let allCells = playfieldCollectionView.visibleCells.filter { (cell) -> Bool in
             if let image = ((cell as? CustomCollectionViewCell)?.imageView.image) as? GridImage {
@@ -174,6 +185,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         return (allCells as? [CustomCollectionViewCell]) ?? []
     }
     
+    // If all images are on the playfield show checkButton and check if puzzle are solved
     private func checkIfAllTilesOnGrid() {
         if imageTiles.count == 0 {
             checkPuzzleButton.isHidden = false
@@ -183,6 +195,8 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     // Check happens before image swap -> delay check by swap animation time
+    // Change border color of the playfield accordingly for a sec
+    // If puzzle is solved fire finish animation
     private func puzzleCheck(immediately: Bool = false) {
         let delay = immediately ? 0 : 0.4
         
@@ -198,6 +212,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    // If all cells have images check if they are in the right place return boolean answer
     private func checkIfPuzzleSolved() -> Bool {
         let allCells = getCellsWithImages()
         let count = gameViewModel.getNumberOfTiles()
@@ -208,13 +223,8 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         return false
     }
     
-    private func enableHintsButtons() {
-        previewButton.makeEnabled(true)
-        helpButton.makeEnabled(true)
-        progressView.progress = 0
-        progressView.alpha = 0
-    }
-    
+    // Inform gameVM of hint usage and block hints for timePenalty duration and shows progress bar
+    // After this time allow hints buttons again
     private func blockHintsButtons() {
         self.gameViewModel.hintUsed()
         previewButton.makeEnabled(false)
@@ -231,8 +241,19 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    // Makes hint buttons enables again, hides progress bar
+    private func enableHintsButtons() {
+        previewButton.makeEnabled(true)
+        helpButton.makeEnabled(true)
+        progressView.progress = 0
+        progressView.alpha = 0
+    }
+    
     // MARK: - Layout Change Events
     
+    // ScrollDirection didn't always changed on orientation change, it has something to do with scrolling collectionView
+    // Make collectionView stop scrolling by selecting first item without animation
+    // Also iPad constraint changes
     override func viewDidLayoutSubviews() {
         if imageTiles.count > 0 {
             collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: isPortraitMode ? .bottom : .left)
@@ -254,6 +275,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         return imageTiles.count
     }
     
+    // Assign images to each cell and make customCell's attribute hasImage true
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? CustomCollectionViewCell else {
             fatalError("NO collectionCell??")
@@ -265,19 +287,21 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - UICollectionViewDelegate Methods {
     
+    // Start arrow animation on highlight.
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        allowDraging = true
         startingGridIndex = indexPath.item
     }
     
     // MARK: - ConnectionDelegate
     
+    // Reason for this is to check if puzzle is solved from inside of playfield -> child parent connection
     func didMoveAnImageOnTheGrid(withImage: Bool) {
         if withImage, imageTiles.count == 0 {
             puzzleCheck()
         }
     }
     
+    // All delegates methods below are made for the purpose of allowing the arrowView to be drawn in this parentView not inside of playfield
     func didStartArrowAnimation(with index: Int) {
         startingGridIndexPlayfield = index
     }
@@ -293,6 +317,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Custom Public Mehtods
     
+    // For animation of tiles into collectionView
     func getFirstItemPosition() -> CGPoint {
         return CGPoint(x: collectionView.frame.origin.x + collectionViewLayout.sectionInset.left, y: collectionView.frame.origin.y + topBottomInset)
     }
@@ -302,6 +327,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
     }
     
+    // Resize collectionView according to slliced tile size
     func changeCellSize(to size: CGSize) {
         collectionViewLayout.itemSize = size
         playfieldCollectionView.layout.itemSize = size
@@ -310,6 +336,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionViewWidthConstraint.constant = size.width + 2 * topBottomInset
     }
     
+    // Prepare grid and animate alpha
     func preparePlayfield() {
         playfieldCollectionView.prepareGridFor(tilesPerRow: CGFloat(gameViewModel.getNumberOfRows()))
         playfieldGridView.setNumberOf(tiles: gameViewModel.getNumberOfRows())
@@ -318,6 +345,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Success Animations
     
+    // Show SuccesView, pass game data to it and play a sound
     private func animateFinish() {
         successView = SuccessView(frame: view.frame)
         successView?.initialize()
@@ -335,6 +363,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: - Action Methods
     
+    // Change icon and change setting in viewModel
     @IBAction func soundButtonTapped(_ sender: UIButton) {
         let isOn = gameViewModel.soundIsOn
         gameViewModel.soundIsOn = !isOn
@@ -346,6 +375,11 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         flow.newGame()
     }
     
+    // Show a right move with an arrow
+    // Default is to show an image from collectionView to its right position on the playfield
+    // If collectionView is empty take all cells from playfield and filter all cells that are not in correct position and take the first one
+    // Show an arrow from its current to its correct position
+    // Block hints buttons after that
     @IBAction func helpButtonTapped(_ sender: UIButton) {
         var cell: CustomCollectionViewCell!
         let imagesStillInCollectionView = imageTiles.count > 0
@@ -364,7 +398,11 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         if let image = cell?.imageView.image as? GridImage {
-            startingGridIndex = imagesStillInCollectionView ? 0 : playfieldCollectionView.indexPath(for: cell)?.item
+            if imagesStillInCollectionView {
+                startingGridIndex = 0
+            } else {
+                startingGridIndexPlayfield = playfieldCollectionView.indexPath(for: cell)?.item
+            }
             let endCellIndex = gameViewModel.convertToIntFrom(row: image.row!, column: image.column!)
             let endPoint = playfieldCollectionView.getCenterPointOf(cell: endCellIndex)
             let convertedPoint = playfieldCollectionView.convert(endPoint!, to: view)
@@ -379,6 +417,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         blockHintsButtons()
     }
     
+    // Create a preview with full image for a couple of sec after that block hints
     @IBAction func previewButtonTapped(_ sender: UIButton) {
         let newOrigin = containerView.convert(playfieldGridView.frame.origin, to: view)
         let gridFrame = CGRect(origin: newOrigin, size: playfieldGridView.frame.size)
@@ -387,6 +426,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         blockHintsButtons()
     }
     
+    // Now there is no animation involved so do it immediately
     @IBAction func checkPuzzleButtonTapped(_ sender: UIButton) {
         puzzleCheck(immediately: true)
     }

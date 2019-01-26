@@ -27,15 +27,16 @@ class CustomButton: UIButton {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-    // If asssets does not contain an image with 'imageName' then use it as a label and hide ImageView
+    
+    // Loads a xib file containing custom button
+    // If asssets file does not contain an image with 'imageName' then use it as a label and hide ImageView
     func setUpButton(withText text: String, andImageName imageName: String) {
         Bundle.main.loadNibNamed("CustomButton", owner: self, options: nil)
         customView.frame = self.bounds
         customView.layer.cornerRadius = 14.0
-
+        
         customTextLabel.text = text
-
+        
         if let image = UIImage(named: imageName) {
             customImageView.image = image
         } else {

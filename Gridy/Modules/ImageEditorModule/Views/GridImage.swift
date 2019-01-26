@@ -10,6 +10,7 @@ import UIKit
 
 class GridImage: UIImage {
     
+    // Each sliced image will be have a row and column value of its original correct position on the grid
     var row: Int!
     var column: Int!
 }

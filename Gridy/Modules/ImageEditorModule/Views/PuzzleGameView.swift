@@ -10,6 +10,7 @@ import UIKit
 
 class PuzzleGameView: UIView {
     
+    // Because iPad doesn't have different autoLayout classes for portrait and landscape it has to be done programatically
     @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionViewTrailingConstraint: NSLayoutConstraint!
@@ -25,17 +26,18 @@ class PuzzleGameView: UIView {
     @IBOutlet weak var playfieldCollectionTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var playfieldCollectionBottomConstraint: NSLayoutConstraint!
     
+    // Every constraint will be either activated or disabled depending on device orientation
     func setConstraints(isPortraitMode: Bool) {
         collectionViewWidthConstraint.isActive = !isPortraitMode
         collectionViewHeightConstraint.isActive = isPortraitMode
         collectionViewTrailingConstraint.isActive = isPortraitMode
         collectionViewBottomConstraint.isActive = !isPortraitMode
-
+        
         containerViewTopConstraint.isActive = !isPortraitMode
         containerViewTopTOCollectionViewConstraint.isActive = isPortraitMode
         containerViewLeadingTOCollectionView.isActive = !isPortraitMode
         containerViewLeadingConstraint.isActive = isPortraitMode
-
+        
         playfieldCollectionTopConstraint.isActive = !isPortraitMode
         playfieldCollectionLeadingConstraint.isActive = isPortraitMode
         playfieldCollectionTrailingConstraint.isActive = isPortraitMode

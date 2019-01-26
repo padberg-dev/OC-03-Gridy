@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 
+// Structs will be used for data passing, and enums for sound clarification
+// Arrays or ints could be used for this purpose as well but that would be very unclear
 struct ScoreData {
     let points: Int
     let movesMade: Int
@@ -37,10 +39,12 @@ class GameVM {
     private var tilesPerRow: Int = 0
     
     var audioPlayer: AVAudioPlayer?
-    var soundIsOn = true
     
     // MARK: - Scoring Variables
     
+    // A user gets fixed ammount of points on start and each move that he makes make score less.
+    // So in order to have a good score one have to make less moves to complete a puzzle
+    // Depending on number of tiles different inital points will be set
     let timePenalty = 10.0
     
     private let pointsPerMove = -3
@@ -61,16 +65,19 @@ class GameVM {
     // MARK: - Public Settings
     
     var extendInsetsToGridView: Bool = true
+    var soundIsOn = true
     
     // MARK: - Public API's
     
+    // Takes an image and crops it into given ammount of square tiles peer column with same number of rows
+    // Then the initial points will be set and sound played
     func sliceTheImage(_ image: UIImage, into tilesPerRowAndColumn: Int) {
         fullImage = image
         tilesPerRow = tilesPerRowAndColumn
         
         let step = Int(image.size.width) / tilesPerRowAndColumn
         let size = CGSize(width: step, height: step)
-
+        
         for row in 0 ..< tilesPerRowAndColumn {
             for column in 0 ..< tilesPerRowAndColumn {
                 let point = CGPoint(x: column * step, y: row * step)
@@ -88,6 +95,8 @@ class GameVM {
         playSound(for: .puzzleStart)
     }
     
+    // Play sound only if the user didn't disabled it
+    // Change the name of the needed audio file depending on type of event that is happening
     func playSound(for type: SoundTypes) {
         if !soundIsOn { return }
         
@@ -108,6 +117,8 @@ class GameVM {
         play(sound: soundName)
     }
     
+    // Creates and returns a stackView with stackViews inside, that will have tiles inside them
+    // It should look like a full image
     func createImageStackView(ofSize size: CGRect) -> UIStackView {
         let mainStackView = UIStackView(frame: size)
         mainStackView.customizeSettings(vertical: true)
@@ -134,6 +145,7 @@ class GameVM {
         return randomPool
     }
     
+    // For example index 13 in 5x5 grid would be row= 3 and column=4
     func getRowAndColumn(from index: Int) -> (Int, Int) {
         let row = Int(index / tilesPerRow)
         let column = index % tilesPerRow
@@ -156,6 +168,7 @@ class GameVM {
         return tilesPerRow
     }
     
+    // Check if all of the cells are in correct position
     func checkIfPuzzleSolved(cells array: [CustomCollectionViewCell]) -> Bool {
         for cell in array {
             if !isCellInCorrectPlace(cell) {
@@ -165,6 +178,7 @@ class GameVM {
         return true
     }
     
+    // Check if index of the cell equals the converted index from image row- and columnValue
     func isCellInCorrectPlace(_ cell: CustomCollectionViewCell) -> Bool {
         if let image = cell.imageView.image as? GridImage {
             if cell.index == convertToIntFrom(row: image.row, column: image.column) {
@@ -174,12 +188,14 @@ class GameVM {
         return false
     }
     
+    // For example: Row 3 and Column 4 in 5x5 grid would give index of 13
     func convertToIntFrom(row: Int, column: Int) -> Int {
         return tilesPerRow * row + column
     }
     
     // MARK: - Scoring Public Methods
     
+    // If a move was made with at least one image add +1 move, play sound and subtract points
     func moveMade(_ withImage: Bool) {
         if withImage {
             moves += 1
@@ -188,16 +204,19 @@ class GameVM {
         }
     }
     
+    // Play sound, subtract penalty from score and add penalties += 1
     func hintUsed() {
         penalties += 1
         subtractPoints(pointsPerPenalty)
         playSound(for: .hint)
     }
     
+    // Calculate score and return it
     func getScore() -> Int {
         return (moves - getNumberOfTiles()) * pointsPerMove + penalties * pointsPerPenalty
     }
     
+    // Format all the score and points data into structs and return them
     func getInjectionData() -> (ScoreData, PointsData) {
         let scoreData = ScoreData(points: points, movesMade: moves, hintsUsed: penalties, tiles: getNumberOfTiles())
         let pointsData = PointsData(pointsPerMove: pointsPerMove, pointsPerPenalty: pointsPerPenalty, pointsPerTile: pointsPerTile)
@@ -219,6 +238,7 @@ class GameVM {
         updateScore()
     }
     
+    // Plays a file with a given name
     private func play(sound name: String) {
         let path = Bundle.main.path(forResource: name, ofType : "mp3")!
         let url = URL(fileURLWithPath : path)

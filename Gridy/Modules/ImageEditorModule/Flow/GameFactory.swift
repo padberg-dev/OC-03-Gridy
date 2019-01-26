@@ -11,7 +11,6 @@ import UIKit
 class GameFactory {
     
     static func pushIn(navigator: UINavigationController, with image: UIImage) {
-        
         let imageEditorController = UIStoryboard(name: "Game", bundle: nil).instantiateInitialViewController() as! ImageEditorViewController
         let gameFlowController = GameFlowController(navigator: navigator)
         let viewModel = GameVM()

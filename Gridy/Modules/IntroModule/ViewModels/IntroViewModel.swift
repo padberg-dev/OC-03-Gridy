@@ -10,6 +10,7 @@ import Foundation
 
 class IntroViewModel {
     
+    // Array of images names in xcassets file
     private let photosNames = [
         "office", "puppy", "lion", "eiffel", "pizza"
     ]

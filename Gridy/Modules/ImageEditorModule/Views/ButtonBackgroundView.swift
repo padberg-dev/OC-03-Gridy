@@ -9,7 +9,7 @@
 import UIKit
 
 class ButtonBackgroundView: UIView {
-
+    
     override func awakeFromNib() {
         self.backgroundColor = StyleGuide.yellowLight.withAlphaComponent(0.05)
         self.layer.cornerRadius = self.bounds.width / 4

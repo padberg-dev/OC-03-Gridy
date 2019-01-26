@@ -20,6 +20,7 @@ extension UIButton {
         self.setTitleColor(StyleGuide.navy, for: .normal)
     }
     
+    // Enables and disenables button and changes its alpha value accordingly
     func makeEnabled(_ enabled: Bool) {
         self.isEnabled = enabled
         self.animateAlpha(to: (enabled ? 1.0 : 0.3))

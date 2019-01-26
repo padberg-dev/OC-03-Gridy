@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>In order to play sounds you need to allow access to your microphone. Do you want to be able to hear the sounds?</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>The app needs your permission to choose photos from your media library. Do you want to play Gridy with your own photos?</string>
 	<key>NSCameraUsageDescription</key>

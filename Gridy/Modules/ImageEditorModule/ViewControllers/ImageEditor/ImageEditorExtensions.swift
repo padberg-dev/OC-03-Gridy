@@ -30,7 +30,6 @@ extension ImageEditorViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         checkIfCanContinue()
-        viewModel.playSound(for: .imageMove)
     }
 }
 
@@ -42,6 +41,7 @@ extension ImageEditorViewController: CustomScrollViewRotationDelegate {
         return scrollView.imageView
     }
     
+    // Rotate passed view by passed radiants and show in degrees in a label
     func scrollViewIsRotating(_ scrollView: CustomScrollView, view: UIView, by radiants: CGFloat) {
         let transform = CGAffineTransform(rotationAngle: radiants)
         view.transform = transform
@@ -53,6 +53,7 @@ extension ImageEditorViewController: CustomScrollViewRotationDelegate {
         checkIfCanContinue()
     }
     
+    // If snapping is chosen by the user, use snappingDegree as degree otherwise 0
     func scrollView(_ scrollView: CustomScrollView, rotationSnapsToAngle inAngularDegrees: CGFloat) -> CGFloat {
         return isSnapingAllowed ? CGFloat(snappingDegree) : 0
     }

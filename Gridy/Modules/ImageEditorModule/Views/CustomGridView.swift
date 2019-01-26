@@ -26,6 +26,8 @@ class CustomGridView: UIView {
     
     // MARK: - Public API
     
+    // Change border color for a blink and change it back to black
+    // Change the size of the border so that it covers complete view
     func colorBorder(with color: UIColor) {
         layer.borderColor = color.cgColor
         layer.borderWidth = frame.size.width / 2
@@ -36,6 +38,7 @@ class CustomGridView: UIView {
         }
     }
     
+    // Change number of tiles but only if is different than current so that it won't be redrawn every time
     func setNumberOf(tiles: Int) {
         if gridTilesPerRow != tiles {
             gridTilesPerRow = tiles
@@ -48,6 +51,8 @@ class CustomGridView: UIView {
     
     // MARK: - Draw
     
+    // Draws  2 dashed lines with offsets from left to right and then inverts its points and draws from top to bottom
+    // I does that (tilesPerRow - 1) times
     override func draw(_ rect: CGRect) {
         let tileLength = bounds.width / CGFloat(gridTilesPerRow)
         let fullWidth = bounds.width
@@ -75,6 +80,7 @@ class CustomGridView: UIView {
     
     // MARK: - Custom Methods
     
+    // Returns a linePath from origin to target with set dash offset
     private func calculateLinePath(from origin: CGPoint, to targetPoint: CGPoint, withOffset offset: CGFloat = 0) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: origin)

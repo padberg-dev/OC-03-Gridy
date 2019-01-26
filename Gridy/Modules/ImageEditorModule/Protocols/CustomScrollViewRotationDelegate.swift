@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Custom protocol for scrollViews rotation functionalities
 @objc protocol CustomScrollViewRotationDelegate: class {
     
     func viewForRotation(in scrollView: CustomScrollView) -> UIView?

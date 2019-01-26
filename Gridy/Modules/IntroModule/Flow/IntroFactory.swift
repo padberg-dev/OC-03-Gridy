@@ -11,7 +11,6 @@ import UIKit
 class IntroFactory {
     
     static func showIn(window: UIWindow) {
-        
         let navigationController = UINavigationController()
         navigationController.isNavigationBarHidden = true
         

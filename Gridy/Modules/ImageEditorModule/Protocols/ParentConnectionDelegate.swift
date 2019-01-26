@@ -8,7 +8,9 @@
 
 import UIKit
 
+// Protocol for sending data from child view to parent VC
 protocol ParentConnectionDelegate: class {
+    
     func didMoveAnImageOnTheGrid(withImage: Bool)
     func didStartArrowAnimation(with index: Int)
     func shouldResizeArrowFrame(to point: CGPoint)

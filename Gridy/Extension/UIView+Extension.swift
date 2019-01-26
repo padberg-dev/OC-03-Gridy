@@ -42,7 +42,6 @@ extension UIView {
     }
     
     // Changes each view's alpha to 0 and views that are hidden will be shown(alpha = 1). That only applies to contentView(view containing next VC)
-    // Prepares views to be cleaned after animation -> next method -> removeTransparentViews()
     func hideNotNeededUI() {
         UIView.animate(withDuration: 0.6) {
             self.subviews.forEach { (view) in
@@ -50,15 +49,6 @@ extension UIView {
             }
         }
         
-    }
-    
-    // Cleans the UI by removing all views, which alpha is 0, from theirs superviews
-    func removeTransparentViews() {
-        self.subviews.forEach { (view) in
-            if view.alpha == 0 {
-                view.removeFromSuperview()
-            }
-        }
     }
     
     // Depending on the orientation the view will be moved up or right out of the screen
@@ -71,6 +61,9 @@ extension UIView {
         self.isHidden = false
     }
     
+    // Creates a new imageView inside of a UIView from a given imageView
+    // The passed imageView will be removed from its superview
+    // Its needed for taking imageView from a stackView and creating fresh imageView on the same spot but independent of the stackView.
     func createNewView(from imageView: UIView) -> UIView {
         let oldFrame = imageView.convert(imageView.bounds, to: self)
         
@@ -91,7 +84,8 @@ extension UIView {
     
     // This method takes itemIndexes from 2 collectionViews and creates an animation of exchanging Images.
     // After the animation Images will swap places in the collectionViews.
-    // Posible to run the animation with only 1 image.
+    // Posible to run the animation with only 1 image. If None of the cells has an image return false
+    // The returned Boll is needed for scoring if no image swap has taken place don't subtract points
     func moveImages(from startCollectionView: UICollectionView, with startIndex: Int, to endCollectionView: UICollectionView, with endIndex: Int) -> Bool {
         guard let startCell = startCollectionView.cellForItem(at: IndexPath(item: startIndex, section: 0)) as? CustomCollectionViewCell else { fatalError("!!!") }
         guard let endCell = endCollectionView.cellForItem(at: IndexPath(item: endIndex, section: 0)) as? CustomCollectionViewCell else { fatalError("!!!") }
@@ -100,6 +94,8 @@ extension UIView {
         
         let startHasImage = startCell.hasImage
         let endHasImage = endCell.hasImage
+        
+        if !startHasImage && !endHasImage { return false }
         
         let startPoint = startCollectionView.convert(startCell.frame.origin, to: self)
         let endPoint = endCollectionView.convert(endCell.frame.origin, to: self)
@@ -144,9 +140,13 @@ extension UIView {
             startCell.hasImage = endHasImage
             endCell.hasImage = startHasImage
         }
-        return startHasImage || endHasImage
+        return true
     }
     
+    // Creates a preview-UIView with full image as a hint
+    // It includes bluredOut background, extended rect as a border for the image and a progress bar with time left. Some basic animations involved
+    // All is created programmatically hence a lot of code
+    // After 2.4 seconds it will be removed from the superView
     func createPreview(of image: UIImage, withGridFrame gridFrame: CGRect, isPortraitMode: Bool, above: UIView) {
         let extendBy: CGFloat = 25.0
         

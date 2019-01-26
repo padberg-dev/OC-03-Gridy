@@ -10,21 +10,27 @@ import UIKit
 
 class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // MARK: - Attributes
+    
+    // Delegate for parent child connection
     weak var parentConnectionDelegate: ParentConnectionDelegate?
     
+    var gameViewModel: GameVM!
     var layout: UICollectionViewFlowLayout!
-    var numberOfTiles: Int = 0
+    
+    // Whole gestureRecognizer logic same as in in PuzzleGameViewController
+    var startingGridIndex: Int!
+    var gridIndexOld: Int?
     var panGesture: UIPanGestureRecognizer! {
         didSet {
             self.addGestureRecognizer(panGesture)
         }
     }
-    var startingGridIndex: Int!
-    var gridIndexOld: Int?
-    var gameViewModel: GameVM!
     
     // MARK: - Gesture Recognizer Methods
     
+    // Very similar to handlePan(:) in PuzzleGameViewController
+    // Difference is that is uses delegate for some of the actions
     @objc private func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
         switch panRecognizer.state {
         case .began:
@@ -48,6 +54,7 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
                 gridIndexOld = nil
             }
         case .ended:
+            cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.clearHighlight()
             parentConnectionDelegate?.didEndArrowAnimation(extended: false)
             
             if gridIndexOld != nil {
@@ -77,17 +84,13 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         return true
     }
     
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.clearHighlight()
-    }
-    
     // MARK: - UICollectionViewDataSource Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfTiles
+        return gameViewModel.getNumberOfTiles()
     }
     
+    // cell.index explained in CustomCollectionViewCell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playfieldCell", for: indexPath) as? CustomCollectionViewCell else {
             fatalError("NO playfieldCell??")
@@ -99,6 +102,9 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     // MARK: - Custom Public Mehtods
     
+    // Mostly prep work cellHeight
+    // Because size of sliced tiles has to be whole numbers(but still CGFloat) there will be some automatic rounding involved that results in differences between gridViewTile-size and imageTile-size
+    // The edgeInsets and lineSpacing will be set depending on differenceOfPixels between grid- and image-Tiles
     func prepareGridFor(tilesPerRow: CGFloat) {
         let height = self.frame.height
         let cellHeight: CGFloat = CGFloat(Int(height / tilesPerRow))
@@ -110,8 +116,6 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         layout.sectionInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = lineSpacing
         layout.minimumInteritemSpacing = 0
-            
-        numberOfTiles = Int(tilesPerRow * tilesPerRow)
         
         self.allowsSelection = true
         self.isScrollEnabled = false

@@ -9,7 +9,9 @@
 import UIKit
 
 extension UINavigationController {
-    
+    // For autorotate blocking
+    // In a navigationController shouldAutorotate-attribute of each ViewController will be overrided by navigationontroller's shouldAutorotate
+    // Change it so that navigationController will always ask it vissibleController for shouldAutorotate-attribute
     override open var shouldAutorotate: Bool {
         get {
             if let visibleVC = visibleViewController {

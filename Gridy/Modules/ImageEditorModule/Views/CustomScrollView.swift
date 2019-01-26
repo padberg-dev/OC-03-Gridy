@@ -19,16 +19,21 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Delegate-Implementation Variables
     
+    // Custom delegate for rotation
     weak var rotationDelegate: CustomScrollViewRotationDelegate?
     
+    // RotationGestureRecognizer used for the delegate
     var rotationGestureRecognizer: UIRotationGestureRecognizer?
+    // Default rotationGestureRecognizer's rotation is not cummulative so..
     var rotationIsCumulative: Bool = false
     var cumulativeRotation: CGFloat = 0
-    var tempRotation: CGFloat = 0
     
+    // For snapping
+    var tempRotation: CGFloat = 0
     var isSnapingEnabled: Bool = false
     var snappingAngle: CGFloat = 0
     
+    // If rotationEnabled is set to true create and assign a gesture recognizer to self
     var isRotationEnabled: Bool {
         set {
             if newValue {
@@ -54,12 +59,15 @@ class CustomScrollView: UIScrollView {
         
         imageView.image = image
         
+        // Constraints were set to high for interfaceBuilder not to show warnings
         imageHeightConstraint.priority = .required
         imageWidthConstraint.priority = .required
     }
     
     // MARK: - Custom Methods
     
+    // Set content size to minimum possible size that fits into grid
+    // Set minimum scale value and multiply contentSize by scale
     func setContentSize(toFitInGrid size: CGSize? = nil) {
         if let image = imageView.image {
             var newSize = calculateMinSizeToFit(basedOn: (image.size))
@@ -72,7 +80,6 @@ class CustomScrollView: UIScrollView {
                 let scaleY = round(gridSize.height / newSize.height * 10) / 10
                 minimumZoomScale = max(scaleX, scaleY)
             }
-            
             newSize.width *= zoomScale
             newSize.height *= zoomScale
             
@@ -80,6 +87,9 @@ class CustomScrollView: UIScrollView {
         }
     }
     
+    // Animates rotation to 0 degree
+    // Zooming after that will move image to nearest edges if image is in wrong place
+    // And calling delegate after that will fire checkIfCanContinue() in parent VC
     func setRotationToZero() {
         UIView.animate(withDuration: 0.6, animations: {
             self.rotationDelegate?.viewForRotation(in: self)?.transform = .identity
@@ -94,6 +104,7 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Custom Private Methods
     
+    // Calculates ratios of image and screen sizes and calculates minimum size to fit the screen
     private func calculateMinSizeToFit(basedOn imageSize: CGSize) -> CGSize {
         let screenSize = UIScreen.main.bounds
         
@@ -117,12 +128,13 @@ class CustomScrollView: UIScrollView {
     // MARK: - Delegate-Implementation Methods
     
     @objc private func handleRotation(byReactingTo rotationRecognizer: UIRotationGestureRecognizer) {
+        // Take given view as view for rotation
         if let rotatingView = rotationDelegate?.viewForRotation(in: self) {
-            
             if isZooming { return }
             
             switch rotationRecognizer.state {
             case .began:
+                // If a snappingAngle in parentVC is set, change internal isSnapingEnabled to true that will change calculations
                 if let angle = rotationDelegate?.scrollView?(self, rotationSnapsToAngle: snappingAngle) {
                     if abs(angle) > 0 {
                         isSnapingEnabled = true
@@ -132,16 +144,23 @@ class CustomScrollView: UIScrollView {
                     }
                 }
                 
+                // If cummulative rotation is allowed assign cummulative rotation to rotation recognizer
+                // But if snappingIsEnabled don't as now cummulativeRotation will have to be calculated differently
                 if rotationDelegate?.scrollView?(self, cummulativeRotation: (rotationIsCumulative)) != nil, !isSnapingEnabled {
                     rotationRecognizer.rotation = cumulativeRotation
                 }
                 
+                // Inform parentVC that rotationBegun
                 rotationDelegate?.scrollViewDidBeginRotation?(self, with: rotatingView, having: rotationRecognizer.rotation)
             case .changed:
                 let fullRotation = rotationRecognizer.rotation
                 
                 var rotation: CGFloat = 0
                 if isSnapingEnabled {
+                    // The cummulative rotation is:
+                    // fullRotation rounded to snapping angle
+                    // Plus the rotation that was before
+                    // This whole rotation set to tempRotation
                     rotation = (round(fullRotation / snappingAngle.convertToRadiants()) * snappingAngle.convertToRadiants())
                     rotation += cumulativeRotation
                     tempRotation = rotation
@@ -149,13 +168,16 @@ class CustomScrollView: UIScrollView {
                     rotation = fullRotation
                 }
                 
+                // Inform parentVC that now the view is being rotated
                 rotationDelegate?.scrollViewIsRotating(self, view: rotatingView, by: rotation)
             case .ended:
+                // If snappingIsEnabled assign tempRotation, if not recognizer.rotation, to cummulative varaiable
                 if !isSnapingEnabled {
                     cumulativeRotation = reduceRadiants(rotationRecognizer.rotation)
                 } else {
                     cumulativeRotation = reduceRadiants(tempRotation)
                 }
+                // Inform parentVC that rotation has ended
                 rotationDelegate?.scrollViewDidEndRotation?(self, with: rotatingView, rotatedBy: rotationRecognizer.rotation)
             case .cancelled:
                 break
@@ -169,6 +191,7 @@ class CustomScrollView: UIScrollView {
     
     // MARK: - Custom Helper Methods
     
+    // Reduce radiants to one circle? => 700 -> 340 
     private func reduceRadiants(_ radiants: CGFloat) -> CGFloat {
         let twoPi = 2 * CGFloat.pi
         

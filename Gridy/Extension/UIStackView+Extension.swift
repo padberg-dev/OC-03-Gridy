@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIStackView {
-    
+    // Aplly same setting for many stakViews
     func customizeSettings(vertical: Bool = false) {
         self.axis = vertical ? .vertical : .horizontal
         self.spacing = 0
@@ -17,6 +17,8 @@ extension UIStackView {
         self.alignment = .fill
     }
     
+    // Animates StackView with image tiles to extend its frame to the edges of the screen - 5 points each size
+    // At the same time animate spacing between imageTiles so it looks like a full image is sliced into tiles
     func animateSlicing(in view: UIView, to point: CGPoint, extendBy pointsDistance: CGFloat) {
         let numOfStacks = numberOfStackViewsInside
         
@@ -40,6 +42,7 @@ extension UIStackView {
         }
     }
     
+    // After slicing animation each of the tiles will be moved to next collectionView but in a randomly generated order so -> this method returns a random UIView from it child stackView
     func getRandomImageViewFromInsideStackView(_ number: Int) -> UIView? {
         if let rowStackView = self.subviews[number] as? UIStackView {
             let numberOfSubviews = rowStackView.subviews.count
