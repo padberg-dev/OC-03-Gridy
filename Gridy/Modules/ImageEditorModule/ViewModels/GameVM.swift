@@ -239,14 +239,17 @@ class GameVM {
     }
     
     // Plays a file with a given name
+    // Aysnc dispatch so that loading the sound doesn't block main thread
     private func play(sound name: String) {
-        let path = Bundle.main.path(forResource: name, ofType : "mp3")!
-        let url = URL(fileURLWithPath : path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.play()
-        } catch {
-            print(error.localizedDescription)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let path = Bundle.main.path(forResource: name, ofType : "mp3")!
+            let url = URL(fileURLWithPath : path)
+            do {
+                self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                self.audioPlayer?.play()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }

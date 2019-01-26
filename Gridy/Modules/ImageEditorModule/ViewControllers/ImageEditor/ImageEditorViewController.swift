@@ -130,11 +130,9 @@ class ImageEditorViewController: UIViewController {
     // Check if selectButton should be enabled and if not show error label and errorView
     func checkIfCanContinue() {
         if checkIfImageOutOfGrid() {
-            selectButton.isEnabled = true
-            selectButton.alpha = 1
+            selectButton.makeEnabled(true)
         } else {
-            selectButton.isEnabled = false
-            selectButton.alpha = 0.2
+            selectButton.makeEnabled(false)
             errorView.animateAlpha(andBackTo: 0)
             errorLabel.animateAlpha(andBackTo: 0)
         }
@@ -203,11 +201,11 @@ class ImageEditorViewController: UIViewController {
     
     // MARK: - Action Methods
     
-    // Double check if image isn't out of grid
+    // Double check if image isn't out of grid and it isn't moving
     // Then take a snapshot of the scrollView and crops only the part covered by a grid
     // Cropped image will be sliced intro tiles and put into a stackView for animation
     @IBAction func selectButtonTapped(_ sender: UIButton) {
-        if checkIfImageOutOfGrid() {
+        if checkIfImageOutOfGrid(), !scrollView.isDecelerating {
             if let snapshotImage = Utilities.takeSnapshot(from: scrollView) {
                 if let croppedImage = Utilities.cropImage(snapshotImage, to: gridView.frame) {
                     

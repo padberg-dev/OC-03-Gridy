@@ -16,6 +16,11 @@ extension ImageEditorViewController: UIScrollViewDelegate {
         return self.scrollView.contentView
     }
     
+    // To not allow to continue while the image is moving disenable selectButton
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        selectButton.makeEnabled(false)
+    }
+    
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {        
         resetUI()
         checkIfCanContinue()
@@ -25,11 +30,11 @@ extension ImageEditorViewController: UIScrollViewDelegate {
         if !decelerate {
             checkIfCanContinue()
         }
-        viewModel.playSound(for: .imageMove)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         checkIfCanContinue()
+        viewModel.playSound(for: .imageMove)
     }
 }
 

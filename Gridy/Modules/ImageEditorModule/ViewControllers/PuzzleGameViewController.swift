@@ -115,7 +115,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         case .ended:
             // Make arrow disappear and clear highlights
             // If pan ended over playfieldCollectionView move images
-            // Remove chosen image from imageTiles and from collectionView
+            // Remove chosen image from imageTiles and from collectionView if playfieldCell is empty otherwise swap them
             // Then check if all tiles are on playfield grid
             showView?.animatedRemoval()
             
@@ -128,9 +128,11 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
                 let wasImageMoved = view.moveImages(from: collectionView, with: startingGridIndex, to: playfieldCollectionView, with: gridIndexOld!)
                 gameViewModel.moveMade(wasImageMoved)
                 
-                imageTiles.remove(at: startingGridIndex!)
-                collectionView.deleteItems(at: [IndexPath(item: startingGridIndex!, section: 0)])
-                checkIfAllTilesOnGrid()
+                if !cell.hasImage {
+                    imageTiles.remove(at: startingGridIndex!)
+                    collectionView.deleteItems(at: [IndexPath(item: startingGridIndex!, section: 0)])
+                    checkIfAllTilesOnGrid()
+                }
             }
         case .failed:
             print("FAILED")
@@ -198,7 +200,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
     // Change border color of the playfield accordingly for a sec
     // If puzzle is solved fire finish animation
     private func puzzleCheck(immediately: Bool = false) {
-        let delay = immediately ? 0 : 0.4
+        let delay = immediately ? 0 : 0.5
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             let check = self.checkIfPuzzleSolved()
