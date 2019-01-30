@@ -24,7 +24,7 @@ class ImageEditorView: UIView {
     
     @IBOutlet weak var angleLabelCenterYConstraint: NSLayoutConstraint!
     @IBOutlet weak var angleLabelCenterXConstraint: NSLayoutConstraint!
-    @IBOutlet weak var angleLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var angleLabelTopTOSoundButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var angleLabelLeadingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var soundButtonCenterYTOResetButtonConstraint: NSLayoutConstraint!
@@ -67,7 +67,7 @@ class ImageEditorView: UIView {
         
         gridSliderTOnumberOfRowsYConstraint.constant = isPortraitMode ? 20 : 5
         
-        angleLabelTopConstraint.isActive = isPortraitMode
+        angleLabelTopTOSoundButtonConstraint.isActive = isPortraitMode
         angleLabelLeadingConstraint.isActive = !isPortraitMode
         angleLabelCenterXConstraint.isActive = isPortraitMode
         angleLabelCenterYConstraint.isActive = !isPortraitMode

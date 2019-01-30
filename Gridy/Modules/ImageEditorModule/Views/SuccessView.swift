@@ -48,28 +48,18 @@ class SuccessView: UIView {
     }
     
     // Populates all labels with data
-    func injectData(score: ScoreData, points: PointsData) {
-        scoreBigLabel.text = String(score.points)
-        scoreSmallLabel.text = String(score.points)
-        
+    func injectData(successData: SuccessViewData) {
         let descriptions = detailsStackView.subviews[0].subviews as? [UILabel]
         let pointsPerX = detailsStackView.subviews[2].subviews as? [UILabel]
         let calculations = detailsStackView.subviews[4].subviews as? [UILabel]
         
-        descriptions?[0].text = "\(score.tiles) tiles"
-        descriptions?[1].text = "Min. \(score.tiles) moves"
-        descriptions?[2].text = "\(score.movesMade) moves made"
-        descriptions?[3].text = "\(score.hintsUsed) hints used"
-        
-        pointsPerX?[0].text = "\(points.pointsPerTile)"
-        pointsPerX?[1].text = "\(-points.pointsPerMove)"
-        pointsPerX?[2].text = "\(points.pointsPerMove)"
-        pointsPerX?[3].text = "\(points.pointsPerPenalty)"
-        
-        calculations?[0].text = "\(points.pointsPerTile * score.tiles)"
-        calculations?[1].text = "\(-points.pointsPerMove * score.tiles)"
-        calculations?[2].text = "\(points.pointsPerMove * score.movesMade)"
-        calculations?[3].text = "\(points.pointsPerPenalty * score.hintsUsed)"
+        for i in 0 ..< 4 {
+            descriptions?[i].text = successData.descriptions[i]
+            pointsPerX?[i].text = successData.pointsPerX[i]
+            calculations?[i].text = successData.calculations[i]
+        }
+        scoreBigLabel.text = successData.endScore
+        scoreSmallLabel.text = successData.endScore
     }
     
     // 3 consecutive animations happening each after another to create a good looking effect

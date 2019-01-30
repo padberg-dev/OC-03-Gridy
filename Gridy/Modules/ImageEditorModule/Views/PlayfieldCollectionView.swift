@@ -33,10 +33,6 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     // Difference is that is uses delegate for some of the actions
     @objc private func handlePan(byReactingTo panRecognizer: UIPanGestureRecognizer) {
         switch panRecognizer.state {
-        case .began:
-            break
-        case .cancelled:
-            break
         case .changed:
             let movePoint = panRecognizer.location(in: self)
             parentConnectionDelegate?.shouldResizeArrowFrame(to: movePoint)
@@ -63,21 +59,21 @@ class PlayfieldCollectionView: UICollectionView, UICollectionViewDelegate, UICol
                 gameViewModel.moveMade(wasImageMoved)
                 parentConnectionDelegate?.didMoveAnImageOnTheGrid(withImage: wasImageMoved)
             }
-        case .failed:
-            print("FAILED")
-        case . possible:
-            print("POSIBLE")
+        case .began, .cancelled, .failed, .possible:
+            break
         }
     }
     
     // MARK: - UICollectionViewDelegate Methods
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.highlight()
-        
         startingGridIndex = indexPath.item
+        collectionView.cellForItem(at: indexPath)?.highlight()
         parentConnectionDelegate?.didStartArrowAnimation(with: indexPath.item)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: indexPath)?.clearHighlight()
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {

@@ -217,10 +217,10 @@ class GameVM {
     }
     
     // Format all the score and points data into structs and return them
-    func getInjectionData() -> (ScoreData, PointsData) {
+    func getInjectionData() -> SuccessViewData {
         let scoreData = ScoreData(points: points, movesMade: moves, hintsUsed: penalties, tiles: getNumberOfTiles())
         let pointsData = PointsData(pointsPerMove: pointsPerMove, pointsPerPenalty: pointsPerPenalty, pointsPerTile: pointsPerTile)
-        return (scoreData, pointsData)
+        return SuccessViewData(score: scoreData, points: pointsData)
     }
     
     // MARK: - Private Methods

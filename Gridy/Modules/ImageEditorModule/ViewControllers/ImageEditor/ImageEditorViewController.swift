@@ -25,6 +25,7 @@ class ImageEditorViewController: UIViewController {
     @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var snappingButton: UIButton!
     @IBOutlet weak var snapDegreeButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var snapDegreeView: UIView!
     
     // MARK: - Dependencies
@@ -79,6 +80,7 @@ class ImageEditorViewController: UIViewController {
         
         scrollView.initialize(with: photoImage)
         initializeGameVC()
+        backButton.styleBackButton()
     }
     
     override var shouldAutorotate: Bool {
@@ -253,23 +255,11 @@ class ImageEditorViewController: UIViewController {
     
     // Change the degree that the rotation will snap to. The image will also be changed
     @IBAction func snapDegreeButtonTapped(_ sender: UIButton) {
-        var tag = sender.tag + 1
-        var degree = 0
+        let snapDegree = SnapDegrees(buttonTag: sender.tag)
         
-        switch tag {
-        case 1:
-            degree = 30
-        case 2:
-            degree = 45
-        case 3:
-            degree = 90
-        default:
-            tag = 0
-            degree = 15
-        }
-        snapDegreeButton.setBackgroundImage(UIImage(named: String(degree)), for: .normal)
-        snappingDegree = degree
-        sender.tag = tag
+        snapDegreeButton.setBackgroundImage(UIImage(named: snapDegree.imageName), for: .normal)
+        snappingDegree = snapDegree.degree
+        sender.tag = snapDegree.tag
     }
     
     // Rotates Image back to 0 degree

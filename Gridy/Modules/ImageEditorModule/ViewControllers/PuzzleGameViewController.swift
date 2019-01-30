@@ -93,8 +93,6 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         switch panRecognizer.state {
         case .began:
             collectionView.cellForItem(at: IndexPath(item: startingGridIndex, section: 0))?.highlight()
-        case .cancelled:
-            break
         case .changed:
             // Converts location of pan to playfieldCollectionView
             // Resize Arrow
@@ -134,10 +132,8 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
                     checkIfAllTilesOnGrid()
                 }
             }
-        case .failed:
-            print("FAILED")
-        case . possible:
-            print("POSIBLE")
+        case .cancelled, .failed, .possible:
+            break
         }
     }
     
@@ -352,8 +348,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         successView = SuccessView(frame: view.frame)
         successView?.initialize()
         
-        let (scoreData, pointsData) = gameViewModel.getInjectionData()
-        successView?.injectData(score: scoreData, points: pointsData)
+        successView?.injectData(successData: gameViewModel.getInjectionData())
         successView?.conectFlowController(flow: flow)
         
         view.addSubview(successView!)

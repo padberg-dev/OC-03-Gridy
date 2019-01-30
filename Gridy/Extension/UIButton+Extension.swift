@@ -20,6 +20,17 @@ extension UIButton {
         self.setTitleColor(StyleGuide.navy, for: .normal)
     }
     
+    func styleBackButton() {
+        self.backgroundColor = StyleGuide.grey
+        
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = StyleGuide.navy.cgColor
+        
+        self.layer.cornerRadius = self.frame.height / 4
+        
+        self.setTitleColor(StyleGuide.navy, for: .normal)
+    }
+    
     // Enables and disenables button and changes its alpha value accordingly
     func makeEnabled(_ enabled: Bool) {
         self.isEnabled = enabled

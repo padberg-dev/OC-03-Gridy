@@ -59,6 +59,7 @@
 		0174E1AA21FA9D930089A109 /* glitch.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0174E19F21FA9D930089A109 /* glitch.mp3 */; };
 		0174E1AB21FA9D930089A109 /* youWin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0174E1A021FA9D930089A109 /* youWin.mp3 */; };
 		01995BB321C1B6ED00A4275D /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01995BB221C1B6ED00A4275D /* IntroViewModel.swift */; };
+		019FE1A02201A050002ABE43 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019FE19F2201A050002ABE43 /* Constants.swift */; };
 		01A2010D21FA34A300E4742F /* ImageEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2010C21FA34A300E4742F /* ImageEditorView.swift */; };
 		01B0033D21E24777002ED09C /* PlayfieldCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */; };
 		01D1F12121ECF91600B5908A /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */; };
@@ -122,6 +123,7 @@
 		0174E19F21FA9D930089A109 /* glitch.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = glitch.mp3; sourceTree = "<group>"; };
 		0174E1A021FA9D930089A109 /* youWin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = youWin.mp3; sourceTree = "<group>"; };
 		01995BB221C1B6ED00A4275D /* IntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
+		019FE19F2201A050002ABE43 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		01A2010C21FA34A300E4742F /* ImageEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorView.swift; sourceTree = "<group>"; };
 		01B0033C21E24777002ED09C /* PlayfieldCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayfieldCollectionView.swift; sourceTree = "<group>"; };
 		01D1F12021ECF91600B5908A /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				012966A821D4D42600D0549C /* GameVM.swift */,
+				019FE19F2201A050002ABE43 /* Constants.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				013A515821EB7D4200CE6ED2 /* UIScrollView+Extension.swift in Sources */,
 				01225A7321DE455D00608CDA /* UINavigationController+Extension.swift in Sources */,
 				0174E19421FA723F0089A109 /* PuzzleGameView.swift in Sources */,
+				019FE1A02201A050002ABE43 /* Constants.swift in Sources */,
 				012D03ED21DCC15600663152 /* PuzzleGameViewController.swift in Sources */,
 				0120093921F5E42100BC7AF5 /* UIProgressView+Extension.swift in Sources */,
 				012966A921D4D42600D0549C /* GameVM.swift in Sources */,
