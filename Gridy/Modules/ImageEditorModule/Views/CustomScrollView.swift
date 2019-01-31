@@ -89,10 +89,12 @@ class CustomScrollView: UIScrollView {
     
     // Animates rotation to 0 degree
     // Zooming after that will move image to nearest edges if image is in wrong place
+    // Sets cummulative rotation to 0
     // And calling delegate after that will fire checkIfCanContinue() in parent VC
     func setRotationToZero() {
         UIView.animate(withDuration: 0.6, animations: {
             self.rotationDelegate?.viewForRotation(in: self)?.transform = .identity
+            self.cumulativeRotation = 0
         }) { [weak self] (_) in
             UIView.animate(withDuration: 0.3, animations: {
                 self?.setZoomScale((self?.zoomScale)!, animated: true)

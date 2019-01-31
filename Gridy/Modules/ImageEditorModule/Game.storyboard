@@ -282,8 +282,8 @@
                                     <action selector="snapDegreeButtonTapped:" destination="gVS-aK-b8D" eventType="touchUpInside" id="9W4-DM-VlH"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQg-Nt-gU5">
-                                <rect key="frame" x="152" y="450" width="16.5" height="26"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQg-Nt-gU5">
+                                <rect key="frame" x="145.5" y="450" width="29.5" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="JXA-Fb-vfX">
                                         <variation key="heightClass=regular-widthClass=regular" constant="36"/>
@@ -434,11 +434,11 @@
                                 <exclude reference="L94-65-e7F"/>
                                 <exclude reference="Lfx-jU-L91"/>
                                 <exclude reference="cqz-n2-kyY"/>
+                                <exclude reference="3Wc-ld-Mud"/>
+                                <exclude reference="ThD-qS-gf2"/>
                                 <exclude reference="D0h-vZ-1bK"/>
                                 <exclude reference="OZF-f4-0Qj"/>
                                 <exclude reference="hLH-vI-5TM"/>
-                                <exclude reference="3Wc-ld-Mud"/>
-                                <exclude reference="ThD-qS-gf2"/>
                                 <exclude reference="PFZ-ED-shU"/>
                                 <exclude reference="nXv-XA-71c"/>
                                 <exclude reference="r5r-G1-TEu"/>
@@ -511,15 +511,15 @@
                                 <exclude reference="GyD-NJ-2LP"/>
                                 <include reference="cqz-n2-kyY"/>
                                 <exclude reference="jDm-1y-jgw"/>
+                                <exclude reference="3Wc-ld-Mud"/>
+                                <exclude reference="ThD-qS-gf2"/>
+                                <include reference="fsd-bd-hxh"/>
                                 <include reference="D0h-vZ-1bK"/>
                                 <include reference="OZF-f4-0Qj"/>
                                 <exclude reference="UOx-lu-hUX"/>
                                 <exclude reference="YgS-Uu-FML"/>
                                 <include reference="hLH-vI-5TM"/>
                                 <exclude reference="uJb-mV-72I"/>
-                                <exclude reference="3Wc-ld-Mud"/>
-                                <exclude reference="ThD-qS-gf2"/>
-                                <include reference="fsd-bd-hxh"/>
                                 <include reference="nXv-XA-71c"/>
                                 <exclude reference="r5r-G1-TEu"/>
                             </mask>
@@ -554,11 +554,11 @@
                                 <include reference="PzR-Lp-A42"/>
                                 <include reference="L94-65-e7F"/>
                                 <include reference="Lfx-jU-L91"/>
+                                <include reference="3Wc-ld-Mud"/>
+                                <include reference="ThD-qS-gf2"/>
                                 <include reference="D0h-vZ-1bK"/>
                                 <include reference="OZF-f4-0Qj"/>
                                 <include reference="hLH-vI-5TM"/>
-                                <include reference="3Wc-ld-Mud"/>
-                                <include reference="ThD-qS-gf2"/>
                                 <include reference="PFZ-ED-shU"/>
                                 <exclude reference="nXv-XA-71c"/>
                                 <include reference="r5r-G1-TEu"/>
