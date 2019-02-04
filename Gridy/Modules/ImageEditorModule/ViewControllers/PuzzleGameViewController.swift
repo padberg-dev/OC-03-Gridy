@@ -383,8 +383,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if imagesStillInCollectionView {
             // Hint from collectionView to playfield
-            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: false)
-            cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CustomCollectionViewCell
+            cell = collectionView.visibleCells[0] as? CustomCollectionViewCell
         } else {
             // No more images in collectionView -> hint in Playfield
             let cells = getCellsWithImages()
@@ -396,7 +395,7 @@ class PuzzleGameViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if let image = cell?.imageView.image as? GridImage {
             if imagesStillInCollectionView {
-                startingGridIndex = 0
+                startingGridIndex = (collectionView.indexPath(for: cell))?.item
             } else {
                 startingGridIndexPlayfield = playfieldCollectionView.indexPath(for: cell)?.item
             }
