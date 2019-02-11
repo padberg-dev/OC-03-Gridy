@@ -15,9 +15,12 @@ class IntroViewModel {
         "office", "puppy", "lion", "eiffel", "pizza"
     ]
     
+    // Unit Test FailCase
+//    private let photosNames = ["noName", ""]
+    
     // MARK: - Public API
     
     func chooseRandomPhoto() -> String {
-        return photosNames.randomElement()!
+        return photosNames.randomElement() ?? ""
     }
 }

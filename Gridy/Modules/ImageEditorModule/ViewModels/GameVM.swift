@@ -35,7 +35,7 @@ enum SoundTypes {
 class GameVM {
     
     private(set) var fullImage: UIImage?
-    private var imageTiles: [GridImage] = []
+    private(set) var imageTiles: [GridImage] = []
     private var tilesPerRow: Int = 0
     
     var audioPlayer: AVAudioPlayer?
