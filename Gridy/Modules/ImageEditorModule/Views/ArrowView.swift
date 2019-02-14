@@ -99,7 +99,7 @@ class ArrowView: UIView {
     
     private func initialize() {
         self.contentMode = .redraw
-        self.backgroundColor = .clear
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
     }
     
     // Calculates length of line from point A to B -> cEdge

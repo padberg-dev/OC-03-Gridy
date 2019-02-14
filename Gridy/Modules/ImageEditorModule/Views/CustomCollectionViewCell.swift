@@ -10,7 +10,7 @@ import UIKit
 
 class CustomCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
     
     // To make checks wheter the UIImageView contains an image when swaping cells.
     // Quicker than if let image = ....
